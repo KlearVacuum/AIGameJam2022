@@ -5,10 +5,10 @@ class Path
 {
     public class Node
     {
-        private Vector3Int m_Position;
-        public Vector3Int Position => m_Position;
+        private Vector3 m_Position;
+        public Vector3 Position => m_Position;
 
-        public Node(Vector3Int position)
+        public Node(Vector3 position)
         {
             m_Position = position;
         }
@@ -25,12 +25,39 @@ class Path
 
     public Node GetCurrentNode()
     {
-        Debug.Assert(m_CurrentNodeIndex < m_Nodes.Count, "Invalid node index");
-        return m_Nodes[m_CurrentNodeIndex];
+        Node currentNode = null;
+
+        if(Completed == false)
+        {
+            currentNode = m_Nodes[m_CurrentNodeIndex];
+        }
+
+        return currentNode;
+    }
+
+    public Vector3 Update (Agent agent)
+    {
+        Vector3 agentPosition = agent.transform.position;
+        Node currentNode = GetCurrentNode();
+
+        if(currentNode != null)
+        {
+            agentPosition = Vector3.MoveTowards(agentPosition, currentNode.Position, agent.Speed);
+
+            Debug.DrawLine(agentPosition, currentNode.Position, Color.red, 1f);
+
+            // TODO: Change threshold value to be settable
+            if ((agentPosition - currentNode.Position).sqrMagnitude <= 0.05f)
+            {
+                Advance();
+            }
+        }
+
+        return agentPosition;
     }
 
     public void Advance()
     {
-        ++m_CurrentNodeIndex; 
+        ++m_CurrentNodeIndex;
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-class Pathfinding : MonoBehaviour
+class Pathfinding
 {
     private class Node : IHeapItem<Node>
     {
@@ -52,37 +52,36 @@ class Pathfinding : MonoBehaviour
         }
     }
 
-
-    [SerializeField] private Tilemap m_Tilemap;
+    private Tilemap m_Tilemap;
 
     public void Initialize(Tilemap tilemap)
     {
         m_Tilemap = tilemap;
     }
 
-    public void Start()
-    {
-        Vector3 startPosition = new Vector3(-3.63f, 1.51f, 10f);
-        Vector3 endPosition = new Vector3(-2.34f, 0.42f, -10f);
+    //public void Start()
+    //{
+    //    Vector3 startPosition = new Vector3(-3.63f, 1.51f, 10f);
+    //    Vector3 endPosition = new Vector3(-2.34f, 0.42f, -10f);
 
-        m_Tilemap.CompressBounds();
+    //    m_Tilemap.CompressBounds();
 
-        Path path = FindPath(startPosition, endPosition);
-    }
+    //    Path path = FindPath(startPosition, endPosition);
+    //}
 
-    public void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            PathfindingTile tile = m_Tilemap.GetTile(m_Tilemap.WorldToCell(mouseWorldPos)) as PathfindingTile;
+    //public void Update()
+    //{
+    //    if(Input.GetMouseButtonDown(0))
+    //    {
+    //        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        PathfindingTile tile = m_Tilemap.GetTile(m_Tilemap.WorldToCell(mouseWorldPos)) as PathfindingTile;
 
-            if (tile != null)
-            {
-                Debug.Log("TilePos = " + mouseWorldPos);
-            }
-        }
-    }
+    //        if (tile != null)
+    //        {
+    //            Debug.Log("TilePos = " + mouseWorldPos);
+    //        }
+    //    }
+    //}
 
     public Path FindPath(Vector3 startPosition, Vector3 endPosition)
     {
@@ -160,7 +159,9 @@ class Pathfinding : MonoBehaviour
 
         do
         {
-            pathNodes.Add(new Path.Node(node.Position));
+            m_Tilemap.SetTileFlags(node.Position, TileFlags.None);
+            m_Tilemap.SetColor(node.Position, Color.green);
+            pathNodes.Add(new Path.Node(m_Tilemap.GetCellCenterWorld(node.Position)));
             node = node.Parent;
         } while (node.Parent != null);
 
@@ -212,16 +213,5 @@ class Pathfinding : MonoBehaviour
         Vector3Int distance = nodeA.Position - nodeB.Position;
 
         return (Math.Abs(distance.x) + Math.Abs(distance.y)) * 10;
-    }
-
-    private void InitializeCostTable(ref int[,] costTable)
-    {
-        for(int x = 0; x < costTable.GetLength(0); ++x)
-        {
-            for(int y = 0; y <costTable.GetLength(1); ++y)
-            {
-                costTable[x, y] = int.MaxValue;
-            }
-        }
     }
 }
