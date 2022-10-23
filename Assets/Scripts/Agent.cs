@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,12 +10,15 @@ public class Agent : MonoBehaviour
 
     Pathfinding m_Pathfinding = new Pathfinding();
     SpriteRenderer m_SpriteRenderer;
+    Rigidbody2D m_Rigidbody2D;
 
     [Header("Status")]
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
-
+    [SerializeField] FrozenStatus m_FrozenStatus;
+ 
     [Header("Spatial Properties")]
     [SerializeField] Tilemap m_Tilemap;
+
     // Temporary for testing purposes
     [SerializeField] GameObject m_Target;
 
@@ -25,10 +29,10 @@ public class Agent : MonoBehaviour
     public float DefaultSpeed => m_DefaultSpeed;
     public float Speed => m_CurrentSpeed;
 
-
     void Awake()
     {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
         m_CurrentSpeed = m_DefaultSpeed;
 
@@ -47,6 +51,12 @@ public class Agent : MonoBehaviour
 
     public void Update()
     {
+        if(m_StatusHandler.CurrentStatus is BlownStatus)
+        {
+            // Here lerp bot to center and then blow it
+            return;
+        }
+
         if(m_CurrentPath != null && !m_CurrentPath.Completed)
         {
             transform.position = m_CurrentPath.Update(this);
@@ -72,5 +82,33 @@ public class Agent : MonoBehaviour
     public void SetSpeed(float newSpeed)
     {
         m_CurrentSpeed = newSpeed;
+    }
+
+    // Test only remove later if dont need
+    Coroutine m_Coroutine;
+
+    public void SetCoroutine(IEnumerator coroutine)
+    {
+        if(m_Coroutine != null)
+        {
+            StopCoroutine(m_Coroutine);
+        }
+
+        m_Coroutine = StartCoroutine(coroutine);
+    }
+
+    public void ClearPath()
+    {
+        m_CurrentPath = null;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall") &&
+           m_StatusHandler.CurrentStatus is BlownStatus)
+        {
+            m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+            SetStatus(m_FrozenStatus);
+        }
     }
 }

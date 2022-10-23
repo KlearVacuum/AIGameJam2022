@@ -8,16 +8,11 @@ public class FrozenStatus : Status
     {
         StatusEffect statusEffect = null;
 
-        switch(otherStatus)
+        statusEffect = new StatusEffect((Agent agent) =>
         {
-            case WetStatus:
-                statusEffect = new StatusEffect((Agent agent) =>
-                {
-                    agent.SetSprite(m_Sprite);
-                    // Other effects..
-                });
-                break;
-        }
+            agent.SetSprite(m_Sprite);
+            // Other effects..
+        });
 
         return statusEffect;
     }

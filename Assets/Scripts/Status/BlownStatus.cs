@@ -16,8 +16,8 @@ public class BlownStatus : Status
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.SetStatus(m_FrozenStatus);
-                    agent.SetSpeed(m_BlownSpeed);
+                    // agent.SetStatus(m_FrozenStatus);
+                    // agent.SetSpeed(m_BlownSpeed);
                     // Other effects..
                 });
                 break;

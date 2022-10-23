@@ -42,7 +42,7 @@ class Path
 
         if(currentNode != null)
         {
-            agentPosition = Vector3.MoveTowards(agentPosition, currentNode.Position, agent.Speed);
+            agentPosition = Vector3.MoveTowards(agentPosition, currentNode.Position, agent.Speed * Time.deltaTime);
 
             Debug.DrawLine(agentPosition, currentNode.Position, Color.red, 1f);
 

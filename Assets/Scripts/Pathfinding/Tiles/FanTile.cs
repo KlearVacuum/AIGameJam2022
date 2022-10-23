@@ -2,16 +2,14 @@
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "Tiles/FanTile")]
-class FanTile : PathfindingTile
+public class FanTile : PathfindingTile
 {
     [SerializeField] Fan m_FanPrefab;
     [SerializeField] Fan.Direction m_FanDirection;
 
     Fan m_Fan;
-    Vector3 m_FanPosition;
 
-    bool m_Activated = false;
-    public override bool IsWalkable => m_Activated ? false : true;
+    public override bool IsWalkable => m_Fan.gameObject.activeSelf ? false : true;
 
     public override bool StartUp(Vector3Int location, ITilemap tilemap, GameObject go)
     {
@@ -24,26 +22,40 @@ class FanTile : PathfindingTile
 
         if(interactableTrigger != null)
         {
+            FanInteractable fanInteractable = interactableTrigger.Interactable as FanInteractable;
+
             // Instantiate fan
-            m_Fan = Instantiate<Fan>(m_FanPrefab);
+            m_Fan = Instantiate(m_FanPrefab);
             m_Fan.transform.position = go.transform.position;
+            DeactivateFan();
+
+            // Initialize fan interactable
+            fanInteractable.Initialize(this);
 
             // offset trigger
             go.transform.position += GetDirectionVector();
+            m_Fan.SetWindPosition(go.transform.position);
+            m_Fan.SetWindDirection(m_FanDirection);
+
             return true;
         }
 
         return false;
     }
 
-    public void Activate()
+    public void ActivateFan()
     {
-        m_Activated = true;
+        m_Fan.gameObject.SetActive(true);
     }
 
-    public void Deactivate()
+    public void DeactivateFan()
     {
-        m_Activated = false;
+        m_Fan.gameObject.SetActive(false);
+    }
+
+    public Vector3 GetWindPosition()
+    {
+        return m_Fan.WindPosition;
     }
 
     Vector3Int GetDirectionVector()

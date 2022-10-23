@@ -59,30 +59,6 @@ class Pathfinding
         m_Tilemap = tilemap;
     }
 
-    //public void Start()
-    //{
-    //    Vector3 startPosition = new Vector3(-3.63f, 1.51f, 10f);
-    //    Vector3 endPosition = new Vector3(-2.34f, 0.42f, -10f);
-
-    //    m_Tilemap.CompressBounds();
-
-    //    Path path = FindPath(startPosition, endPosition);
-    //}
-
-    //public void Update()
-    //{
-    //    if(Input.GetMouseButtonDown(0))
-    //    {
-    //        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //        PathfindingTile tile = m_Tilemap.GetTile(m_Tilemap.WorldToCell(mouseWorldPos)) as PathfindingTile;
-
-    //        if (tile != null)
-    //        {
-    //            Debug.Log("TilePos = " + mouseWorldPos);
-    //        }
-    //    }
-    //}
-
     public Path FindPath(Vector3 startPosition, Vector3 endPosition)
     {
         Vector3Int startCellPosition = m_Tilemap.WorldToCell(startPosition);
@@ -160,7 +136,7 @@ class Pathfinding
         Debug.Assert(node != null); 
 
         // Add last node
-        pathNodes.Add(new Path.Node(node.Position));
+        pathNodes.Add(new Path.Node(m_Tilemap.GetCellCenterWorld(node.Position)));
         pathNodes.Reverse();
 
         return new Path(pathNodes);

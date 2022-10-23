@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b21f52bb0326594fb361637cd23d27a, type: 3}
   m_Name: Fan
   m_EditorClassIdentifier: 
-  m_Status: {fileID: 0}
+  m_Status: {fileID: 11400000, guid: 181097a0d8969444981e9945c30b8f29, type: 2}
