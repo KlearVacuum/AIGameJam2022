@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92183a2503bdbd94daa86bcffe5a622a, type: 3}
-  m_Name: BlownStatus
+  m_Script: {fileID: 11500000, guid: bb81d3ff3012b764d991fef65140c624, type: 3}
+  m_Name: Fire
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 2391abdb399eecd4ba86ba5474a73b18, type: 3}
-  m_FrozenStatus: {fileID: 11400000, guid: 3657ab37d1c669b4fa78b0d729990f6c, type: 2}
-  m_BlownSpeed: 5
+  m_Status: {fileID: 11400000, guid: 37a9e7d3969b3294e8957e8d114a0694, type: 2}

@@ -127,8 +127,8 @@ class Pathfinding
 
         do
         {
-            m_Tilemap.SetTileFlags(node.Position, TileFlags.None);
-            m_Tilemap.SetColor(node.Position, Color.green);
+            // m_Tilemap.SetTileFlags(node.Position, TileFlags.None);
+            // m_Tilemap.SetColor(node.Position, Color.green);
             pathNodes.Add(new Path.Node(m_Tilemap.GetCellCenterWorld(node.Position)));
             node = node.Parent;
         } while (node.Parent != null);

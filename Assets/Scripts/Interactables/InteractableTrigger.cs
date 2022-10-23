@@ -14,7 +14,7 @@ public class InteractableTrigger : MonoBehaviour
 
         if (agent != null)
         {
-            m_Interactable.Interact(agent);
+            m_Interactable.Interact(agent, transform.position);
         }
     }
 }

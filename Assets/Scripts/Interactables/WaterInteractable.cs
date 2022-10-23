@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Interactable/Water")]
 public class WaterInteractable : Interactable
 {
-    public override void Interact(Agent agent)
+    public override void Interact(Agent agent, Vector3 tilePosition)
     {
         agent.SetStatus(m_Status);
+        Debug.Log("Touched water");
     }
 }

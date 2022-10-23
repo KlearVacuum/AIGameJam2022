@@ -13,13 +13,12 @@ public class FanInteractable : Interactable
         m_FanTile = fanTile;
     }
 
-    public override void Interact(Agent agent)
+    public override void Interact(Agent agent, Vector3 tilePosition)
     {
         // Activate fan
         m_FanTile.ActivateFan();
 
-        // Set agent status
-        agent.SetStatus(m_Status);
+        agent.SetIsBlown(true);
         agent.ClearPath();
         agent.SetCoroutine(MoveAgentToWindPosition(agent, m_FanTile.GetWindPosition()));
     }

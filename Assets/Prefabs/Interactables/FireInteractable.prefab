@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8630634058484117767}
   - component: {fileID: 210016956183213752}
   m_Layer: 0
-  m_Name: WaterInteractableTrigger 1
+  m_Name: FireInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,4 +71,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce12c9843b4bc3d498f634dc0b6b94af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Interactable: {fileID: 11400000, guid: e4d473db6622e3b4f97f35ee29b881e2, type: 2}
+  m_Interactable: {fileID: 11400000, guid: 8a9cc5ca58aae504d8698d9b3c0966fc, type: 2}

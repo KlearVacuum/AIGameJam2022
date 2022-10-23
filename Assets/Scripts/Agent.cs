@@ -12,10 +12,15 @@ public class Agent : MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
 
+    bool m_IsBlown = false;
+    bool m_Dead = false;
+
     [Header("Status")]
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
     [SerializeField] FrozenStatus m_FrozenStatus;
- 
+    public Status Status => m_StatusHandler.CurrentStatus;
+
+
     [Header("Spatial Properties")]
     [SerializeField] Tilemap m_Tilemap;
 
@@ -48,8 +53,9 @@ public class Agent : MonoBehaviour
 
     public void Update()
     {
-        if(m_StatusHandler.CurrentStatus is BlownStatus)
+        if(m_Dead || m_IsBlown)
         {
+            if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
             return;
         }
@@ -86,6 +92,39 @@ public class Agent : MonoBehaviour
         m_CurrentSpeed = newSpeed;
     }
 
+    public void SetIsBlown(bool isBlown)
+    {
+        m_IsBlown = isBlown;
+    }
+
+    public void Die(Vector3 deathPosition, Sprite deathSprite)
+    {
+        m_Dead = true;
+        m_IsBlown = false;
+        m_Rigidbody2D.simulated = false;
+        m_Rigidbody2D.isKinematic = true;
+
+        Debug.Log("Death position " + deathPosition);
+
+        SetCoroutine(DyingCoroutine(transform.position, deathPosition, deathSprite));
+    }
+
+    IEnumerator DyingCoroutine(Vector3 currentPosition, Vector3 nextPosition, Sprite deathSprite)
+    {
+        float totalTime = (currentPosition - nextPosition).magnitude / Speed;
+        float t = 0;
+
+        while (t < totalTime)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Speed * Time.deltaTime);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        Debug.Log("Truly dead");
+        m_SpriteRenderer.sprite = deathSprite;
+    }
+
     // Test only remove later if dont need
     Coroutine m_Coroutine;
 
@@ -106,10 +145,10 @@ public class Agent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall") &&
-           m_StatusHandler.CurrentStatus is BlownStatus)
+        if (collision.gameObject.CompareTag("Wall") && m_IsBlown)
         {
-            m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+            m_IsBlown = false;
+            m_Rigidbody2D.isKinematic = true;
             SetStatus(m_FrozenStatus);
         }
     }
