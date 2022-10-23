@@ -15,6 +15,8 @@ public class Agent : MonoBehaviour
     bool m_IsBlown = false;
     bool m_Dead = false;
 
+    public bool IsBlown => m_IsBlown;
+
     [Header("Status")]
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
     [SerializeField] FrozenStatus m_FrozenStatus;
@@ -53,14 +55,16 @@ public class Agent : MonoBehaviour
 
     public void Update()
     {
-        if(m_Dead || m_IsBlown)
+        if(m_Dead)
         {
             if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
             return;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
+        m_StatusHandler.Update(this);
+
+        if (Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
         {
             m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
         }
@@ -71,15 +75,17 @@ public class Agent : MonoBehaviour
         }
     }
 
-    public void SetStatus(Status newStatus)
+    public void ApplyStatus(Status newStatus)
     {
-        // Status effect is null when a "bad" transition occurs e.g. Wet -> Wet / Frozen -> Wet
-        StatusEffect statusEffect = m_StatusHandler.TransitionTo(newStatus);
+        m_StatusHandler.QueueStatus(newStatus);
 
-        if(statusEffect != null)
-        {
-            statusEffect.Apply(this);
-        }
+        // Status effect is null when a "bad" transition occurs e.g. Wet -> Wet / Frozen -> Wet
+        //StatusEffect statusEffect = m_StatusHandler.TransitionTo(newStatus);
+
+        //if(statusEffect != null)
+        //{
+        //    statusEffect.Apply(this);
+        //}
     }
 
     public void SetSprite(Sprite sprite)
@@ -106,6 +112,8 @@ public class Agent : MonoBehaviour
 
         Debug.Log("Death position " + deathPosition);
 
+        StopAllCoroutines();
+
         SetCoroutine(DyingCoroutine(transform.position, deathPosition, deathSprite));
     }
 
@@ -130,7 +138,7 @@ public class Agent : MonoBehaviour
 
     public void SetCoroutine(IEnumerator coroutine)
     {
-        if(m_Coroutine != null)
+        if (m_Coroutine != null)
         {
             StopCoroutine(m_Coroutine);
         }
@@ -149,7 +157,8 @@ public class Agent : MonoBehaviour
         {
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
-            SetStatus(m_FrozenStatus);
+            m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
+            ApplyStatus(m_FrozenStatus);
         }
     }
 }

@@ -6,6 +6,6 @@ public class WindInteractable : Interactable
 {
     public override void Interact(Agent agent, Vector3 tilePosition)
     {
-        agent.SetStatus(m_Status);
+        agent.ApplyStatus(m_Status);
     }
 }

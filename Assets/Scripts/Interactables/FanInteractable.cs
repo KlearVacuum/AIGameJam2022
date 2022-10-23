@@ -18,9 +18,20 @@ public class FanInteractable : Interactable
         // Activate fan
         m_FanTile.ActivateFan();
 
+        if(agent.Status is FrozenStatus)
+        {
+            return;
+        }
+
+        if (!agent.IsBlown)
+        {
+            agent.SetCoroutine(MoveAgentToWindPosition(agent, m_FanTile.GetWindPosition()));
+        }
+
         agent.SetIsBlown(true);
         agent.ClearPath();
-        agent.SetCoroutine(MoveAgentToWindPosition(agent, m_FanTile.GetWindPosition()));
+
+        Debug.Log("Blow");
     }
 
     IEnumerator MoveAgentToWindPosition(Agent agent, Vector3 windPosition)

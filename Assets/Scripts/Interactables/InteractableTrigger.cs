@@ -8,6 +8,11 @@ public class InteractableTrigger : MonoBehaviour
 
     public Interactable Interactable => m_Interactable;
 
+    private void Awake()
+    {
+        m_Interactable = Instantiate(m_Interactable);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Agent agent = collision.transform.GetComponent<Agent>();

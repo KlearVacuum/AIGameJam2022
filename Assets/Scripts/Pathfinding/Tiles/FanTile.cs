@@ -45,6 +45,7 @@ public class FanTile : PathfindingTile
 
     public void ActivateFan()
     {
+        Debug.Log("Fan activated");
         m_Fan.gameObject.SetActive(true);
     }
 

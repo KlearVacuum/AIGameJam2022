@@ -31,6 +31,9 @@ public class Fan : MonoBehaviour
             case Direction.LEFT:
                 m_AreaEffector2D.forceAngle = 180f;
                 break;
+            case Direction.RIGHT:
+                m_AreaEffector2D.forceAngle = 0f;
+                break;
         }
     }
 

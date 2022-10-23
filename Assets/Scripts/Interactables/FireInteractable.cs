@@ -14,7 +14,7 @@ public class FireInteractable : Interactable
         }
         else
         {
-            agent.SetStatus(m_Status);
+            agent.ApplyStatus(m_Status);
         }
     }
 }

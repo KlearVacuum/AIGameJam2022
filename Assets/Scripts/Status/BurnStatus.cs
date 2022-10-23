@@ -16,13 +16,13 @@ public class BurnStatus : Status
             case FrozenStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.SetStatus(m_WetStatus);
+                    agent.ApplyStatus(m_WetStatus);
                 });
                 break;
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.SetStatus(m_DefaultStatus);
+                    agent.ApplyStatus(m_DefaultStatus);
                 });
                 break;
         }

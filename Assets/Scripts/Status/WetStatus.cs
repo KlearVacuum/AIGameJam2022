@@ -11,18 +11,11 @@ public class WetStatus : Status
         switch(otherStatus)
         {
             case DefaultStatus:
+            case ShockedStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
                     agent.SetSprite(m_Sprite);
                     // Other effects..
-                });
-                break;
-            case FrozenStatus:
-                statusEffect = new StatusEffect((Agent agent) =>
-                {
-                    agent.SetSprite(m_Sprite);
-                    // Other effects.. 
-                    // Slow down speed??
                 });
                 break;
         }
