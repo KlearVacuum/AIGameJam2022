@@ -131,21 +131,13 @@ class Pathfinding
                 int currentNeighbourGCost = 
                     costTable.ContainsKey(neighbourPosition) ? costTable[neighbourPosition] : int.MaxValue;
 
-                if (newGCost < currentNeighbourGCost || !openList.Contains(neighbourNode))
+                if (newGCost < currentNeighbourGCost)
                 {
                     costTable[neighbourPosition] = newGCost;
 
                     neighbourNode.SetGCost(newGCost);
                     neighbourNode.SetHCost(GetHeuristic(neighbourNode, targetNode));
-                    
-                    if(openList.Contains(neighbourNode))
-                    {
-                        openList.UpdateItem(neighbourNode);
-                    }
-                    else
-                    {
-                        openList.Add(neighbourNode);
-                    }
+                    openList.Add(neighbourNode);
                 }
             }
         }
@@ -165,7 +157,7 @@ class Pathfinding
             node = node.Parent;
         } while (node.Parent != null);
 
-        Debug.Assert(node != null);
+        Debug.Assert(node != null); 
 
         // Add last node
         pathNodes.Add(new Path.Node(node.Position));

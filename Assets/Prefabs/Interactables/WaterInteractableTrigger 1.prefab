@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8630634058484117767}
   - component: {fileID: 210016956183213752}
   m_Layer: 0
-  m_Name: WaterInteractableTrigger
+  m_Name: WaterInteractableTrigger 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

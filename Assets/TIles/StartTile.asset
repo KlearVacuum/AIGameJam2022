@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StartTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
-  m_Color: {r: 0.72057354, g: 0.8962264, b: 0.5960751, a: 1}
+  m_Color: {r: 0.9614832, g: 1, b: 0.41037738, a: 1}
   m_Transform:
     e00: 1
     e01: 0

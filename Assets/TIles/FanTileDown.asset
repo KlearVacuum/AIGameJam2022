@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47fa43226e6c4e64384306dc2b11e083, type: 3}
-  m_Name: WaterTile
+  m_Script: {fileID: 11500000, guid: 5d2c46be540bfb04d90dba26fdb69164, type: 3}
+  m_Name: FanTileDown
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
-  m_Color: {r: 0.4292453, g: 0.8644456, b: 1, a: 1}
+  m_Color: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -31,7 +31,8 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 3205067737630532311, guid: d3c22dc3dba6f17459dba3e9e262cc6a, type: 3}
-  m_Flags: 1
+  m_InstancedGameObject: {fileID: 3205067737630532311, guid: 7a3ff0e460a1f69428140b7e66e2e7fa, type: 3}
+  m_Flags: 13
   m_ColliderType: 1
-  m_WaterInteractable: {fileID: 11400000, guid: e4d473db6622e3b4f97f35ee29b881e2, type: 2}
+  m_FanPrefab: {fileID: 4833348419335772541, guid: 9c3e623e9c3af864da06523305a6bfbd, type: 3}
+  m_FanDirection: 1

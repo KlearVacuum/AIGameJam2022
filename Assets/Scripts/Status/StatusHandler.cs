@@ -9,7 +9,10 @@ class StatusHandler
     {
         StatusEffect effect = newStatus.TransitionFrom(m_CurrentStatus);
 
-        m_CurrentStatus = newStatus;
+        if(effect != null)
+        {
+            m_CurrentStatus = newStatus;
+        }
 
         return effect;
     }

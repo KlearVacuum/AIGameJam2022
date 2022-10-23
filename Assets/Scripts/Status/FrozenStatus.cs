@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Status/Wet")]
-public class WetStatus : Status
+[CreateAssetMenu(menuName = "Status/Frozen")]
+public class FrozenStatus : Status
 {
     public override StatusEffect TransitionFrom(Status otherStatus)
     {
@@ -10,19 +10,11 @@ public class WetStatus : Status
 
         switch(otherStatus)
         {
-            case DefaultStatus:
+            case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
                     agent.SetSprite(m_Sprite);
                     // Other effects..
-                });
-                break;
-            case FrozenStatus:
-                statusEffect = new StatusEffect((Agent agent) =>
-                {
-                    agent.SetSprite(m_Sprite);
-                    // Other effects.. 
-                    // Slow down speed??
                 });
                 break;
         }
