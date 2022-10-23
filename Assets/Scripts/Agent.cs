@@ -44,9 +44,6 @@ public class Agent : MonoBehaviour
         Debug.Assert(m_Tilemap != null, "Agent has no assigned tilemap!");
 
         m_Pathfinding.Initialize(m_Tilemap);
-        m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
-
-        Debug.Assert(m_CurrentPath != null);
     }
 
     public void Update()
@@ -55,6 +52,11 @@ public class Agent : MonoBehaviour
         {
             // Here lerp bot to center and then blow it
             return;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
+        {
+            m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
         }
 
         if(m_CurrentPath != null && !m_CurrentPath.Completed)

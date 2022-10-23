@@ -1321,11 +1321,11 @@ Tilemap:
   - first: {x: -5, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 1
+      m_TileIndex: 5
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 2
-      m_TileObjectToInstantiateIndex: 65535
+      m_TileColorIndex: 5
+      m_TileObjectToInstantiateIndex: 1
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -4, y: 1, z: 0}
@@ -1334,18 +1334,18 @@ Tilemap:
       m_TileIndex: 5
       m_TileSpriteIndex: 0
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 3
+      m_TileColorIndex: 5
       m_TileObjectToInstantiateIndex: 1
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -3, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 5
-      m_TileSpriteIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 3
-      m_TileObjectToInstantiateIndex: 1
+      m_TileColorIndex: 2
+      m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: -2, y: 1, z: 0}
@@ -1447,6 +1447,8 @@ Tilemap:
     m_Data: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
   - m_RefCount: 20
     m_Data: {fileID: 21300000, guid: a5d1865ee1b972249b75c6dccc8bce78, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 23
     m_Data:
@@ -1509,12 +1511,12 @@ Tilemap:
     m_Data: {r: 3.8679e-41, g: 3.8679e-41, b: 3.8679e-41, a: 3.8679e-41}
   - m_RefCount: 20
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  - m_RefCount: 2
-    m_Data: {r: 0.4292453, g: 0.8644456, b: 1, a: 1}
-  - m_RefCount: 1
-    m_Data: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
   - m_RefCount: 0
     m_Data: {r: 3.8667e-41, g: 3.8667e-41, b: 3.8667e-41, a: 3.8667e-41}
+  - m_RefCount: 1
+    m_Data: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
+  - m_RefCount: 2
+    m_Data: {r: 0.4292453, g: 0.8644456, b: 1, a: 1}
   m_TileObjectToInstantiateArray:
   - m_RefCount: 1
     m_Data: {fileID: 3205067737630532311, guid: 7a3ff0e460a1f69428140b7e66e2e7fa, type: 3}
