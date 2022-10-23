@@ -17,6 +17,8 @@ public class Agent : MonoBehaviour
     bool m_HasKey = false;
 
     public bool IsBlown => m_IsBlown;
+    public bool HasKey => m_HasKey;
+
     Fan m_Fan;
 
     [Header("Status")]
@@ -153,9 +155,14 @@ public class Agent : MonoBehaviour
         m_Coroutine = StartCoroutine(coroutine);
     }
 
-    public void ClearPath()
+    public void Stop()
     {
         m_CurrentPath = null;
+    }
+
+    public void Move()
+    {
+        m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
     }
 
     public void PickupKey()
