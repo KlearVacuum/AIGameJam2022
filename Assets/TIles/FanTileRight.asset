@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d2c46be540bfb04d90dba26fdb69164, type: 3}
+  m_Name: FanTileRight
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
+  m_Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 3205067737630532311, guid: 7a3ff0e460a1f69428140b7e66e2e7fa, type: 3}
+  m_Flags: 13
+  m_ColliderType: 1
+  m_FanPrefab: {fileID: 4833348419335772541, guid: 9c3e623e9c3af864da06523305a6bfbd, type: 3}
+  m_FanDirection: 3
