@@ -14,6 +14,7 @@ public class Agent : MonoBehaviour
 
     bool m_IsBlown = false;
     bool m_Dead = false;
+    bool m_HasKey = false;
 
     public bool IsBlown => m_IsBlown;
     Fan m_Fan;
@@ -155,6 +156,11 @@ public class Agent : MonoBehaviour
     public void ClearPath()
     {
         m_CurrentPath = null;
+    }
+
+    public void PickupKey()
+    {
+        m_HasKey = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

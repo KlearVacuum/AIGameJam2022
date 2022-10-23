@@ -74,7 +74,7 @@ class Pathfinding
         Heap<Node> openList = new Heap<Node>(allTiles.Length);
 
         Node startNode = new Node(startCellPosition);
-        Node targetNode = new Node(endCellPosition); 
+        Node targetNode = new Node(endCellPosition);
         Path path = null;
 
         costTable[startCellPosition] = 0;
