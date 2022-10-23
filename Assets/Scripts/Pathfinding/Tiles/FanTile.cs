@@ -8,6 +8,7 @@ public class FanTile : PathfindingTile
     [SerializeField] Fan.Direction m_FanDirection;
 
     Fan m_Fan;
+    public Fan Fan => m_Fan;
 
     public override bool IsWalkable => m_Fan.gameObject.activeSelf ? false : true;
 

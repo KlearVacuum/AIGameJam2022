@@ -16,6 +16,7 @@ public class Agent : MonoBehaviour
     bool m_Dead = false;
 
     public bool IsBlown => m_IsBlown;
+    Fan m_Fan;
 
     [Header("Status")]
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
@@ -103,6 +104,11 @@ public class Agent : MonoBehaviour
         m_IsBlown = isBlown;
     }
 
+    public void SetFan(Fan fan)
+    {
+        m_Fan = fan;
+    }
+
     public void Die(Vector3 deathPosition, Sprite deathSprite)
     {
         m_Dead = true;
@@ -157,6 +163,7 @@ public class Agent : MonoBehaviour
         {
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
+            m_Fan?.gameObject.SetActive(false);
             m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
             ApplyStatus(m_FrozenStatus);
         }

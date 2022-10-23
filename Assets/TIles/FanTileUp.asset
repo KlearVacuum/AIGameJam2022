@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FanTileUp
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
-  m_Color: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
+  m_Color: {r: 0.04490092, g: 0.4433962, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
