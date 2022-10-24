@@ -16,7 +16,6 @@ MonoBehaviour:
   m_Precondition:
     m_Conditions:
     - {fileID: 11400000, guid: 14ea66bb087e58749a51d4b3bf123823, type: 2}
-    - {fileID: 11400000, guid: df5cf6e8b2b582f45bc0b2770bcd1b04, type: 2}
   m_Effect:
     m_Results:
     - {fileID: 11400000, guid: 81819245103305d42b2b34555ae856a4, type: 2}

@@ -92,6 +92,11 @@ namespace GOAP
                 Debug.LogWarning($"Attempting to add an action << {actionToAdd.GetName()} >> that already exists.");
             }
         }
+        
+        public void AssignActions(List<Action> actions)
+        {
+            m_AvailableActions = actions;
+        }
 
         public void AddGoal(Goal goalToAdd)
         {
