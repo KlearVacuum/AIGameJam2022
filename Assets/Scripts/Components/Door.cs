@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
         Debug.Log("Waiting for door to open");
         yield return new WaitForSeconds(1f);
         Debug.Log("Door opened");
-
+        agent.audioUnlock.PlayOneShot(agent.aSource);
         gameObject.SetActive(false);
         agent.Move();
     }

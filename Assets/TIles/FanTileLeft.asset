@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d2c46be540bfb04d90dba26fdb69164, type: 3}
-  m_Name: FanTileUp
+  m_Name: FanTileLeft
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
   m_Color: {r: 0.69411767, g: 0.972549, b: 0.6627451, a: 1}
@@ -35,4 +35,4 @@ MonoBehaviour:
   m_Flags: 13
   m_ColliderType: 1
   m_FanPrefab: {fileID: 4833348419335772541, guid: 9c3e623e9c3af864da06523305a6bfbd, type: 3}
-  m_FanDirection: 0
+  m_FanDirection: 2

@@ -6,6 +6,7 @@ class Key : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             Agent agent = collision.gameObject.GetComponent<Agent>();
+            agent.audioGetKey.PlayOneShot(agent.aSource);
             agent.PickupKey();
             Destroy(gameObject);
         }

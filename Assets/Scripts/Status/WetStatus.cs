@@ -14,6 +14,7 @@ public class WetStatus : Status
             case ShockedStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
+                    agent.audioZapDie.PlayOneShot(agent.aSource);
                     agent.SetSprite(m_Sprite);
                     // Other effects..
                 });

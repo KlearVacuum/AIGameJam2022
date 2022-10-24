@@ -12,6 +12,10 @@ public class Agent : MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
 
+    [Header("Audio")]
+    [HideInInspector] public AudioSource aSource;
+    public AudioClipGroup audioZap, audioZapDie, audioWet, audioSteam, audioBurn, audioBlow, audioFreeze, audioUnlock, audioGetKey;
+
     bool m_IsBlown = false;
     bool m_Dead = false;
     bool m_HasKey = false;
@@ -51,6 +55,7 @@ public class Agent : MonoBehaviour
     {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        aSource = GetComponent<AudioSource>();
 
 
         m_Planner = new GOAP.Planner(this);

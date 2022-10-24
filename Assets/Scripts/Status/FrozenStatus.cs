@@ -13,6 +13,7 @@ public class FrozenStatus : Status
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
+                    agent.audioFreeze.PlayOneShot(agent.aSource);
                     agent.SetSprite(m_Sprite);
                     // Other effects..
                 });
