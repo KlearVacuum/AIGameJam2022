@@ -12,7 +12,6 @@ public class DoorInteractable : Interactable
 
     public override void Interact(Agent agent, Vector3 interactablePosition)
     {
-        agent.Stop();
         m_Door.Open(agent);
     }
 }

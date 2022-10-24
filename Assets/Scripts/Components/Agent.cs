@@ -87,6 +87,11 @@ public class Agent : MonoBehaviour
 
         m_StatusHandler.Update(this);
 
+        if(m_IsBlown)
+        {
+            return;
+        }
+
         GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
 
         if(currentPlan != null)
@@ -96,20 +101,11 @@ public class Agent : MonoBehaviour
             if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
                 currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
             {
-                Debug.Log($"Executing {currentAction.GetName()}");
+                // Debug.Log($"Executing {currentAction.GetName()}");
             }
 
             currentPlan.Execute(this);
         }
-        //if (Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
-        //{
-        //    m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
-        //}
-
-        //if(m_CurrentPath != null && !m_CurrentPath.Completed)
-        //{
-        //    transform.position = m_CurrentPath.Update(this);
-        //}
     }
 
     public Path GetCurrentPath()
@@ -119,15 +115,19 @@ public class Agent : MonoBehaviour
         if(m_PathPlanningRequests.Count > 0)
         {
             Path.Request pathRequest = m_PathPlanningRequests.Dequeue();
-            m_CurrentPath = m_Pathfinding.FindPath(transform.position, pathRequest.TargetPosition);
+
+            m_CurrentPath = m_Pathfinding.FindPath(
+                transform.position, 
+                pathRequest.TargetPosition, 
+                pathRequest.PathCompleteAction);
         }
 
         return m_CurrentPath;
     }
 
-    public void AddPathRequest(Vector3 targetPosition)
+    public void AddPathRequest(Vector3 targetPosition, Action<Agent> pathCompleteAction)
     {
-        m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition));
+        m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition, pathCompleteAction));
     }
 
     private void EvaluateCurrentPath()
@@ -216,16 +216,6 @@ public class Agent : MonoBehaviour
         m_Coroutine = StartCoroutine(coroutine);
     }
 
-    public void Stop()
-    {
-        m_CurrentPath = null;
-    }
-
-    public void Move()
-    {
-        m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
-    }
-
     public void PickupKey()
     {
         m_HasKey = true;
@@ -238,7 +228,13 @@ public class Agent : MonoBehaviour
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
             m_Fan?.gameObject.SetActive(false);
-            m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
+
+            // Reevaluate path based on old path
+            m_CurrentPath = m_Pathfinding.FindPath(
+                transform.position, 
+                m_CurrentPath.TargetPosition, 
+                m_CurrentPath.PathCompleteAction);
+
             audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
         }

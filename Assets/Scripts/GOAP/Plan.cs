@@ -66,7 +66,6 @@ namespace GOAP
                             if (m_Goal.IsSatisfiedBy(currentAction.GetEffect()))
                             {
                                 currentAction.Exit(agent);
-                                Debug.Log("Exit Action");
                                 m_ExecutionStatus = ExecutionStatus.Succeeded;
                             }
                             else

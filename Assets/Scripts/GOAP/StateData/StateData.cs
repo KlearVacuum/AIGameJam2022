@@ -18,5 +18,10 @@ namespace GOAP
 
         public T Value => m_StateValue;
         public override IStateValue GetStateValue() => m_StateValue;
+
+        public override IStateValue CloneStateValue()
+        {
+            return new StateValue<T>(m_StateValue.Data);
+        }
     }
 }

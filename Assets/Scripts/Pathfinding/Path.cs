@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class Path
@@ -8,9 +9,14 @@ public class Path
         Vector3 m_TargetPosition;
         public Vector3 TargetPosition => m_TargetPosition;
 
-        public Request(Vector3 targetPosition)
+        Action<Agent> m_PathCompleteAction;
+
+        public Action<Agent> PathCompleteAction => m_PathCompleteAction;
+
+        public Request(Vector3 targetPosition, Action<Agent> pathCompleteAction)
         {
             m_TargetPosition = targetPosition;
+            m_PathCompleteAction = pathCompleteAction;
         }
     }
 
@@ -28,14 +34,19 @@ public class Path
     Vector3 m_TargetPosition;
     public Vector3 TargetPosition => m_TargetPosition;
 
+    Action<Agent> m_PathCompleteAction;
+
+    public Action<Agent> PathCompleteAction => m_PathCompleteAction;
+
     List<Node> m_Nodes;
     int m_CurrentNodeIndex = 0;
     public bool Completed => m_CurrentNodeIndex >= m_Nodes.Count;
 
-    public Path(List<Node> nodes, Vector3 targetPosition)
+    public Path(List<Node> nodes, Vector3 targetPosition, Action<Agent> pathCompleteAction)
     {
         m_Nodes = nodes;
         m_TargetPosition = targetPosition;
+        m_PathCompleteAction = pathCompleteAction;
     }
 
     public Node GetCurrentNode()
@@ -65,6 +76,11 @@ public class Path
             if ((agentPosition - currentNode.Position).sqrMagnitude <= 0.05f)
             {
                 Advance();
+
+                if(Completed)
+                {
+                    m_PathCompleteAction(agent);
+                }
             }
         }
 

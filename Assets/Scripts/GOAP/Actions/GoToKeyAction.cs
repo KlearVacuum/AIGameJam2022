@@ -12,7 +12,10 @@ class GoToKeyAction : GOAP.Action
 
         Debug.Assert(key != null, "There is no key in the world!");
 
-        agent.AddPathRequest(key.transform.position);
+        agent.AddPathRequest(key.transform.position, (Agent agent) =>
+        {
+            Complete(agent.WorldState);
+        });
     }
 
     public override void Execute(Agent agent)

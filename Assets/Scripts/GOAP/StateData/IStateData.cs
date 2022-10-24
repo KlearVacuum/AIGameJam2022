@@ -9,6 +9,8 @@ namespace GOAP
 
         public abstract IStateValue GetStateValue();
 
+        public abstract IStateValue CloneStateValue();
+        
         public static T Get<T>(IStateData data)
         {
             return (data as StateData<T>).Value;

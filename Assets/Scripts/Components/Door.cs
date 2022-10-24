@@ -23,6 +23,5 @@ public class Door : MonoBehaviour
         Debug.Log("Door opened");
         agent.audioUnlock.PlayOneShot(agent.aSource);
         gameObject.SetActive(false);
-        agent.Move();
     }
 }

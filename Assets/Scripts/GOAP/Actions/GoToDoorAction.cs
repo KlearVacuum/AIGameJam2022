@@ -12,7 +12,10 @@ class GoToDoorAction : GOAP.Action
 
         Debug.Assert(door != null, "There is no door in the world!");
 
-        agent.AddPathRequest(door.transform.position);
+        agent.AddPathRequest(door.transform.position, (Agent agent) =>
+        {
+            Complete(agent.WorldState);
+        });
     }
 
     public override void Execute(Agent agent)
@@ -24,11 +27,6 @@ class GoToDoorAction : GOAP.Action
         {
             Vector3 newPosition = path.Update(agent);
             agent.transform.position = newPosition;
-
-            if ((agent.transform.position - path.TargetPosition).sqrMagnitude <= 0.05f)
-            {
-                Complete(agent.WorldState);
-            }
         }
     }
 

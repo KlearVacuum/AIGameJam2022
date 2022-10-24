@@ -59,7 +59,7 @@ class Pathfinding
         m_Tilemap = tilemap;
     }
 
-    public Path FindPath(Vector3 startPosition, Vector3 endPosition)
+    public Path FindPath(Vector3 startPosition, Vector3 endPosition, Action<Agent> pathCompleteAction)
     {
         Vector3Int startCellPosition = m_Tilemap.WorldToCell(startPosition);
         Vector3Int endCellPosition = m_Tilemap.WorldToCell(endPosition);
@@ -87,7 +87,7 @@ class Pathfinding
             if(currentNode.Position == targetNode.Position)
             {
                 // Build path
-                path = BuildPath(currentNode, targetNode.Position);
+                path = BuildPath(currentNode, targetNode.Position, pathCompleteAction);
                 break;
             }
 
@@ -121,7 +121,7 @@ class Pathfinding
         return path;
     }
 
-    private Path BuildPath(Node node, Vector3 targetPosition)
+    private Path BuildPath(Node node, Vector3 targetPosition, Action<Agent> pathCompleteAction)
     {
         List<Path.Node> pathNodes = new List<Path.Node>();
 
@@ -133,7 +133,7 @@ class Pathfinding
 
         pathNodes.Reverse();
 
-        return new Path(pathNodes, targetPosition);
+        return new Path(pathNodes, targetPosition, pathCompleteAction);
     }
 
     private List<Node> GetNeighbours(Node node)

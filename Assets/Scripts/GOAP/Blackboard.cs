@@ -38,7 +38,7 @@ namespace GOAP
         {
             foreach (IStateData state in m_StateList)
             {
-                m_States.Add(state.Key, state.GetStateValue());
+                m_States.Add(state.Key, state.CloneStateValue());
             }
         }
 

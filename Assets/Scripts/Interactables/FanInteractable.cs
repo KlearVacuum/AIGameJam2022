@@ -30,7 +30,6 @@ public class FanInteractable : Interactable
 
         agent.SetIsBlown(true);
         agent.SetFan(m_FanTile.Fan);
-        agent.Stop();
 
         Debug.Log("Blow");
     }
