@@ -12,7 +12,7 @@ public class FireInteractable : Interactable
     {
         if(agent.Status is DefaultStatus)
         {
-            agent.Die(tilePosition, m_Status.Sprite);
+            agent.Die(tilePosition, m_Status.Sprite, agent.audioBurn);
         }
         else
         {
@@ -23,8 +23,8 @@ public class FireInteractable : Interactable
             }
             else if (agent.Status is WetStatus)
             {
-                Debug.Log("wet to default"); 
-                agent.audioSteam.PlayOneShot(agent.aSource);
+                Debug.Log("wet to default");
+                agent.audioBurn.PlayOneShot(agent.aSource);
             }
             agent.ApplyStatus(m_Status);
         }

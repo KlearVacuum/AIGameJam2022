@@ -173,7 +173,7 @@ public class Agent : MonoBehaviour
         m_Fan = fan;
     }
 
-    public void Die(Vector3 deathPosition, Sprite deathSprite)
+    public void Die(Vector3 deathPosition, Sprite deathSprite, AudioClipGroup deathSound = null)
     {
         m_Dead = true;
         m_IsBlown = false;
@@ -184,10 +184,10 @@ public class Agent : MonoBehaviour
 
         StopAllCoroutines();
 
-        SetCoroutine(DyingCoroutine(transform.position, deathPosition, deathSprite));
+        SetCoroutine(DyingCoroutine(transform.position, deathPosition, deathSprite, deathSound));
     }
 
-    IEnumerator DyingCoroutine(Vector3 currentPosition, Vector3 nextPosition, Sprite deathSprite)
+    IEnumerator DyingCoroutine(Vector3 currentPosition, Vector3 nextPosition, Sprite deathSprite, AudioClipGroup audio = null)
     {
         float totalTime = (currentPosition - nextPosition).magnitude / Speed;
         float t = 0;
@@ -201,6 +201,9 @@ public class Agent : MonoBehaviour
 
         Debug.Log("Truly dead");
         m_SpriteRenderer.sprite = deathSprite;
+
+        if (audio != null)
+            audio.PlayOneShot(aSource);
     }
 
     // Test only remove later if dont need

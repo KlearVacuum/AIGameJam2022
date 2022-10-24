@@ -17,12 +17,17 @@ public class AudioClipGroup : ScriptableObject
 
     // time restriction
     [SerializeField] float m_minInterval = 0f;
-    float m_lastPlayedTime = 0;
+    [SerializeField] public float m_lastPlayedTime = 0;
+
+    private void OnEnable()
+    {
+        m_lastPlayedTime = 0;
+    }
 
     // play
     public void PlayOneShot(AudioSource audioSource, float maxDistance = -1)
     {
-        if (Time.time >= m_lastPlayedTime && Time.time - m_lastPlayedTime < m_minInterval) return;
+        if (Time.time >= m_lastPlayedTime && (Time.time - m_lastPlayedTime) < m_minInterval) return;
         float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
 
         m_lastPlayedTime = Time.time;
@@ -50,6 +55,8 @@ public class AudioClipGroup : ScriptableObject
         {
             volume = m_volume;
         }
-        audioSource.PlayOneShot(m_clips[Random.Range(0, m_clips.Count)], volume);
+        AudioClip clip = m_clips[Random.Range(0, m_clips.Count)];
+        audioSource.PlayOneShot(clip, volume);
+        Debug.Log(clip + " played");
     }
 }
