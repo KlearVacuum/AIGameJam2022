@@ -16,14 +16,12 @@ public class BurnStatus : Status
             case FrozenStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.audioSteam.PlayOneShot(agent.aSource);
                     agent.ApplyStatus(m_WetStatus);
                 });
                 break;
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.audioBurn.PlayOneShot(agent.aSource);
                     agent.ApplyStatus(m_DefaultStatus);
                 });
                 break;

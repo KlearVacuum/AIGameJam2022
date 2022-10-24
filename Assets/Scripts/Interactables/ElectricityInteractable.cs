@@ -11,10 +11,12 @@ public class ElectricityInteractable : Interactable
         Debug.Log("Touched electricity");
         if(agent.Status is WetStatus)
         {
+            agent.audioZapDie.PlayOneShot(agent.aSource);
             agent.Die(tilePosition, m_ShockedDieSprite);
         }
         else
         {
+            agent.audioZap.PlayOneShot(agent.aSource);
             agent.ApplyStatus(m_Status);
         }
 

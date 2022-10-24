@@ -4,9 +4,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Interactable/Water")]
 public class WaterInteractable : Interactable
 {
+    public Sprite shockDieSprite;
     public override void Interact(Agent agent, Vector3 tilePosition)
     {
-        agent.ApplyStatus(m_Status);
         Debug.Log("Touched water");
+        if (agent.Status is ShockedStatus)
+        {
+            agent.audioZapDie.PlayOneShot(agent.aSource);
+            agent.Die(tilePosition, shockDieSprite);
+        }
+        else
+        {
+            agent.audioWet.PlayOneShot(agent.aSource);
+            agent.ApplyStatus(m_Status);
+        }
     }
 }
