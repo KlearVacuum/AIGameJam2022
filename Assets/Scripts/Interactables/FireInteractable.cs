@@ -12,18 +12,18 @@ public class FireInteractable : Interactable
     {
         if(agent.Status is DefaultStatus)
         {
-            agent.Die(tilePosition, m_Status.Sprite, agent.audioBurn);
+            agent.Die(tilePosition, m_Status.Sprite, 0.75f, agent.audioBurn);
         }
         else
         {
             if (agent.Status is FrozenStatus)
             {
-                Debug.Log("frozen to wet");
+                // Debug.Log("frozen to wet");
                 agent.audioSteam.PlayOneShot(agent.aSource);
             }
             else if (agent.Status is WetStatus)
             {
-                Debug.Log("wet to default");
+                // Debug.Log("wet to default");
                 agent.audioBurn.PlayOneShot(agent.aSource);
             }
             agent.ApplyStatus(m_Status);

@@ -18,9 +18,9 @@ public class Door : MonoBehaviour
 
     IEnumerator OpenDoor(Agent agent)
     {
-        Debug.Log("Waiting for door to open");
+        // Debug.Log("Waiting for door to open");
         yield return new WaitForSeconds(1f);
-        Debug.Log("Door opened");
+        // Debug.Log("Door opened");
         agent.audioUnlock.PlayOneShot(agent.aSource);
         gameObject.SetActive(false);
     }

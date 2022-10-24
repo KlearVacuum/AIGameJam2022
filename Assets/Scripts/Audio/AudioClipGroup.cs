@@ -24,7 +24,6 @@ public class AudioClipGroup : ScriptableObject
         m_lastPlayedTime = 0;
     }
 
-    // play
     public void PlayOneShot(AudioSource audioSource, float maxDistance = -1)
     {
         if (Time.time >= m_lastPlayedTime && (Time.time - m_lastPlayedTime) < m_minInterval) return;
@@ -57,6 +56,6 @@ public class AudioClipGroup : ScriptableObject
         }
         AudioClip clip = m_clips[Random.Range(0, m_clips.Count)];
         audioSource.PlayOneShot(clip, volume);
-        Debug.Log(clip + " played");
+        // Debug.Log(clip + " played");
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2c46be540bfb04d90dba26fdb69164, type: 3}
   m_Name: FanTileRight
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
-  m_Color: {r: 0.69411767, g: 0.972549, b: 0.6627451, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 8bcb5e4dbcf4d8e4aa7553e06738b088, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

@@ -13,14 +13,19 @@ public class Agent : MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
     Animator m_Animator;
+    public SpriteRenderer deadSpriteRenderer;
 
     [Header("Audio")]
     [HideInInspector] public AudioSource aSource;
     public AudioClipGroup audioZap, audioZapDie, audioWet, audioSteam, audioBurn, audioBlow, 
                             audioFreeze, audioUnlock, audioGetKey, audioWallCrash;
+    public AudioClip audioMoveStart, audioMoveLoop, audioMoveEnd;
+
+    public AudioSource moveAudioSource;
 
     bool m_IsBlown = false;
     bool m_Dead = false;
+    bool m_trulyDead = false;
     bool m_HasKey = false;
 
     public bool IsBlown => m_IsBlown;
@@ -47,6 +52,16 @@ public class Agent : MonoBehaviour
     public GOAP.Blackboard WorldState => m_WorldState;
 
     GOAP.WorkingMemory m_WorkingMemory;
+    bool flipped;
+    float startingScale;
+    Vector2 currentFacingDir;
+    float flipXTime = 0.1f;
+    float facingDirTime;
+    bool isMoving;
+    bool moveAudioStarted;
+    bool moveAudioLooping;
+    float dissolveSpeed;
+    float dissolveAmount = 0;
 
     public float DefaultSpeed => m_DefaultSpeed;
     public float Speed => m_CurrentSpeed;
@@ -59,6 +74,7 @@ public class Agent : MonoBehaviour
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
+        startingScale = transform.localScale.x;
 
         m_CurrentSpeed = m_DefaultSpeed;
         m_Planner.Initialize(this);
@@ -74,14 +90,26 @@ public class Agent : MonoBehaviour
         desiredState.Add("HasKey", new GOAP.StateValue<bool>(true));
 
         m_Planner.AddPlanRequest(desiredState);
+
+        currentFacingDir = Vector2.right;
+        flipped = false;
     }
 
     public void Update()
     {
-        if(m_Dead)
+        if (m_Dead)
         {
             // if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
+            // m_Animator.SetBool("isMoving", false);
+            if (m_trulyDead)
+            {
+                m_Animator.SetBool("isDead", true);
+                deadSpriteRenderer.enabled = true;
+                dissolveAmount += Time.deltaTime * dissolveSpeed;
+                m_SpriteRenderer.material.SetFloat("_DissolveAmount", dissolveAmount);
+                deadSpriteRenderer.material.SetFloat("_DissolveAmount", 1-dissolveAmount);
+            }
             return;
         }
 
@@ -92,7 +120,8 @@ public class Agent : MonoBehaviour
             return;
         }
 
-        m_Animator.SetBool("isMoving", GetCurrentPath() != null);
+        isMoving = GetCurrentPath() != null;
+        m_Animator.SetBool("isMoving", isMoving);
 
         GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
 
@@ -110,9 +139,68 @@ public class Agent : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (m_Dead) return;
+        if (isMoving)
+        {
+            if (!moveAudioStarted)
+            {
+                PlaySound(moveAudioSource, audioMoveStart, 0.5f);
+                moveAudioStarted = true;
+            }
+            else if (!moveAudioLooping && !moveAudioSource.isPlaying)
+            {
+                PlaySound(moveAudioSource, audioMoveLoop, 0.5f, true);
+                moveAudioLooping = true;
+            }
+        }
+        else
+        {
+            if (moveAudioStarted && !moveAudioSource.isPlaying)
+            {
+                PlaySound(moveAudioSource, audioMoveEnd, 0.5f);
+                moveAudioStarted = false;
+                moveAudioLooping = false;
+            }
+            if (moveAudioLooping)
+            {
+                PlaySound(moveAudioSource, audioMoveEnd, 0.5f);
+                moveAudioStarted = false;
+                moveAudioLooping = false;
+            }
+        }
+    }
+
+    private void PlaySound(AudioSource audioSource, AudioClip clip, float volume, bool loop = false)
+    {
+        audioSource.volume = volume;
+        audioSource.clip = clip;
+        audioSource.loop = loop;
+        audioSource.Play();
+    }
+
     public void SetDirection(Vector3 direction)
     {
+        Vector2 newDir = direction;
+        newDir.y = 0;
+        newDir.Normalize();
+        if (Vector2.Dot(newDir, currentFacingDir) < -0.01f)
+        {
+            // moving opposite way
+            facingDirTime -= Time.deltaTime;
 
+            if (facingDirTime < 0)
+            {
+                StartCoroutine(FlipXCoroutine(flipXTime));
+                currentFacingDir = newDir;
+                facingDirTime = flipXTime;
+            }
+        }
+        else
+        {
+            facingDirTime = flipXTime;
+        }
     }
 
     public Path GetCurrentPath()
@@ -204,14 +292,15 @@ public class Agent : MonoBehaviour
     {
     }
 
-    public void Die(Vector3 deathPosition, Sprite deathSprite, AudioClipGroup deathSound = null)
+    public void Die(Vector3 deathPosition, Sprite deathSprite, float _dissolveSpeed, AudioClipGroup deathSound = null)
     {
         m_Dead = true;
         m_IsBlown = false;
         m_Rigidbody2D.simulated = false;
         m_Rigidbody2D.isKinematic = true;
+        dissolveSpeed = _dissolveSpeed;
 
-        Debug.Log("Death position " + deathPosition);
+        // Debug.Log("Death position " + deathPosition);
 
         StopAllCoroutines();
 
@@ -231,7 +320,8 @@ public class Agent : MonoBehaviour
         }
 
         Debug.Log("Truly dead");
-        m_SpriteRenderer.sprite = deathSprite;
+        m_trulyDead = true;
+        deadSpriteRenderer.sprite = deathSprite;
 
         if (audio != null)
             audio.PlayOneShot(aSource);
@@ -255,6 +345,36 @@ public class Agent : MonoBehaviour
         m_HasKey = true;
     }
 
+    IEnumerator FlipXCoroutine(float seconds)
+    {
+        float totalTime = seconds;
+        float t = 0;
+        if (flipped)
+        {
+            while (t < totalTime)
+            {
+                float lerp = Mathf.Lerp(-startingScale, startingScale, t / totalTime);
+                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
+                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+
+            while (t < totalTime)
+            {
+                float lerp = Mathf.Lerp(startingScale, -startingScale, t / totalTime);
+                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
+                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+        flipped = !flipped;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") && m_IsBlown)
@@ -262,16 +382,24 @@ public class Agent : MonoBehaviour
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
             m_Fan?.gameObject.SetActive(false);
-
-            // Reevaluate path based on old path
-            m_CurrentPath = m_Pathfinding.FindPath(
-                transform.position, 
-                m_CurrentPath.TargetPosition, 
-                m_CurrentPath.PathQuery,
-                m_CurrentPath.PathCompleteAction);
-
             audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
+            Path resumePath = m_CurrentPath;
+            m_CurrentPath = null;
+            StartCoroutine(ResumeAfterWait(1.0f, resumePath));
         }
+    }
+
+    private IEnumerator ResumeAfterWait(float seconds, Path resumePath)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        // Reevaluate path based on old path
+        m_CurrentPath = m_Pathfinding.FindPath(
+            transform.position,
+            resumePath.TargetPosition,
+            resumePath.PathQuery,
+            resumePath.PathCompleteAction);
+
     }
 }
