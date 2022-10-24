@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   m_Status: {fileID: 11400000, guid: 2e981291c5942f5428e5eee2f340ce35, type: 2}
-  m_Audio: {fileID: 11400000, guid: 68ba1adaca506b642abf24d92d910269, type: 2}
+  shockDieSprite: {fileID: 21300000, guid: a79819c9e071d8f4e9f0e94dd85caa7c, type: 3}

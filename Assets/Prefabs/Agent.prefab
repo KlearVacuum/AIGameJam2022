@@ -60,6 +60,7 @@ MonoBehaviour:
   audioFreeze: {fileID: 11400000, guid: e1cbcb13387368c44bbe10d8bc80de44, type: 2}
   audioUnlock: {fileID: 11400000, guid: e793b861ca7deb540b9a3f5a9a466331, type: 2}
   audioGetKey: {fileID: 11400000, guid: bdc9aba9ead075845b2164035e08b0f6, type: 2}
+  audioWallCrash: {fileID: 11400000, guid: 3ad07a919a87a264d97fe7716bc40373, type: 2}
   m_StatusHandler:
     m_CurrentStatus: {fileID: 11400000, guid: 92b2f309726d2f84f95ffdf11d5fc439, type: 2}
     PreviousStatus: {fileID: 0}
