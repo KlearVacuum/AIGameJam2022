@@ -78,6 +78,20 @@ namespace GOAP
             return effect.Satisfies(m_Precondition);
         }
 
+        public void AddPrecondition(IStateData precondition)
+        {
+            bool preconditionExists =
+                m_Precondition.Conditions.Exists((IStateData stateData) =>
+                {
+                    return stateData.Equals(precondition);
+                });
+
+            if (preconditionExists == false)
+            {
+                m_Precondition.Conditions.Add(precondition);
+            }
+        }
+
         protected void Complete(Blackboard worldState)
         {
             m_ExecutionStatus = ExecutionStatus.Succeeded;

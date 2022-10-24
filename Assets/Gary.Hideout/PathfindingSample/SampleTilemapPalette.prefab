@@ -68,7 +68,7 @@ Tilemap:
       m_TileIndex: 1
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
+      m_TileColorIndex: 8
       m_TileObjectToInstantiateIndex: 0
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
@@ -78,7 +78,7 @@ Tilemap:
       m_TileIndex: 5
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 5
+      m_TileColorIndex: 7
       m_TileObjectToInstantiateIndex: 2
       dummyAlignment: 0
       m_AllTileFlags: 1073741837
@@ -88,7 +88,7 @@ Tilemap:
       m_TileIndex: 7
       m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
-      m_TileColorIndex: 3
+      m_TileColorIndex: 5
       m_TileObjectToInstantiateIndex: 1
       dummyAlignment: 0
       m_AllTileFlags: 1073741837
@@ -204,25 +204,43 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
+  - m_RefCount: 0
+    m_Data:
+      e00: -0.0037957653
+      e01: NaN
+      e02: 1.7834105e+24
+      e03: 0
+      e10: 1.2e-43
+      e11: 1e-45
+      e12: 4.5904e-41
+      e13: 0
+      e20: NaN
+      e21: 0
+      e22: -0.0037957616
+      e23: 0
+      e30: 0
+      e31: 7.34684e-40
+      e32: 1.2e-43
+      e33: 1
   m_TileColorArray:
   - m_RefCount: 2
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  - m_RefCount: 1
-    m_Data: {r: 0.4292453, g: 0.8644456, b: 1, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   - m_RefCount: 0
     m_Data: {r: 3.8754e-41, g: 3.8754e-41, b: 3.8754e-41, a: 3.8754e-41}
-  - m_RefCount: 1
-    m_Data: {r: 0.99338573, g: 1, b: 0.3820755, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   - m_RefCount: 1
     m_Data: {r: 0, g: 0, b: 0, a: 1}
   - m_RefCount: 1
-    m_Data: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
+    m_Data: {r: 0.99338573, g: 1, b: 0.3820755, a: 1}
   - m_RefCount: 1
     m_Data: {r: 0.9245283, g: 0.09158063, b: 0.09158063, a: 1}
-  - m_RefCount: 0
-    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
-  - m_RefCount: 0
-    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
+  - m_RefCount: 1
+    m_Data: {r: 0.69504946, g: 0.9716981, b: 0.66460484, a: 1}
+  - m_RefCount: 1
+    m_Data: {r: 0.4292453, g: 0.8644456, b: 1, a: 1}
   - m_RefCount: 1
     m_Data: {r: 0.6698113, g: 0.66665184, b: 0.66665184, a: 1}
   - m_RefCount: 3
@@ -355,7 +373,7 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &909453309658738749
+--- !u!114 &5236767306004230534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

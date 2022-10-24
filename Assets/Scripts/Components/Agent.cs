@@ -143,6 +143,13 @@ public class Agent : MonoBehaviour
         }
     }
 
+    public void AddActions(List<GOAP.Action> actions)
+    {
+        foreach(GOAP.Action action in actions)
+        {
+            m_Planner.AddAction(action);
+        }
+    }
     public void AddPlanRequest(Dictionary<string, GOAP.IStateValue> desiredState)
     {
         m_Planner.AddPlanRequest(desiredState);
