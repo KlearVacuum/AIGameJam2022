@@ -87,7 +87,7 @@ class Pathfinding
             if(currentNode.Position == targetNode.Position)
             {
                 // Build path
-                path = BuildPath(currentNode);
+                path = BuildPath(currentNode, targetNode.Position);
                 break;
             }
 
@@ -121,7 +121,7 @@ class Pathfinding
         return path;
     }
 
-    private Path BuildPath(Node node)
+    private Path BuildPath(Node node, Vector3 targetPosition)
     {
         List<Path.Node> pathNodes = new List<Path.Node>();
 
@@ -133,7 +133,7 @@ class Pathfinding
 
         pathNodes.Reverse();
 
-        return new Path(pathNodes);
+        return new Path(pathNodes, targetPosition);
     }
 
     private List<Node> GetNeighbours(Node node)

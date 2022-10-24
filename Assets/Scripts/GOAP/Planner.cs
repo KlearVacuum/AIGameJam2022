@@ -10,13 +10,49 @@ namespace GOAP
         [SerializeField] List<Action> m_AvailableActions = new List<Action>();
         [SerializeField] List<Goal> m_AvailableGoals = new List<Goal>();
 
+        Queue<PlanRequest> m_PlanRequests = new Queue<PlanRequest>();
+
+        Plan m_CurrentPlan = null; 
+
         private Agent m_Agent;
-        public Planner(Agent agent)
+
+        public void Initialize(Agent agent)
         {
             m_Agent = agent;
         }
 
-        public Plan Plan(Dictionary<string, IStateValue> desiredState)
+        public void AddPlanRequest(Dictionary<string, IStateValue> desiredState)
+        {
+            m_PlanRequests.Enqueue(new PlanRequest(desiredState));
+        }
+
+        public Plan GetCurrentPlan()
+        {
+            EvaluateCurrentPlan();
+
+            if(m_CurrentPlan == null && m_PlanRequests.Count > 0)
+            {
+                PlanRequest planRequest = m_PlanRequests.Dequeue();
+                m_CurrentPlan = Plan(planRequest.DesiredState);
+            }
+
+            return m_CurrentPlan;
+        }
+
+        private void EvaluateCurrentPlan()
+        {
+            if (m_CurrentPlan == null)
+            {
+                return;
+            }
+
+            if (m_CurrentPlan.IsComplete() || !m_CurrentPlan.IsValid())
+            {
+                m_CurrentPlan = null;
+            }
+        }
+
+        private Plan Plan(Dictionary<string, IStateValue> desiredState)
         {
             Goal bestGoal = GetBestGoal(desiredState);
 
