@@ -14,7 +14,8 @@ public class Agent : MonoBehaviour
 
     [Header("Audio")]
     [HideInInspector] public AudioSource aSource;
-    public AudioClipGroup audioZap, audioZapDie, audioWet, audioSteam, audioBurn, audioBlow, audioFreeze, audioUnlock, audioGetKey;
+    public AudioClipGroup audioZap, audioZapDie, audioWet, audioSteam, audioBurn, audioBlow, 
+                            audioFreeze, audioUnlock, audioGetKey, audioWallCrash;
 
     bool m_IsBlown = false;
     bool m_Dead = false;
@@ -193,6 +194,7 @@ public class Agent : MonoBehaviour
             m_Rigidbody2D.isKinematic = true;
             m_Fan?.gameObject.SetActive(false);
             m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
+            audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
         }
     }

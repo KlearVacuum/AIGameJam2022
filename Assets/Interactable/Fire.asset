@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: 
   m_Status: {fileID: 11400000, guid: 37a9e7d3969b3294e8957e8d114a0694, type: 2}
+  wetSprite: {fileID: 21300000, guid: a554755114f932f4c93dbaf7d5a71083, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 2391abdb399eecd4ba86ba5474a73b18, type: 3}
