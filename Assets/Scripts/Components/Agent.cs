@@ -34,6 +34,7 @@ public class Agent : MonoBehaviour
 
     [Header("Spatial Properties")]
     [SerializeField] Tilemap m_Tilemap;
+    public Tilemap Tilemap => m_Tilemap;
 
     // Temporary for testing purposes
     [SerializeField] GameObject m_Target;
@@ -80,7 +81,7 @@ public class Agent : MonoBehaviour
     {
         if(m_Dead)
         {
-            if(m_Dead) Debug.Log("Dead");
+            // if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
             return;
         }
@@ -119,15 +120,31 @@ public class Agent : MonoBehaviour
             m_CurrentPath = m_Pathfinding.FindPath(
                 transform.position, 
                 pathRequest.TargetPosition, 
+                pathRequest.PathQuery,
                 pathRequest.PathCompleteAction);
         }
 
         return m_CurrentPath;
     }
 
-    public void AddPathRequest(Vector3 targetPosition, Action<Agent> pathCompleteAction)
+    public void AddPathRequest(Vector3 targetPosition, PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
-        m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition, pathCompleteAction));
+        m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition, pathQuery, pathCompleteAction));
+    }
+    public bool AddPathRequestToClosestTileOfType<T>(PathQuery pathQuery, Action<Agent> pathCompleteAction)
+    {
+        Path.Request pathRequest = m_Pathfinding.GeneratePathRequestToClosestTileOfType<T>(
+            transform.position, 
+            pathQuery, 
+            pathCompleteAction);
+
+        if(pathRequest != null)
+        {
+            m_PathPlanningRequests.Enqueue(pathRequest);
+            return true;
+        }
+
+        return false;
     }
 
     private void EvaluateCurrentPath()
@@ -178,6 +195,10 @@ public class Agent : MonoBehaviour
     public void SetFan(Fan fan)
     {
         m_Fan = fan;
+    }
+
+    public void GetPathToClosestPosition(List<Vector3> positions)
+    {
     }
 
     public void Die(Vector3 deathPosition, Sprite deathSprite, AudioClipGroup deathSound = null)
@@ -243,6 +264,7 @@ public class Agent : MonoBehaviour
             m_CurrentPath = m_Pathfinding.FindPath(
                 transform.position, 
                 m_CurrentPath.TargetPosition, 
+                m_CurrentPath.PathQuery,
                 m_CurrentPath.PathCompleteAction);
 
             audioWallCrash.PlayOneShot(aSource);

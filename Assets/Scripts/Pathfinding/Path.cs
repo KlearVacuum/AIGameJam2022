@@ -13,9 +13,13 @@ public class Path
 
         public Action<Agent> PathCompleteAction => m_PathCompleteAction;
 
-        public Request(Vector3 targetPosition, Action<Agent> pathCompleteAction)
+        PathQuery m_PathQuery;
+        public PathQuery PathQuery => m_PathQuery;
+
+        public Request(Vector3 targetPosition, PathQuery pathQuery, Action<Agent> pathCompleteAction)
         {
             m_TargetPosition = targetPosition;
+            m_PathQuery = pathQuery;
             m_PathCompleteAction = pathCompleteAction;
         }
     }
@@ -42,11 +46,19 @@ public class Path
     int m_CurrentNodeIndex = 0;
     public bool Completed => m_CurrentNodeIndex >= m_Nodes.Count;
 
-    public Path(List<Node> nodes, Vector3 targetPosition, Action<Agent> pathCompleteAction)
+    private PathQuery m_PathQuery;
+    public PathQuery PathQuery => m_PathQuery;
+
+    private float m_PathCost;
+    public float Cost => m_PathCost;
+
+    public Path(List<Node> nodes, Vector3 targetPosition, float pathCost, PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
         m_Nodes = nodes;
         m_TargetPosition = targetPosition;
+        m_PathQuery = pathQuery;
         m_PathCompleteAction = pathCompleteAction;
+        m_PathCost = pathCost;
     }
 
     public Node GetCurrentNode()

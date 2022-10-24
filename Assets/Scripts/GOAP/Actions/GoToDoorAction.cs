@@ -12,7 +12,14 @@ class GoToDoorAction : GOAP.Action
 
         Debug.Assert(door != null, "There is no door in the world!");
 
-        agent.AddPathRequest(door.transform.position, (Agent agent) =>
+        PathQuery pathQuery = new PathQuery();
+
+        if(m_Precondition.Contains("IsWet", true))
+        {
+            pathQuery.AddFilter<FireplaceTile>();
+        }
+
+        agent.AddPathRequest(door.transform.position, pathQuery, (Agent agent) =>
         {
             Complete(agent.WorldState);
         });

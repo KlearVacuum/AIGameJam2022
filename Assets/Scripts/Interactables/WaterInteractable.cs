@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaterInteractable : Interactable
 {
     public Sprite shockDieSprite;
+
     public override void Interact(Agent agent, Vector3 tilePosition)
     {
         Debug.Log("Touched water");

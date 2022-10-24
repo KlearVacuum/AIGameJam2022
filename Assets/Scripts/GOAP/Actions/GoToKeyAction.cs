@@ -12,7 +12,14 @@ class GoToKeyAction : GOAP.Action
 
         Debug.Assert(key != null, "There is no key in the world!");
 
-        agent.AddPathRequest(key.transform.position, (Agent agent) =>
+        PathQuery pathQuery = new PathQuery();
+
+        if (m_Precondition.Contains("IsWet", true))
+        {
+            pathQuery.AddFilter<FireplaceTile>();
+        }
+
+        agent.AddPathRequest(key.transform.position, pathQuery, (Agent agent) =>
         {
             Complete(agent.WorldState);
         });
@@ -27,11 +34,6 @@ class GoToKeyAction : GOAP.Action
         {
             Vector3 newPosition = path.Update(agent);
             agent.transform.position = newPosition;
-
-            if(path.Completed)
-            {
-                Complete(agent.WorldState);
-            }
         }
     }
 

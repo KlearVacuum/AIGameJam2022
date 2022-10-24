@@ -21,6 +21,9 @@ class Pathfinding
 
         public int HCost => m_HCost;
 
+        private PathfindingTile m_Tile;
+        public PathfindingTile Tile => m_Tile;
+
         public void SetHCost(int hCost) => m_HCost = hCost;
         public void SetGCost(int gCost) => m_GCost = gCost;
 
@@ -34,9 +37,10 @@ class Pathfinding
 
         public int FCost => m_GCost + m_HCost;
 
-        public Node(Vector3Int position)
+        public Node(Vector3Int position, PathfindingTile tile)
         {
             m_Position = position;
+            m_Tile = tile;
         }
 
         public int CompareTo(Node otherNode)
@@ -59,13 +63,16 @@ class Pathfinding
         m_Tilemap = tilemap;
     }
 
-    public Path FindPath(Vector3 startPosition, Vector3 endPosition, Action<Agent> pathCompleteAction)
+    public Path FindPath(Vector3 startPosition, Vector3 endPosition, PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
         Vector3Int startCellPosition = m_Tilemap.WorldToCell(startPosition);
         Vector3Int endCellPosition = m_Tilemap.WorldToCell(endPosition);
 
-        Debug.Assert(m_Tilemap.GetTile(startCellPosition) != null, "Start tile is invalid!");
-        Debug.Assert(m_Tilemap.GetTile(endCellPosition) != null, "End tile is invalid!");
+        PathfindingTile startTile = m_Tilemap.GetTile(startCellPosition) as PathfindingTile;
+        PathfindingTile endTile = m_Tilemap.GetTile(endCellPosition) as PathfindingTile;
+
+        Debug.Assert(startTile != null, "Start tile is invalid!");
+        Debug.Assert(endTile != null, "End tile is invalid!");
 
         TileBase[] allTiles = m_Tilemap.GetTilesBlock(m_Tilemap.cellBounds);
 
@@ -73,8 +80,8 @@ class Pathfinding
         HashSet<Vector3Int> closedList = new HashSet<Vector3Int>();
         Heap<Node> openList = new Heap<Node>(allTiles.Length);
 
-        Node startNode = new Node(startCellPosition);
-        Node targetNode = new Node(endCellPosition);
+        Node startNode = new Node(startCellPosition, startTile);
+        Node targetNode = new Node(endCellPosition, endTile);
         Path path = null;
 
         costTable[startCellPosition] = 0;
@@ -87,7 +94,7 @@ class Pathfinding
             if(currentNode.Position == targetNode.Position)
             {
                 // Build path
-                path = BuildPath(currentNode, targetNode.Position, pathCompleteAction);
+                path = BuildPath(currentNode, targetNode.Position, pathQuery, pathCompleteAction);
                 break;
             }
 
@@ -95,7 +102,7 @@ class Pathfinding
 
             int currentNodeGCost = costTable[currentNode.Position];
 
-            foreach(Node neighbourNode in GetNeighbours(currentNode))
+            foreach(Node neighbourNode in GetNeighbours(currentNode, pathQuery))
             {
                 if(closedList.Contains(neighbourNode.Position))
                 {
@@ -103,7 +110,9 @@ class Pathfinding
                 }
 
                 Vector3Int neighbourPosition = neighbourNode.Position;
-                int newGCost = currentNodeGCost + GetHeuristic(currentNode, neighbourNode);
+
+                int newGCost = 
+                    currentNodeGCost + GetHeuristic(currentNode, neighbourNode);
                 int currentNeighbourGCost = 
                     costTable.ContainsKey(neighbourPosition) ? costTable[neighbourPosition] : int.MaxValue;
 
@@ -121,9 +130,63 @@ class Pathfinding
         return path;
     }
 
-    private Path BuildPath(Node node, Vector3 targetPosition, Action<Agent> pathCompleteAction)
+    public Path.Request GeneratePathRequestToClosestTileOfType<T>(
+        Vector3 currentPosition, 
+        PathQuery pathQuery, 
+        Action<Agent> pathCompleteAction)
+    {
+        Vector3Int tileStartPos = m_Tilemap.WorldToCell(currentPosition);
+        PathfindingTile startTile = m_Tilemap.GetTile(tileStartPos) as PathfindingTile;
+
+        Debug.Assert(startTile != null, "Start tile is invalid!");
+
+        Queue<Node> openList = new Queue<Node>();
+        HashSet<Vector3Int> closedList = new HashSet<Vector3Int>();
+
+        Node startNode = new Node(tileStartPos, startTile);
+        Node bestNode = null;
+
+        openList.Enqueue(startNode);
+
+        while(openList.Count > 0)
+        {
+            Node currentNode = openList.Dequeue();
+
+            closedList.Add(currentNode.Position);
+
+            foreach (Node neighbourNode in GetNeighbours(currentNode, pathQuery))
+            {
+                if(closedList.Contains(neighbourNode.Position))
+                {
+                    continue;
+                }
+
+                if(neighbourNode.Tile.GetType() == typeof(T))
+                {
+                    bestNode = neighbourNode;
+                    break;
+                }
+                else
+                {
+                    openList.Enqueue(neighbourNode);
+                }
+            }
+        }
+
+        Path.Request pathRequest = null;
+
+        if(bestNode != null)
+        {
+            pathRequest = new Path.Request(bestNode.Position, pathQuery, pathCompleteAction);
+        }
+
+        return pathRequest;
+    }
+
+    private Path BuildPath(Node node, Vector3 targetPosition, PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
         List<Path.Node> pathNodes = new List<Path.Node>();
+        float pathCost = node.FCost;
 
         do
         {
@@ -133,10 +196,10 @@ class Pathfinding
 
         pathNodes.Reverse();
 
-        return new Path(pathNodes, targetPosition, pathCompleteAction);
+        return new Path(pathNodes, targetPosition, pathCost, pathQuery, pathCompleteAction);
     }
 
-    private List<Node> GetNeighbours(Node node)
+    private List<Node> GetNeighbours(Node node, PathQuery pathQuery)
     {
         List<Node> neighbours = new List<Node>();
 
@@ -157,9 +220,11 @@ class Pathfinding
                 Vector3Int neighbourPos = new Vector3Int(node.Position.x + x, node.Position.y + y);
                 PathfindingTile neighbourTile = m_Tilemap.GetTile(neighbourPos) as PathfindingTile;
 
-                if (neighbourTile != null && neighbourTile.IsWalkable)
+                if (neighbourTile != null && neighbourTile.IsWalkable && pathQuery.PassFilter(neighbourTile))
                 {
-                    Node neighbourNode = new Node(neighbourPos);
+                    Node neighbourNode = new Node(neighbourPos, neighbourTile);
+
+                    Debug.Log($"Type of tile : {neighbourTile.GetType()}");
 
                     neighbourNode.SetParent(node);
                     neighbours.Add(neighbourNode);
