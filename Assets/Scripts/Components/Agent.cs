@@ -26,7 +26,6 @@ public class Agent : MonoBehaviour
     [SerializeField] FrozenStatus m_FrozenStatus;
     public Status Status => m_StatusHandler.CurrentStatus;
 
-
     [Header("Spatial Properties")]
     [SerializeField] Tilemap m_Tilemap;
 
@@ -37,6 +36,14 @@ public class Agent : MonoBehaviour
     [SerializeField] float m_DefaultSpeed;
     float m_CurrentSpeed;
 
+    [Header("Planner")]
+    [SerializeField] GOAP.Blackboard m_WorldState = new GOAP.Blackboard();
+    public GOAP.Blackboard WorldState => m_WorldState;
+
+    GOAP.Plan m_CurrentPlan;
+    GOAP.Planner m_Planner;
+    GOAP.WorkingMemory m_WorkingMemory;
+
     public float DefaultSpeed => m_DefaultSpeed;
     public float Speed => m_CurrentSpeed;
 
@@ -44,6 +51,9 @@ public class Agent : MonoBehaviour
     {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+
+
+        m_Planner = new GOAP.Planner(this);
 
         m_CurrentSpeed = m_DefaultSpeed;
 
