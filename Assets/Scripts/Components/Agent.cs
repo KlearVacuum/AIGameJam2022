@@ -166,12 +166,9 @@ public class Agent : MonoBehaviour
         }
     }
 
-    public void AddActions(List<GOAP.Action> actions)
+    public void AssignActions(List<GOAP.Action> actions)
     {
-        foreach(GOAP.Action action in actions)
-        {
-            m_Planner.AddAction(action);
-        }
+        m_Planner.AssignActions(actions);
     }
     public void AddPlanRequest(Dictionary<string, GOAP.IStateValue> desiredState)
     {

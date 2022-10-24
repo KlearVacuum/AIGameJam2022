@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActionNode : MonoBehaviour
 {
     [SerializeField] GOAP.Action m_Action;
+    List<ConditionNode> m_ConditionNodes = new List<ConditionNode>(); 
 
     private void Awake()
     {
@@ -13,11 +14,18 @@ public class ActionNode : MonoBehaviour
 
     public void AddCondition(ConditionNode conditionNode)
     {
-        m_Action.AddPrecondition(conditionNode.GetCondition());
+        m_ConditionNodes.Add(conditionNode);
     }
 
     public GOAP.Action GetAction()
     {
-        return Instantiate(m_Action);
+        GOAP.Action newAction = Instantiate(m_Action);
+
+        foreach (ConditionNode conditionNode in m_ConditionNodes)
+        {
+            newAction.AddPrecondition(conditionNode.GetCondition());    
+        }
+
+        return newAction;
     }
 }

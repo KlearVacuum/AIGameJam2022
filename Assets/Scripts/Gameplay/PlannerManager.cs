@@ -49,6 +49,6 @@ public class PlannerManager : MonoBehaviour
             actions.Add(actionNode.GetAction());
         }
 
-        m_Agent.AddActions(actions);
+        m_Agent.AssignActions(actions);
     }
 }
