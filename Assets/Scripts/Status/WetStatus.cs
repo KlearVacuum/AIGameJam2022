@@ -11,6 +11,7 @@ public class WetStatus : Status
         switch(otherStatus)
         {
             case DefaultStatus:
+            case BurnStatus:
             case ShockedStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {

@@ -20,13 +20,11 @@ public class FireInteractable : Interactable
             {
                 Debug.Log("frozen to wet");
                 agent.audioSteam.PlayOneShot(agent.aSource);
-                // agent.SetSprite(wetSprite);
             }
             else if (agent.Status is WetStatus)
             {
-                Debug.Log("wet to default");
+                Debug.Log("wet to default"); 
                 agent.audioSteam.PlayOneShot(agent.aSource);
-                // agent.SetSprite(defaultSprite);
             }
             agent.ApplyStatus(m_Status);
         }
