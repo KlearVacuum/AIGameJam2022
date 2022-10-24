@@ -52,6 +52,19 @@ namespace GOAP
             return true;
         }
 
+        public bool Contains<T>(string key, T value) where T : struct
+        {
+            foreach(IStateData condition in m_Conditions)
+            {
+                if(condition.Key == key)
+                {
+                    return IStateData.Get<T>(condition).Equals(value);
+                }
+            }
+
+            return false;
+        }
+
         private bool CompareStateValueToWorldState<T>(IStateData state, Blackboard worldState)
         {
             StateData<T> data = state as StateData<T>;
