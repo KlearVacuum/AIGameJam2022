@@ -24,7 +24,6 @@ public class AudioClipGroup : ScriptableObject
     {
         if (Time.time >= m_lastPlayedTime && Time.time - m_lastPlayedTime < m_minInterval) return;
         float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
-        if (distance > maxDistance) return;
 
         m_lastPlayedTime = Time.time;
         audioSource.pitch = Random.Range(m_pitchVariance.x, m_pitchVariance.y);
@@ -46,6 +45,10 @@ public class AudioClipGroup : ScriptableObject
                 // Sound source is on the left
                 audioSource.panStereo = -ratio;
             }
+        }
+        else
+        {
+            volume = m_volume;
         }
         audioSource.PlayOneShot(m_clips[Random.Range(0, m_clips.Count)], volume);
     }

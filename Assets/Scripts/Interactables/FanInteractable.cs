@@ -28,6 +28,7 @@ public class FanInteractable : Interactable
             agent.SetCoroutine(MoveAgentToWindPosition(agent, m_FanTile.GetWindPosition()));
         }
 
+        agent.audioBlow.PlayOneShot(agent.aSource);
         agent.SetIsBlown(true);
         agent.SetFan(m_FanTile.Fan);
         agent.Stop();

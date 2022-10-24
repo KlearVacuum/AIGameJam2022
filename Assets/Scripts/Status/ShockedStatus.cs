@@ -18,6 +18,7 @@ public class ShockedStatus : Status
             case DefaultStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
+                    agent.audioZap.PlayOneShot(agent.aSource);
                     SpeedBoost speedBoost = agent.gameObject.AddComponent<SpeedBoost>();
                     speedBoost.Initialize(agent, m_DefaultStatus, m_SpeedBoostDuration, m_SpeedBoostAmount);
                     agent.SetSprite(m_Sprite);
