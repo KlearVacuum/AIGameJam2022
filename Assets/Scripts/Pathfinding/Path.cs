@@ -80,6 +80,8 @@ public class Path
 
         if(currentNode != null)
         {
+            Vector3 direction = currentNode.Position - agentPosition;
+            agent.SetDirection(direction);
             agentPosition = Vector3.MoveTowards(agentPosition, currentNode.Position, agent.Speed * Time.deltaTime);
 
             Debug.DrawLine(agentPosition, currentNode.Position, Color.red, 1f);

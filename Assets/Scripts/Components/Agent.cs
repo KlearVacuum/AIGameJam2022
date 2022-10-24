@@ -12,6 +12,7 @@ public class Agent : MonoBehaviour
     Pathfinding m_Pathfinding = new Pathfinding();
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
+    Animator m_Animator;
 
     [Header("Audio")]
     [HideInInspector] public AudioSource aSource;
@@ -36,9 +37,6 @@ public class Agent : MonoBehaviour
     [SerializeField] Tilemap m_Tilemap;
     public Tilemap Tilemap => m_Tilemap;
 
-    // Temporary for testing purposes
-    [SerializeField] GameObject m_Target;
-
     [Header("Movement Properties")]
     [SerializeField] float m_DefaultSpeed;
     float m_CurrentSpeed;
@@ -58,6 +56,7 @@ public class Agent : MonoBehaviour
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         aSource = GetComponent<AudioSource>();
+        m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
 
@@ -93,6 +92,8 @@ public class Agent : MonoBehaviour
             return;
         }
 
+        m_Animator.SetBool("isMoving", GetCurrentPath() != null);
+
         GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
 
         if(currentPlan != null)
@@ -107,6 +108,11 @@ public class Agent : MonoBehaviour
 
             currentPlan.Execute(this);
         }
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+
     }
 
     public Path GetCurrentPath()
