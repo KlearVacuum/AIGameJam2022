@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConditionNode : MonoBehaviour
+public class ConditionNode : ScriptableObject
 {
     [SerializeField] GOAP.IStateData m_Condition;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_Condition = Instantiate(m_Condition);
     }

@@ -5,16 +5,15 @@ using UnityEngine;
 public class ActionNode : MonoBehaviour
 {
     [SerializeField] GOAP.Action m_Action;
-    List<ConditionNode> m_ConditionNodes = new List<ConditionNode>(); 
+    [SerializeField] ConditionNodeList m_ConditionNodeList;
+    
+    ConditionNode m_SelectedConditioNode = null;
+
+
 
     private void Awake()
     {
         m_Action = Instantiate(m_Action);
-    }
-
-    public void AddCondition(ConditionNode conditionNode)
-    {
-        m_ConditionNodes.Add(conditionNode);
     }
 
     public GOAP.Action GetAction()
