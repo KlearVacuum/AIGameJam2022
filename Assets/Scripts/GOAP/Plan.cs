@@ -53,6 +53,7 @@ namespace GOAP
                     case Action.ExecutionStatus.None:
                         {
                             currentAction.NotifyExecuting();
+                            currentAction.Initialize(agent);
                             goto case Action.ExecutionStatus.Executing;
                         }
                     case Action.ExecutionStatus.Executing:
@@ -64,6 +65,8 @@ namespace GOAP
                         {
                             if (m_Goal.IsSatisfiedBy(currentAction.GetEffect()))
                             {
+                                currentAction.Exit(agent);
+                                Debug.Log("Exit Action");
                                 m_ExecutionStatus = ExecutionStatus.Succeeded;
                             }
                             else

@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class Agent : MonoBehaviour
 {
     Path m_CurrentPath;
+    Queue<Path.Request> m_PathPlanningRequests = new Queue<Path.Request>();
 
     Pathfinding m_Pathfinding = new Pathfinding();
     SpriteRenderer m_SpriteRenderer;
@@ -42,11 +43,10 @@ public class Agent : MonoBehaviour
     float m_CurrentSpeed;
 
     [Header("Planner")]
+    [SerializeField] GOAP.Planner m_Planner;
     [SerializeField] GOAP.Blackboard m_WorldState = new GOAP.Blackboard();
     public GOAP.Blackboard WorldState => m_WorldState;
 
-    GOAP.Plan m_CurrentPlan;
-    GOAP.Planner m_Planner;
     GOAP.WorkingMemory m_WorkingMemory;
 
     public float DefaultSpeed => m_DefaultSpeed;
@@ -58,19 +58,22 @@ public class Agent : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         aSource = GetComponent<AudioSource>();
 
-
-        m_Planner = new GOAP.Planner(this);
+        Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
 
         m_CurrentSpeed = m_DefaultSpeed;
-
-        Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
+        m_Planner.Initialize(this);
+        m_WorldState.Initialize();
     }
 
     void Start()
     {
         Debug.Assert(m_Tilemap != null, "Agent has no assigned tilemap!");
-
         m_Pathfinding.Initialize(m_Tilemap);
+
+        Dictionary<string, GOAP.IStateValue> desiredState = new Dictionary<string, GOAP.IStateValue>();
+        desiredState.Add("HasKey", new GOAP.StateValue<bool>(true));
+
+        m_Planner.AddPlanRequest(desiredState);
     }
 
     public void Update()
@@ -84,28 +87,70 @@ public class Agent : MonoBehaviour
 
         m_StatusHandler.Update(this);
 
-        if (Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
+        GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
+
+        if(currentPlan != null)
         {
-            m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
+            GOAP.Action currentAction = currentPlan.GetCurrentAction();
+
+            if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
+                currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
+            {
+                Debug.Log($"Executing {currentAction.GetName()}");
+            }
+
+            currentPlan.Execute(this);
+        }
+        //if (Input.GetKeyDown(KeyCode.Space) && m_CurrentPath == null)
+        //{
+        //    m_CurrentPath = m_Pathfinding.FindPath(transform.position, m_Target.transform.position);
+        //}
+
+        //if(m_CurrentPath != null && !m_CurrentPath.Completed)
+        //{
+        //    transform.position = m_CurrentPath.Update(this);
+        //}
+    }
+
+    public Path GetCurrentPath()
+    {
+        EvaluateCurrentPath();
+
+        if(m_PathPlanningRequests.Count > 0)
+        {
+            Path.Request pathRequest = m_PathPlanningRequests.Dequeue();
+            m_CurrentPath = m_Pathfinding.FindPath(transform.position, pathRequest.TargetPosition);
         }
 
-        if(m_CurrentPath != null && !m_CurrentPath.Completed)
+        return m_CurrentPath;
+    }
+
+    public void AddPathRequest(Vector3 targetPosition)
+    {
+        m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition));
+    }
+
+    private void EvaluateCurrentPath()
+    {
+        if(m_CurrentPath == null)
         {
-            transform.position = m_CurrentPath.Update(this);
+            return;
         }
+
+        if(m_CurrentPath.Completed)
+        {
+            m_CurrentPath = null;
+        }
+    }
+
+    public void AddPlanRequest(Dictionary<string, GOAP.IStateValue> desiredState)
+    {
+        m_Planner.AddPlanRequest(desiredState);
     }
 
     public void ApplyStatus(Status newStatus)
     {
         m_StatusHandler.QueueStatus(newStatus);
-
-        // Status effect is null when a "bad" transition occurs e.g. Wet -> Wet / Frozen -> Wet
-        //StatusEffect statusEffect = m_StatusHandler.TransitionTo(newStatus);
-
-        //if(statusEffect != null)
-        //{
-        //    statusEffect.Apply(this);
-        //}
     }
 
     public void SetSprite(Sprite sprite)

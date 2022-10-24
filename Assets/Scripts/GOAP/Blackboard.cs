@@ -40,11 +40,6 @@ namespace GOAP
             {
                 m_States.Add(state.Key, state.GetStateValue());
             }
-            //foreach(State state in m_StateList)
-            //{
-            //    Debug.Assert(m_States.ContainsKey(state.Key) == false, "Duplicate state found: " + state.Key);
-            //    m_States.Add(state.Key, state.Value);
-            //}
         }
 
         public T GetStateValue<T>(string stateKey)

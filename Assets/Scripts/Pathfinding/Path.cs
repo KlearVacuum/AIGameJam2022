@@ -1,8 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-class Path
+public class Path
 {
+    public class Request
+    {
+        Vector3 m_TargetPosition;
+        public Vector3 TargetPosition => m_TargetPosition;
+
+        public Request(Vector3 targetPosition)
+        {
+            m_TargetPosition = targetPosition;
+        }
+    }
+
     public class Node
     {
         private Vector3 m_Position;
@@ -14,13 +25,17 @@ class Path
         }
     }
 
+    Vector3 m_TargetPosition;
+    public Vector3 TargetPosition => m_TargetPosition;
+
     List<Node> m_Nodes;
     int m_CurrentNodeIndex = 0;
     public bool Completed => m_CurrentNodeIndex >= m_Nodes.Count;
 
-    public Path(List<Node> nodes)
+    public Path(List<Node> nodes, Vector3 targetPosition)
     {
         m_Nodes = nodes;
+        m_TargetPosition = targetPosition;
     }
 
     public Node GetCurrentNode()
