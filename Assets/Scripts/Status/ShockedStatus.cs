@@ -22,6 +22,7 @@ public class ShockedStatus : Status
                     speedBoost.Initialize(agent, m_DefaultStatus, m_SpeedBoostDuration, m_SpeedBoostAmount);
                     agent.SetSprite(m_Sprite);
                     agent.SetLightColor(m_LightColor);
+                    agent.FlashColor(0.25f, m_LightColor);
                 });
                 break;
         }

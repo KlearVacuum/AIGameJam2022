@@ -120,8 +120,11 @@ public class Agent : MonoBehaviour
             // if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
             // m_Animator.SetBool("isMoving", false);
+            Camera.main.GetComponent<CameraScript>().SetCam(transform, 25f, new Vector3(0, 0, -10));
+
             if (m_trulyDead)
             {
+                isMoving = false;
                 m_Animator.SetBool("isDead", true);
                 deadSpriteRenderer.enabled = true;
                 dissolveAmount += Time.deltaTime * dissolveSpeed;
@@ -140,6 +143,12 @@ public class Agent : MonoBehaviour
 
         isMoving = GetCurrentPath() != null;
         m_Animator.SetBool("isMoving", isMoving);
+
+        float materialColorIntensity = m_SpriteRenderer.material.GetFloat("_AddColorIntensity");
+        if (materialColorIntensity > 0)
+        {
+            m_SpriteRenderer.material.SetFloat("_AddColorIntensity", materialColorIntensity -= Time.deltaTime * 0.75f);
+        }
 
         if (!manualControl)
         {
@@ -165,7 +174,6 @@ public class Agent : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_Dead) return;
         if (isMoving)
         {
             if (!moveAudioStarted)
@@ -202,6 +210,12 @@ public class Agent : MonoBehaviour
         audioSource.clip = clip;
         audioSource.loop = loop;
         audioSource.Play();
+    }
+
+    public void FlashColor(float amount, Color color)
+    {
+        m_SpriteRenderer.material.SetColor("_AddColor", color);
+        m_SpriteRenderer.material.SetFloat("_AddColorIntensity", amount);
     }
 
     public void SetDirection(Vector3 direction)

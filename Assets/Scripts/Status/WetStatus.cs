@@ -17,6 +17,7 @@ public class WetStatus : Status
                 {
                     agent.SetSprite(m_Sprite);
                     agent.SetLightColor(m_LightColor);
+                    agent.FlashColor(0.5f, m_LightColor);
                     // Other effects..
                 });
                 break;

@@ -39,8 +39,13 @@ public class CameraScript : MonoBehaviour
             transform.position = newPos;
         }
 
-        float newFOV = Mathf.Lerp(cam.fieldOfView, desiredFOV, 0.5f);
-        cam.fieldOfView = Mathf.Abs(newFOV - cam.fieldOfView) < 0.05f ? newFOV : cam.fieldOfView + Mathf.Sign(newFOV - cam.fieldOfView) * FOVChangeSpeed * Time.deltaTime;
+        if (Mathf.Abs(desiredFOV - cam.fieldOfView) < 0.2f) return;
+        else
+        {
+            float newFOV = Mathf.Lerp(cam.fieldOfView, desiredFOV, Time.deltaTime);
+            float abs = Mathf.Abs(newFOV - cam.fieldOfView);
+            cam.fieldOfView = abs > 10f ? cam.fieldOfView + Mathf.Sign(newFOV - cam.fieldOfView) * FOVChangeSpeed * Time.deltaTime : newFOV;
+        }
     }
 
     public void SetCam(Transform _target, float _FOV, Vector3 _offset)
