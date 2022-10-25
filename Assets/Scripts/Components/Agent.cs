@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class Agent : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class Agent : MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
     Animator m_Animator;
+    Light2D m_GlowLight;
+    
     public SpriteRenderer deadSpriteRenderer;
 
     [Header("Audio")]
@@ -45,6 +49,15 @@ public class Agent : MonoBehaviour
     [Header("Movement Properties")]
     [SerializeField] float m_DefaultSpeed;
     float m_CurrentSpeed;
+    [SerializeField] KeyCode m_ManualControlKey;
+    [SerializeField] bool manualControl;
+    public int startingControlChips;
+    int remainingControlChips;
+    public float manualControlTime;
+    float currentControlTime;
+
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI itemsUI;
 
     [Header("Planner")]
     [SerializeField] GOAP.Planner m_Planner;
@@ -72,6 +85,7 @@ public class Agent : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         aSource = GetComponent<AudioSource>();
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
+        m_GlowLight = GetComponentInChildren<Light2D>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
         startingScale = transform.localScale.x;
@@ -93,6 +107,10 @@ public class Agent : MonoBehaviour
 
         currentFacingDir = Vector2.right;
         flipped = false;
+        manualControl = false;
+        remainingControlChips = startingControlChips;
+
+        UpdateItemsUI();
     }
 
     public void Update()
@@ -123,20 +141,26 @@ public class Agent : MonoBehaviour
         isMoving = GetCurrentPath() != null;
         m_Animator.SetBool("isMoving", isMoving);
 
-        GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
-
-        if(currentPlan != null)
+        if (!manualControl)
         {
-            GOAP.Action currentAction = currentPlan.GetCurrentAction();
+            // GOAP
+            GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
 
-            if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
-                currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
+            if (currentPlan != null)
             {
-                // Debug.Log($"Executing {currentAction.GetName()}");
-            }
+                GOAP.Action currentAction = currentPlan.GetCurrentAction();
 
-            currentPlan.Execute(this);
+                if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
+                    currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
+                {
+                    // Debug.Log($"Executing {currentAction.GetName()}");
+                }
+
+                currentPlan.Execute(this);
+            }
         }
+
+        ManualControl();
     }
 
     private void FixedUpdate()
@@ -200,6 +224,38 @@ public class Agent : MonoBehaviour
         else
         {
             facingDirTime = flipXTime;
+        }
+    }
+
+    private void ManualControl()
+    {
+        if (Input.GetKeyDown(m_ManualControlKey))
+        {
+            if (remainingControlChips > 0)
+            {
+                remainingControlChips--;
+                manualControl = true;
+                currentControlTime = manualControlTime;
+                UpdateItemsUI();
+            }
+        }
+        if (currentControlTime > 0)
+        {
+            Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0).normalized;
+            SetDirection(direction);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, m_CurrentSpeed * Time.deltaTime);
+
+            Debug.DrawLine(transform.position, transform.position + direction, Color.green, 1f);
+            currentControlTime -= Time.deltaTime;
+
+            if (currentControlTime <= 0)
+            {
+                // end manual control
+                manualControl = false;
+                // Gary: re-enable AI here, GOAP manual planning
+
+                UpdateItemsUI();
+            }
         }
     }
 
@@ -273,6 +329,11 @@ public class Agent : MonoBehaviour
         m_SpriteRenderer.sprite = sprite;
     }
 
+    public void SetLightColor(Color color)
+    {
+        m_GlowLight.color = color;
+    }
+
     public void SetSpeed(float newSpeed)
     {
         m_CurrentSpeed = newSpeed;
@@ -343,6 +404,17 @@ public class Agent : MonoBehaviour
     public void PickupKey()
     {
         m_HasKey = true;
+        UpdateItemsUI();
+    }
+
+    private void UpdateItemsUI()
+    {
+        itemsUI.text = "Key Obtained: " + m_HasKey + "\n" 
+                            + "Override Chips: " + remainingControlChips;
+        if (manualControl)
+        {
+            itemsUI.text += "\n\n" + "OVERRIDE ACTIVE";
+        }
     }
 
     IEnumerator FlipXCoroutine(float seconds)

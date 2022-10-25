@@ -16,6 +16,7 @@ public class WetStatus : Status
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
                     agent.SetSprite(m_Sprite);
+                    agent.SetLightColor(m_LightColor);
                     // Other effects..
                 });
                 break;

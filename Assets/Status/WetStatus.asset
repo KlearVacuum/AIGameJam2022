@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: WetStatus
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: a554755114f932f4c93dbaf7d5a71083, type: 3}
+  m_LightColor: {r: 0.43173724, g: 0.68230885, b: 0.9245283, a: 1}

@@ -21,6 +21,7 @@ public class ShockedStatus : Status
                     SpeedBoost speedBoost = agent.gameObject.AddComponent<SpeedBoost>();
                     speedBoost.Initialize(agent, m_DefaultStatus, m_SpeedBoostDuration, m_SpeedBoostAmount);
                     agent.SetSprite(m_Sprite);
+                    agent.SetLightColor(m_LightColor);
                 });
                 break;
         }

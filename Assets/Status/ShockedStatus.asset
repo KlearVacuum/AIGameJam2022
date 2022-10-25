@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShockedStatus
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 14b9a2f3947a9c0408f99c8340a17ddd, type: 3}
+  m_LightColor: {r: 0.9622642, g: 0.9541019, b: 0.35857958, a: 1}
   m_DefaultStatus: {fileID: 11400000, guid: 92b2f309726d2f84f95ffdf11d5fc439, type: 2}
-  m_SpeedBoostDuration: 1
-  m_SpeedBoostAmount: 5
+  m_SpeedBoostDuration: 2
+  m_SpeedBoostAmount: 2.5

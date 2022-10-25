@@ -74,6 +74,11 @@ MonoBehaviour:
   m_FrozenStatus: {fileID: 11400000, guid: 3657ab37d1c669b4fa78b0d729990f6c, type: 2}
   m_Tilemap: {fileID: 0}
   m_DefaultSpeed: 1
+  m_ManualControlKey: 32
+  manualControl: 0
+  startingControlChips: 3
+  manualControlTime: 5
+  itemsUI: {fileID: 0}
   m_Planner:
     m_AvailableActions:
     - {fileID: 11400000, guid: 9397541d08312924bac4354f46daae71, type: 2}
