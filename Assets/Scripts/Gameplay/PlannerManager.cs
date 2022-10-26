@@ -7,6 +7,7 @@ public class PlannerManager : MonoBehaviour
     [SerializeField] Agent m_Agent;
     [SerializeField] ActionNodePanel m_PanelPrefab;
     [SerializeField] List<ActionNodePanelData> m_ActionNodePanelDataList = new List<ActionNodePanelData>();
+    [SerializeField] GameObject actionPanel;
 
     List<ActionNodePanel> m_ActionNodePanels;
     // [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
@@ -28,7 +29,7 @@ public class PlannerManager : MonoBehaviour
 
         foreach (ActionNodePanelData actionNodePanelData in m_ActionNodePanelDataList)
         {
-            ActionNodePanel actionNodePanel = Instantiate(m_PanelPrefab, transform);
+            ActionNodePanel actionNodePanel = Instantiate(m_PanelPrefab, actionPanel.transform);
 
             actionNodePanel.Initialize(actionNodePanelData.ActionNode);
 

@@ -50,7 +50,7 @@ public class PersistentBGM : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            PlayNextBGM();
+            // PlayNextBGM();
         }
     }
 
