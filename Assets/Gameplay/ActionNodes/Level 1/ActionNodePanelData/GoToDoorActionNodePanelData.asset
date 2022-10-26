@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061a22101d2c8854693c0617c23cfdfa, type: 3}
-  m_Name: IsWetConditionNode
+  m_Script: {fileID: 11500000, guid: 537052328f9a56647835d3e8e09fbf7f, type: 3}
+  m_Name: GoToDoorActionNodePanelData
   m_EditorClassIdentifier: 
-  m_ConditionReference: {fileID: 11400000, guid: 0e487d6d40d12fe4999a0578f38222cf, type: 2}
+  m_ActionNode: {fileID: 11400000, guid: 62a0ac9e335729948b9d021c922e528d, type: 2}

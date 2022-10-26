@@ -4,21 +4,17 @@ using System.Collections.Generic;
 
 class ActionNodePanel : MonoBehaviour
 {
-    [SerializeField] ActionNode m_ActionNode;
+    ActionNode m_ActionNode;
     [SerializeField] TMPro.TMP_Dropdown m_Dropdown;
 
+    public ActionNode ActionNode => m_ActionNode;
 
-    private void Awake()
+    public void Initialize(ActionNode actionNode)
     {
-        // Make a deep copy of the action node at runtime
-        m_ActionNode = Instantiate(m_ActionNode);
-    }
-
-    private void Start()
-    {
-        ConditionNodeList conditionList = m_ActionNode.ConditionList;
+        ConditionNodeList conditionList = actionNode.ConditionList;
         List<string> optionList = new List<string>();
-        
+
+        m_ActionNode = Instantiate(actionNode);
         m_Dropdown.ClearOptions();
 
         optionList.Add("No Condition");
@@ -33,6 +29,6 @@ class ActionNodePanel : MonoBehaviour
 
     public void OnSelectOption(int optionSelected)
     {
-        
+        m_ActionNode.SetConditionUsingIndex(optionSelected);
     }
 }

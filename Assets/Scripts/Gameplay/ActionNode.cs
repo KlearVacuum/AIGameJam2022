@@ -6,22 +6,26 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Node/ActionNode")]
 public class ActionNode : ScriptableObject
 {
-    [SerializeField] GOAP.Action m_Action;
+    [SerializeField] GOAP.Action m_ActionReference;
     [SerializeField] ConditionNodeList m_ConditionNodeList;
 
+    GOAP.Action m_ActionInstance;
     public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
     // This is always a copy
     GOAP.IStateData m_SelectedCondition = null;
 
-    private void Awake()
+    private void OnEnable()
     {
-        m_Action = Instantiate(m_Action);
+        if(m_ActionReference != null)
+        {
+            m_ActionInstance = Instantiate(m_ActionReference);
+        }
     }
 
     public GOAP.Action GetAction()
     {
-        GOAP.Action newAction = Instantiate(m_Action);
+        GOAP.Action newAction = m_ActionInstance;
 
         if(m_SelectedCondition != null)
         {
@@ -41,7 +45,7 @@ public class ActionNode : ScriptableObject
         }
         else if ((conditionIndex - 1) < conditionNodes.Count)
         {
-            m_SelectedCondition = conditionNodes[conditionIndex].GetCondition();   
+            m_SelectedCondition = conditionNodes[conditionIndex - 1].GetCondition();   
         }
     }
 }

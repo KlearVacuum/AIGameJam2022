@@ -113,7 +113,7 @@ public class Agent : MonoBehaviour
         UpdateItemsUI();
     }
 
-    public void Update()
+    public void UpdateAgent()
     {
         if (m_Dead)
         {

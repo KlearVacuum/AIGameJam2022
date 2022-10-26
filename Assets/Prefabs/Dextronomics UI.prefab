@@ -122,13 +122,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2902641617689260591}
+        m_TargetAssemblyTypeName: PlannerManager, Assembly-CSharp
+        m_MethodName: StartSimulation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -361,8 +361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Agent: {fileID: 0}
-  m_AvailableActionNodes: []
-  m_AvailableConditionNodes: []
+  m_PanelPrefab: {fileID: 8068384760153581669, guid: cbeebd49f31c97b4c8f01102a7c355b0, type: 3}
+  m_ActionNodePanelDataList: []
 --- !u!1 &7601865489179182276
 GameObject:
   m_ObjectHideFlags: 0

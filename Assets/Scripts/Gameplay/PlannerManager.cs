@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlannerManager : MonoBehaviour
 {
     [SerializeField] Agent m_Agent;
-    [SerializeField] List<ActionNode> m_AvailableActionNodes = new List<ActionNode>();
+    [SerializeField] ActionNodePanel m_PanelPrefab;
+    [SerializeField] List<ActionNodePanelData> m_ActionNodePanelDataList = new List<ActionNodePanelData>();
+
+    List<ActionNodePanel> m_ActionNodePanels;
     // [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
 
     // List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
@@ -15,7 +18,22 @@ public class PlannerManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Assert(m_Agent != null, "Agent has not been set in Planner Manager");
+        // Debug.Assert(m_Agent != null, "Agent has not been set in Planner Manager");
+    }
+
+    private void Start()
+    {
+        m_Agent = GlobalGameData.playerGO.GetComponent<Agent>();
+        m_ActionNodePanels = new List<ActionNodePanel>();
+
+        foreach (ActionNodePanelData actionNodePanelData in m_ActionNodePanelDataList)
+        {
+            ActionNodePanel actionNodePanel = Instantiate(m_PanelPrefab, transform);
+
+            actionNodePanel.Initialize(actionNodePanelData.ActionNode);
+
+            m_ActionNodePanels.Add(actionNodePanel);
+        }
     }
 
     //public void AddActionNode(ActionNode actionNode)
@@ -40,13 +58,21 @@ public class PlannerManager : MonoBehaviour
         m_SimulationRunning = true;
     }
 
+    public void Update()
+    {
+        if(m_SimulationRunning)
+        {
+            m_Agent.UpdateAgent();
+        }
+    }
+
     private void SetupAgent()
     {
         List<GOAP.Action> actions = new List<GOAP.Action>();
 
-        foreach(ActionNode actionNode in m_AvailableActionNodes)
+        foreach(ActionNodePanel actionNodePanel in m_ActionNodePanels)
         {
-            actions.Add(actionNode.GetAction());
+            actions.Add(actionNodePanel.ActionNode.GetAction());
         }
 
         m_Agent.AssignActions(actions);
