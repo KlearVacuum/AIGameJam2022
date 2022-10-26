@@ -14,10 +14,15 @@ class GoToDoorAction : GOAP.Action
 
         PathQuery pathQuery = new PathQuery();
 
-        if(m_Precondition.ContainsKey("IsWet") == false && 
-           agent.WorldState.GetStateValue<bool>("IsWet") == false)
+        if(m_Precondition.ContainsKey("IsWet") == false &&
+           m_Precondition.ContainsKey("IsShocked") == false)
         {
             pathQuery.AddFilter<FireplaceTile>();
+        }
+
+        if (m_Precondition.ContainsKey("IsShocked"))
+        {
+            pathQuery.AddFilter<WaterTile>();
         }
 
         agent.AddPathRequest(door.transform.position, pathQuery, (Agent agent) =>

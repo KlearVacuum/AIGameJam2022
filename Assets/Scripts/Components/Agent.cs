@@ -432,6 +432,20 @@ public class Agent : MonoBehaviour
         m_Coroutine = StartCoroutine(coroutine);
     }
 
+    public void ReplanWithNewPathQuery(PathQuery newPathQuery)
+    {
+        if(m_CurrentPath != null)
+        {
+            Path.Request pathRequest = new Path.Request(
+                m_CurrentPath.TargetPosition,
+                newPathQuery,
+                m_CurrentPath.PathCompleteAction);
+
+            m_PathPlanningRequests.Enqueue(pathRequest);
+        }
+
+        m_CurrentPath = null;
+    }
     public void PickupKey()
     {
         m_HasKey = true;

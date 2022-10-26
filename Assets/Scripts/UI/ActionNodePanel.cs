@@ -15,8 +15,8 @@ class ActionNodePanel : MonoBehaviour
         ConditionNodeList conditionList = actionNode.ConditionList;
         List<string> optionList = new List<string>();
 
+        m_ActionName.SetText(actionNode.ActionName);
         m_ActionNode = Instantiate(actionNode);
-        m_ActionName.SetText(m_ActionNode.ActionName);
         m_Dropdown.ClearOptions();
 
         optionList.Add("No Condition");
