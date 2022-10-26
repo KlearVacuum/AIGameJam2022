@@ -13,6 +13,7 @@ public class UIFade : MonoBehaviour
     private void Awake()
     {
         image = GetComponent<Image>();
+        image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
     }
 
     public void FadeIn()
