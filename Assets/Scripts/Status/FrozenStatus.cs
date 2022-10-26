@@ -15,6 +15,8 @@ public class FrozenStatus : Status
                 {
                     agent.audioFreeze.PlayOneShot(agent.aSource);
                     agent.SetSprite(m_Sprite);
+                    agent.SetLightColor(m_LightColor);
+                    agent.FlashColor(0.5f, m_LightColor);
                     // Other effects..
                 });
                 break;

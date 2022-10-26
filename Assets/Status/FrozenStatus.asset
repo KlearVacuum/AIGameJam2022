@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: FrozenStatus
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 3d98a8248e1278347897fe16b6ef0526, type: 3}
+  m_LightColor: {r: 0.43147027, g: 0.9056604, b: 0.87287074, a: 1}

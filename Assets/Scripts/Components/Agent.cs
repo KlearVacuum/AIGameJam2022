@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class Agent : MonoBehaviour
 {
@@ -13,14 +15,21 @@ public class Agent : MonoBehaviour
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
     Animator m_Animator;
+    Light2D m_GlowLight;
+    
+    public SpriteRenderer deadSpriteRenderer;
 
     [Header("Audio")]
     [HideInInspector] public AudioSource aSource;
     public AudioClipGroup audioZap, audioZapDie, audioWet, audioSteam, audioBurn, audioBlow, 
                             audioFreeze, audioUnlock, audioGetKey, audioWallCrash;
+    public AudioClip audioMoveStart, audioMoveLoop, audioMoveEnd;
+
+    public AudioSource moveAudioSource;
 
     bool m_IsBlown = false;
     bool m_Dead = false;
+    bool m_trulyDead = false;
     bool m_HasKey = false;
 
     public bool IsBlown => m_IsBlown;
@@ -40,6 +49,15 @@ public class Agent : MonoBehaviour
     [Header("Movement Properties")]
     [SerializeField] float m_DefaultSpeed;
     float m_CurrentSpeed;
+    [SerializeField] KeyCode m_ManualControlKey;
+    [SerializeField] bool manualControl;
+    public int startingControlChips;
+    int remainingControlChips;
+    public float manualControlTime;
+    float currentControlTime;
+
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI itemsUI;
 
     [Header("Planner")]
     [SerializeField] GOAP.Planner m_Planner;
@@ -47,6 +65,16 @@ public class Agent : MonoBehaviour
     public GOAP.Blackboard WorldState => m_WorldState;
 
     GOAP.WorkingMemory m_WorkingMemory;
+    bool flipped;
+    float startingScale;
+    Vector2 currentFacingDir;
+    float flipXTime = 0.1f;
+    float facingDirTime;
+    bool isMoving;
+    bool moveAudioStarted;
+    bool moveAudioLooping;
+    float dissolveSpeed;
+    float dissolveAmount = 0;
 
     public float DefaultSpeed => m_DefaultSpeed;
     public float Speed => m_CurrentSpeed;
@@ -57,8 +85,10 @@ public class Agent : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         aSource = GetComponent<AudioSource>();
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
+        m_GlowLight = GetComponentInChildren<Light2D>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
+        startingScale = transform.localScale.x;
 
         m_CurrentSpeed = m_DefaultSpeed;
         m_Planner.Initialize(this);
@@ -74,14 +104,33 @@ public class Agent : MonoBehaviour
         desiredState.Add("HasKey", new GOAP.StateValue<bool>(true));
 
         m_Planner.AddPlanRequest(desiredState);
+
+        currentFacingDir = Vector2.right;
+        flipped = false;
+        manualControl = false;
+        remainingControlChips = startingControlChips;
+
+        UpdateItemsUI();
     }
 
     public void Update()
     {
-        if(m_Dead)
+        if (m_Dead)
         {
             // if(m_Dead) Debug.Log("Dead");
             // Here lerp bot to center and then blow it
+            // m_Animator.SetBool("isMoving", false);
+            Camera.main.GetComponent<CameraScript>().SetCam(transform, 25f, new Vector3(0, 0, -10));
+
+            if (m_trulyDead)
+            {
+                isMoving = false;
+                m_Animator.SetBool("isDead", true);
+                deadSpriteRenderer.enabled = true;
+                dissolveAmount += Time.deltaTime * dissolveSpeed;
+                m_SpriteRenderer.material.SetFloat("_DissolveAmount", dissolveAmount);
+                deadSpriteRenderer.material.SetFloat("_DissolveAmount", 1-dissolveAmount);
+            }
             return;
         }
 
@@ -92,27 +141,153 @@ public class Agent : MonoBehaviour
             return;
         }
 
-        m_Animator.SetBool("isMoving", GetCurrentPath() != null);
+        isMoving = GetCurrentPath() != null;
+        m_Animator.SetBool("isMoving", isMoving);
 
-        GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
-
-        if(currentPlan != null)
+        float materialColorIntensity = m_SpriteRenderer.material.GetFloat("_AddColorIntensity");
+        if (materialColorIntensity > 0)
         {
-            GOAP.Action currentAction = currentPlan.GetCurrentAction();
-
-            if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
-                currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
-            {
-                // Debug.Log($"Executing {currentAction.GetName()}");
-            }
-
-            currentPlan.Execute(this);
+            m_SpriteRenderer.material.SetFloat("_AddColorIntensity", materialColorIntensity -= Time.deltaTime * 0.75f);
         }
+
+        if (!manualControl)
+        {
+            // GOAP
+            GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
+
+            if (currentPlan != null)
+            {
+                GOAP.Action currentAction = currentPlan.GetCurrentAction();
+
+                if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
+                    currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
+                {
+                    // Debug.Log($"Executing {currentAction.GetName()}");
+                }
+
+                currentPlan.Execute(this);
+            }
+        }
+
+        ManualControl();
+    }
+
+    private void FixedUpdate()
+    {
+        if (isMoving)
+        {
+            if (!moveAudioStarted)
+            {
+                PlaySound(moveAudioSource, audioMoveStart, 0.5f);
+                moveAudioStarted = true;
+            }
+            else if (!moveAudioLooping && !moveAudioSource.isPlaying)
+            {
+                PlaySound(moveAudioSource, audioMoveLoop, 0.5f, true);
+                moveAudioLooping = true;
+            }
+        }
+        else
+        {
+            if (moveAudioStarted && !moveAudioSource.isPlaying)
+            {
+                PlaySound(moveAudioSource, audioMoveEnd, 0.5f);
+                moveAudioStarted = false;
+                moveAudioLooping = false;
+            }
+            if (moveAudioLooping)
+            {
+                PlaySound(moveAudioSource, audioMoveEnd, 0.5f);
+                moveAudioStarted = false;
+                moveAudioLooping = false;
+            }
+        }
+    }
+
+    private void PlaySound(AudioSource audioSource, AudioClip clip, float volume, bool loop = false)
+    {
+        audioSource.volume = volume;
+        audioSource.clip = clip;
+        audioSource.loop = loop;
+        audioSource.Play();
+    }
+
+    public void FlashColor(float amount, Color color)
+    {
+        m_SpriteRenderer.material.SetColor("_AddColor", color);
+        m_SpriteRenderer.material.SetFloat("_AddColorIntensity", amount);
     }
 
     public void SetDirection(Vector3 direction)
     {
+        Vector2 newDir = direction;
+        newDir.y = 0;
+        newDir.Normalize();
+        if (Vector2.Dot(newDir, currentFacingDir) < -0.01f)
+        {
+            // moving opposite way
+            facingDirTime -= Time.deltaTime;
 
+            if (facingDirTime < 0)
+            {
+                StartCoroutine(FlipXCoroutine(flipXTime));
+                currentFacingDir = newDir;
+                facingDirTime = flipXTime;
+            }
+        }
+        else
+        {
+            facingDirTime = flipXTime;
+        }
+    }
+
+    private void ManualControl()
+    {
+        if (Input.GetKeyDown(m_ManualControlKey))
+        {
+            if (remainingControlChips > 0)
+            {
+                remainingControlChips--;
+                manualControl = true;
+                currentControlTime = manualControlTime;
+                UpdateItemsUI();
+            }
+        }
+        if (currentControlTime > 0)
+        {
+            currentControlTime -= Time.deltaTime;
+            float hori = Input.GetAxisRaw("Horizontal");
+            float vert = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(hori, vert, 0).normalized;
+            SetDirection(direction);
+            float checkDist = transform.localScale.y/2;
+
+            Vector2 startPos = transform.position;
+            startPos.y += 0.2f;
+
+            if (hori != 0 && vert != 0) checkDist *= Mathf.Sqrt(2);
+
+            RaycastHit2D hit = Physics2D.Raycast(startPos, direction);
+            float distanceFromWall = Vector2.Distance(hit.point, startPos);
+            if (hit.collider != null && hit.collider.CompareTag("Wall") && distanceFromWall < checkDist)
+            {
+                Debug.DrawLine(startPos, hit.point, Color.red, 1f);
+                Debug.Log("moving into wall");
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, m_CurrentSpeed * Time.deltaTime);
+            }
+
+            if (currentControlTime <= 0)
+            {
+                // end manual control
+                manualControl = false;
+                // Gary: re-enable AI here, GOAP manual planning
+
+                UpdateItemsUI();
+            }
+        }
     }
 
     public Path GetCurrentPath()
@@ -185,6 +360,11 @@ public class Agent : MonoBehaviour
         m_SpriteRenderer.sprite = sprite;
     }
 
+    public void SetLightColor(Color color)
+    {
+        m_GlowLight.color = color;
+    }
+
     public void SetSpeed(float newSpeed)
     {
         m_CurrentSpeed = newSpeed;
@@ -204,14 +384,15 @@ public class Agent : MonoBehaviour
     {
     }
 
-    public void Die(Vector3 deathPosition, Sprite deathSprite, AudioClipGroup deathSound = null)
+    public void Die(Vector3 deathPosition, Sprite deathSprite, float _dissolveSpeed, AudioClipGroup deathSound = null)
     {
         m_Dead = true;
         m_IsBlown = false;
         m_Rigidbody2D.simulated = false;
         m_Rigidbody2D.isKinematic = true;
+        dissolveSpeed = _dissolveSpeed;
 
-        Debug.Log("Death position " + deathPosition);
+        // Debug.Log("Death position " + deathPosition);
 
         StopAllCoroutines();
 
@@ -231,7 +412,8 @@ public class Agent : MonoBehaviour
         }
 
         Debug.Log("Truly dead");
-        m_SpriteRenderer.sprite = deathSprite;
+        m_trulyDead = true;
+        deadSpriteRenderer.sprite = deathSprite;
 
         if (audio != null)
             audio.PlayOneShot(aSource);
@@ -253,6 +435,47 @@ public class Agent : MonoBehaviour
     public void PickupKey()
     {
         m_HasKey = true;
+        UpdateItemsUI();
+    }
+
+    private void UpdateItemsUI()
+    {
+        itemsUI.text = "Key Obtained: " + m_HasKey + "\n" 
+                            + "Override Chips: " + remainingControlChips;
+        if (manualControl)
+        {
+            itemsUI.text += "\n\n" + "OVERRIDE ACTIVE";
+        }
+    }
+
+    IEnumerator FlipXCoroutine(float seconds)
+    {
+        float totalTime = seconds;
+        float t = 0;
+        if (flipped)
+        {
+            while (t < totalTime)
+            {
+                float lerp = Mathf.Lerp(-startingScale, startingScale, t / totalTime);
+                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
+                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+
+            while (t < totalTime)
+            {
+                float lerp = Mathf.Lerp(startingScale, -startingScale, t / totalTime);
+                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
+                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+        flipped = !flipped;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -262,16 +485,24 @@ public class Agent : MonoBehaviour
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
             m_Fan?.gameObject.SetActive(false);
-
-            // Reevaluate path based on old path
-            m_CurrentPath = m_Pathfinding.FindPath(
-                transform.position, 
-                m_CurrentPath.TargetPosition, 
-                m_CurrentPath.PathQuery,
-                m_CurrentPath.PathCompleteAction);
-
             audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
+            Path resumePath = m_CurrentPath;
+            m_CurrentPath = null;
+            StartCoroutine(ResumeAfterWait(1.0f, resumePath));
         }
+    }
+
+    private IEnumerator ResumeAfterWait(float seconds, Path resumePath)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        // Reevaluate path based on old path
+        m_CurrentPath = m_Pathfinding.FindPath(
+            transform.position,
+            resumePath.TargetPosition,
+            resumePath.PathQuery,
+            resumePath.PathCompleteAction);
+
     }
 }

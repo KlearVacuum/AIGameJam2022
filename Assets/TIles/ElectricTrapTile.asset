@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a335ac9adfa0924c8180f0938334268, type: 3}
   m_Name: ElectricTrapTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 7482667652216324306, guid: 4715b09d39fa591438366821c0494cec, type: 3}
-  m_Color: {r: 0.99338573, g: 1, b: 0.3820755, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 34c92394264500a4ca29c4949da4607c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

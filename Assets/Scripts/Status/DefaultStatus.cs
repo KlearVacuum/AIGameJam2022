@@ -10,6 +10,7 @@ public class DefaultStatus : Status
         return new StatusEffect((Agent agent) =>
         {
             agent.SetSprite(m_Sprite);
+            agent.SetLightColor(m_LightColor);
         });
     }
 }

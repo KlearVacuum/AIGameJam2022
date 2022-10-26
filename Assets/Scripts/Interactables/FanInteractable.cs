@@ -31,7 +31,12 @@ public class FanInteractable : Interactable
         agent.SetIsBlown(true);
         agent.SetFan(m_FanTile.Fan);
 
-        Debug.Log("Blow");
+        // Debug.Log("Blow");
+    }
+
+    public override void ExitTrigger(Agent agent)
+    {
+        m_FanTile.DeactivateFan();
     }
 
     IEnumerator MoveAgentToWindPosition(Agent agent, Vector3 windPosition)
@@ -45,7 +50,6 @@ public class FanInteractable : Interactable
             t += Time.deltaTime;
             yield return null;
         }
-
         // Set 
         agent.audioBlow.PlayOneShot(agent.aSource);
         Rigidbody2D rigidbody2D = agent.GetComponent<Rigidbody2D>();

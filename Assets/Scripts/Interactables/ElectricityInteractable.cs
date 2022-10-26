@@ -8,16 +8,14 @@ public class ElectricityInteractable : Interactable
 
     public override void Interact(Agent agent, Vector3 tilePosition)
     {
-        Debug.Log("Touched electricity");
+        // Debug.Log("Touched electricity");
         if(agent.Status is WetStatus)
         {
-            Debug.Log("zapp die");
-            agent.audioZapDie.PlayOneShot(agent.aSource);
-            agent.Die(tilePosition, m_ShockedDieSprite);
+            // agent.audioZapDie.PlayOneShot(agent.aSource);
+            agent.Die(tilePosition, m_ShockedDieSprite, 100f, agent.audioZapDie);
         }
         else
         {
-            Debug.Log("zapp");
             agent.audioZap.PlayOneShot(agent.aSource);
             agent.ApplyStatus(m_Status);
         }

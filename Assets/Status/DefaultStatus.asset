@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: DefaultStatus
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: 2391abdb399eecd4ba86ba5474a73b18, type: 3}
+  m_LightColor: {r: 1, g: 1, b: 1, a: 1}

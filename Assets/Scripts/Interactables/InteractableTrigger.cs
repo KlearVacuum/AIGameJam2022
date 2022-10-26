@@ -22,4 +22,14 @@ public class InteractableTrigger : MonoBehaviour
             m_Interactable.Interact(agent, transform.position);
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Agent agent = collision.transform.GetComponent<Agent>();
+
+        if (agent != null)
+        {
+            m_Interactable.ExitTrigger(agent);
+        }
+    }
 }

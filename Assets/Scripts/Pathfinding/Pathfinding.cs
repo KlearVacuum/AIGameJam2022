@@ -224,7 +224,7 @@ class Pathfinding
                 {
                     Node neighbourNode = new Node(neighbourPos, neighbourTile);
 
-                    Debug.Log($"Type of tile : {neighbourTile.GetType()}");
+                    // Debug.Log($"Type of tile : {neighbourTile.GetType()}");
 
                     neighbourNode.SetParent(node);
                     neighbours.Add(neighbourNode);
