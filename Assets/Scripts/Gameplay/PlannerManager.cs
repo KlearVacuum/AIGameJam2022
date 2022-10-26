@@ -6,9 +6,9 @@ public class PlannerManager : MonoBehaviour
 {
     [SerializeField] Agent m_Agent;
     [SerializeField] List<ActionNode> m_AvailableActionNodes = new List<ActionNode>();
-    [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
+    // [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
 
-    List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
+    // List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
 
     bool m_SimulationRunning = false;
     public bool SimulationRunning => m_SimulationRunning;
@@ -18,21 +18,21 @@ public class PlannerManager : MonoBehaviour
         Debug.Assert(m_Agent != null, "Agent has not been set in Planner Manager");
     }
 
-    public void AddActionNode(ActionNode actionNode)
-    {
-        if(m_AddedActionNodes.Contains(actionNode) == false)
-        {
-            m_AddedActionNodes.Add(actionNode);
-        }
-    }
+    //public void AddActionNode(ActionNode actionNode)
+    //{
+    //    if(m_AddedActionNodes.Contains(actionNode) == false)
+    //    {
+    //        m_AddedActionNodes.Add(actionNode);
+    //    }
+    //}
 
-    public void RemoveActionNode(ActionNode actionNode)
-    {
-        if(m_AddedActionNodes.Contains(actionNode))
-        {
-            m_AddedActionNodes.Remove(actionNode);
-        }
-    }
+    //public void RemoveActionNode(ActionNode actionNode)
+    //{
+    //    if(m_AddedActionNodes.Contains(actionNode))
+    //    {
+    //        m_AddedActionNodes.Remove(actionNode);
+    //    }
+    //}
 
     public void StartSimulation()
     {
@@ -44,7 +44,7 @@ public class PlannerManager : MonoBehaviour
     {
         List<GOAP.Action> actions = new List<GOAP.Action>();
 
-        foreach(ActionNode actionNode in m_AddedActionNodes)
+        foreach(ActionNode actionNode in m_AvailableActionNodes)
         {
             actions.Add(actionNode.GetAction());
         }

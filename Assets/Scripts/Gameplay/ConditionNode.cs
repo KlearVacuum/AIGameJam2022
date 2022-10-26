@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Node/ConditionNode")]
 public class ConditionNode : ScriptableObject
 {
-    [SerializeField] GOAP.IStateData m_Condition;
+    [SerializeField] GOAP.IStateData m_ConditionReference;
+    GOAP.IStateData m_ConditionInstance;
+    public GOAP.IStateData Condition => m_ConditionInstance;
+
+    public string ConditionName => m_ConditionInstance.Key;
 
     private void OnEnable()
     {
-        m_Condition = Instantiate(m_Condition);
+        m_ConditionInstance = Instantiate(m_ConditionReference);
     }
 
-    public GOAP.IStateData GetCondition()
+    public virtual GOAP.IStateData GetCondition()
     {
-        return Instantiate(m_Condition);
+        return m_ConditionInstance;
     }
 }

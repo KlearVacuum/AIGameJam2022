@@ -80,6 +80,20 @@ namespace GOAP
             Debug.Assert(m_States.ContainsKey(stateKey) == false);
             m_States.Add(stateKey, new StateValue<T>(stateValue));
         }
+
+        public bool Fulfills(Dictionary<string, IStateValue> desiredState)
+        {
+            foreach (KeyValuePair<string, IStateValue> stateData in desiredState)
+            {
+                if(m_States.ContainsKey(stateData.Key) &&
+                   StateValueComparer.Compare(m_States[stateData.Key], stateData.Value) == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
 

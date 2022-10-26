@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionNode : MonoBehaviour
+
+[CreateAssetMenu(menuName = "Node/ActionNode")]
+public class ActionNode : ScriptableObject
 {
     [SerializeField] GOAP.Action m_Action;
     [SerializeField] ConditionNodeList m_ConditionNodeList;
-    
-    ConditionNode m_SelectedConditioNode = null;
 
+    public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
+    // This is always a copy
+    GOAP.IStateData m_SelectedCondition = null;
 
     private void Awake()
     {
@@ -20,11 +23,25 @@ public class ActionNode : MonoBehaviour
     {
         GOAP.Action newAction = Instantiate(m_Action);
 
-        foreach (ConditionNode conditionNode in m_ConditionNodes)
+        if(m_SelectedCondition != null)
         {
-            newAction.AddPrecondition(conditionNode.GetCondition());    
+            newAction.AddPrecondition(m_SelectedCondition);
         }
 
         return newAction;
+    }
+    
+    public void SetConditionUsingIndex(int conditionIndex)
+    {
+        List<ConditionNode> conditionNodes = m_ConditionNodeList.ConditionNodes;
+
+        if(conditionIndex == 0)
+        {
+            m_SelectedCondition = null;
+        }
+        else if ((conditionIndex - 1) < conditionNodes.Count)
+        {
+            m_SelectedCondition = conditionNodes[conditionIndex].GetCondition();   
+        }
     }
 }
