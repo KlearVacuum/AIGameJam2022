@@ -7,6 +7,7 @@ namespace GOAP
     [System.Serializable]
     public class Planner
     {
+        [SerializeField] List<GOAP.Action> m_DefaultActions = new List<GOAP.Action>();
         [SerializeField] List<Action> m_AvailableActions = new List<Action>();
         [SerializeField] List<Goal> m_AvailableGoals = new List<Goal>();
 
@@ -73,6 +74,11 @@ namespace GOAP
             }
 
             List<Action> availableActions = new List<Action>(m_AvailableActions);
+
+            foreach(Action action in m_DefaultActions)
+            {
+                availableActions.Add(action);
+            }
 
             Plan bestPlan = PlannerGraph.GetBestPlan(availableActions, m_Agent.WorldState, bestGoal);
 

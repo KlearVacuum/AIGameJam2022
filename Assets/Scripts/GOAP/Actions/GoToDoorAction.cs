@@ -14,7 +14,8 @@ class GoToDoorAction : GOAP.Action
 
         PathQuery pathQuery = new PathQuery();
 
-        if(m_Precondition.Contains("IsWet", true))
+        if(m_Precondition.ContainsKey("IsWet") == false && 
+           agent.WorldState.GetStateValue<bool>("IsWet") == false)
         {
             pathQuery.AddFilter<FireplaceTile>();
         }

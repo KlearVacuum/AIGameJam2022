@@ -5,6 +5,7 @@ using System.Collections.Generic;
 class ActionNodePanel : MonoBehaviour
 {
     ActionNode m_ActionNode;
+    [SerializeField] TMPro.TextMeshProUGUI m_ActionName;
     [SerializeField] TMPro.TMP_Dropdown m_Dropdown;
 
     public ActionNode ActionNode => m_ActionNode;
@@ -15,6 +16,7 @@ class ActionNodePanel : MonoBehaviour
         List<string> optionList = new List<string>();
 
         m_ActionNode = Instantiate(actionNode);
+        m_ActionName.SetText(m_ActionNode.ActionName);
         m_Dropdown.ClearOptions();
 
         optionList.Add("No Condition");

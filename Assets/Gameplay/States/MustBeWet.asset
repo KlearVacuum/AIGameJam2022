@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061a22101d2c8854693c0617c23cfdfa, type: 3}
-  m_Name: IsWetConditionNode
+  m_Script: {fileID: 11500000, guid: a27c38b967efc59478c47c5c2955fcaa, type: 3}
+  m_Name: MustBeWet
   m_EditorClassIdentifier: 
-  m_ConditionReference: {fileID: 11400000, guid: 4e3a6b9f8b0c9a94b99938995937f6e2, type: 2}
+  m_StateKey: {fileID: 11400000, guid: 57109ab7241572941abc8354e2642246, type: 2}
+  m_StateValue:
+    m_Data: 1

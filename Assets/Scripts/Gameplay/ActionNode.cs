@@ -10,6 +10,8 @@ public class ActionNode : ScriptableObject
     [SerializeField] ConditionNodeList m_ConditionNodeList;
 
     GOAP.Action m_ActionInstance;
+
+    public string ActionName => m_ActionInstance.name;
     public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
     // This is always a copy

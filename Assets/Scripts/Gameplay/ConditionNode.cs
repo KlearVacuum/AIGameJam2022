@@ -9,7 +9,7 @@ public class ConditionNode : ScriptableObject
     GOAP.IStateData m_ConditionInstance;
     public GOAP.IStateData Condition => m_ConditionInstance;
 
-    public string ConditionName => m_ConditionInstance.Key;
+    public string ConditionName => m_ConditionInstance.name;
 
     private void OnEnable()
     {
