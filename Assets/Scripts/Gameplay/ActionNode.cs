@@ -2,30 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionNode : MonoBehaviour
+
+[CreateAssetMenu(menuName = "Node/ActionNode")]
+public class ActionNode : ScriptableObject
 {
-    [SerializeField] GOAP.Action m_Action;
-    List<ConditionNode> m_ConditionNodes = new List<ConditionNode>(); 
+    [SerializeField] GOAP.Action m_ActionReference;
+    [SerializeField] ConditionNodeList m_ConditionNodeList;
 
-    private void Awake()
-    {
-        m_Action = Instantiate(m_Action);
-    }
+    GOAP.Action m_ActionInstance;
+    public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
-    public void AddCondition(ConditionNode conditionNode)
+    // This is always a copy
+    GOAP.IStateData m_SelectedCondition = null;
+
+    private void OnEnable()
     {
-        m_ConditionNodes.Add(conditionNode);
+        if(m_ActionReference != null)
+        {
+            m_ActionInstance = Instantiate(m_ActionReference);
+        }
     }
 
     public GOAP.Action GetAction()
     {
-        GOAP.Action newAction = Instantiate(m_Action);
+        GOAP.Action newAction = m_ActionInstance;
 
-        foreach (ConditionNode conditionNode in m_ConditionNodes)
+        if(m_SelectedCondition != null)
         {
-            newAction.AddPrecondition(conditionNode.GetCondition());    
+            newAction.AddPrecondition(m_SelectedCondition);
         }
 
         return newAction;
+    }
+    
+    public void SetConditionUsingIndex(int conditionIndex)
+    {
+        List<ConditionNode> conditionNodes = m_ConditionNodeList.ConditionNodes;
+
+        if(conditionIndex == 0)
+        {
+            m_SelectedCondition = null;
+        }
+        else if ((conditionIndex - 1) < conditionNodes.Count)
+        {
+            m_SelectedCondition = conditionNodes[conditionIndex - 1].GetCondition();   
+        }
     }
 }

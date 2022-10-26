@@ -22,7 +22,6 @@ public class BurnStatus : Status
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
-                    agent.FlashColor(0.5f, m_LightColor);
                     agent.ApplyStatus(m_DefaultStatus);
                 });
                 break;

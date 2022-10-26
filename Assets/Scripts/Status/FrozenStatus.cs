@@ -17,7 +17,6 @@ public class FrozenStatus : Status
                     agent.SetSprite(m_Sprite);
                     agent.SetLightColor(m_LightColor);
                     agent.FlashColor(0.5f, m_LightColor);
-                    agent.freezeParticles.Play();
                     // Other effects..
                 });
                 break;

@@ -13,11 +13,9 @@ public class WaterInteractable : Interactable
         {
             // agent.audioZapDie.PlayOneShot(agent.aSource);
             agent.Die(tilePosition, shockDieSprite, 100f, agent.audioZapDie);
-            agent.zapParticles.Play();
         }
         else
         {
-            agent.wetParticles.Play();
             agent.audioWet.PlayOneShot(agent.aSource);
             agent.ApplyStatus(m_Status);
         }

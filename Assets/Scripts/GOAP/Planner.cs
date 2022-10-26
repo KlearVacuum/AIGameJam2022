@@ -11,6 +11,7 @@ namespace GOAP
         [SerializeField] List<Goal> m_AvailableGoals = new List<Goal>();
 
         Queue<PlanRequest> m_PlanRequests = new Queue<PlanRequest>();
+        Dictionary<string, IStateValue> m_PreviousDesiredState;
 
         Plan m_CurrentPlan = null; 
 
@@ -33,6 +34,7 @@ namespace GOAP
             if(m_CurrentPlan == null && m_PlanRequests.Count > 0)
             {
                 PlanRequest planRequest = m_PlanRequests.Dequeue();
+                m_PreviousDesiredState = new Dictionary<string, IStateValue>(planRequest.DesiredState);
                 m_CurrentPlan = Plan(planRequest.DesiredState);
             }
 
@@ -48,8 +50,16 @@ namespace GOAP
 
             if (m_CurrentPlan.IsComplete() || !m_CurrentPlan.IsValid())
             {
-                m_CurrentPlan = null;
-            }
+                if (IsPreviousDesiredStateFulfilled() == false)
+                {
+                    // Continue to try to satisfy previous desired state if it hasn't been achieved.
+                    AddPlanRequest(m_PreviousDesiredState);
+                }
+                else
+                {
+                    m_CurrentPlan = null;
+                }
+            }            
         }
 
         private Plan Plan(Dictionary<string, IStateValue> desiredState)
@@ -130,6 +140,17 @@ namespace GOAP
             }
 
             return bestGoal;
+        }
+
+        private bool IsPreviousDesiredStateFulfilled()
+        {
+            // If there is no previous desired state, then there is nothing to do
+            if(m_PreviousDesiredState == null)
+            {
+                return true;
+            }
+
+            return m_Agent.WorldState.Fulfills(m_PreviousDesiredState);
         }
     }
 }

@@ -5,34 +5,52 @@ using UnityEngine;
 public class PlannerManager : MonoBehaviour
 {
     [SerializeField] Agent m_Agent;
-    [SerializeField] List<ActionNode> m_AvailableActionNodes = new List<ActionNode>();
-    [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
+    [SerializeField] ActionNodePanel m_PanelPrefab;
+    [SerializeField] List<ActionNodePanelData> m_ActionNodePanelDataList = new List<ActionNodePanelData>();
 
-    List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
+    List<ActionNodePanel> m_ActionNodePanels;
+    // [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
+
+    // List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
 
     bool m_SimulationRunning = false;
     public bool SimulationRunning => m_SimulationRunning;
 
     private void Awake()
     {
-        Debug.Assert(m_Agent != null, "Agent has not been set in Planner Manager");
+        // Debug.Assert(m_Agent != null, "Agent has not been set in Planner Manager");
     }
 
-    public void AddActionNode(ActionNode actionNode)
+    private void Start()
     {
-        if(m_AddedActionNodes.Contains(actionNode) == false)
+        m_Agent = GlobalGameData.playerGO.GetComponent<Agent>();
+        m_ActionNodePanels = new List<ActionNodePanel>();
+
+        foreach (ActionNodePanelData actionNodePanelData in m_ActionNodePanelDataList)
         {
-            m_AddedActionNodes.Add(actionNode);
+            ActionNodePanel actionNodePanel = Instantiate(m_PanelPrefab, transform);
+
+            actionNodePanel.Initialize(actionNodePanelData.ActionNode);
+
+            m_ActionNodePanels.Add(actionNodePanel);
         }
     }
 
-    public void RemoveActionNode(ActionNode actionNode)
-    {
-        if(m_AddedActionNodes.Contains(actionNode))
-        {
-            m_AddedActionNodes.Remove(actionNode);
-        }
-    }
+    //public void AddActionNode(ActionNode actionNode)
+    //{
+    //    if(m_AddedActionNodes.Contains(actionNode) == false)
+    //    {
+    //        m_AddedActionNodes.Add(actionNode);
+    //    }
+    //}
+
+    //public void RemoveActionNode(ActionNode actionNode)
+    //{
+    //    if(m_AddedActionNodes.Contains(actionNode))
+    //    {
+    //        m_AddedActionNodes.Remove(actionNode);
+    //    }
+    //}
 
     public void StartSimulation()
     {
@@ -40,13 +58,21 @@ public class PlannerManager : MonoBehaviour
         m_SimulationRunning = true;
     }
 
+    public void Update()
+    {
+        if(m_SimulationRunning)
+        {
+            m_Agent.UpdateAgent();
+        }
+    }
+
     private void SetupAgent()
     {
         List<GOAP.Action> actions = new List<GOAP.Action>();
 
-        foreach(ActionNode actionNode in m_AddedActionNodes)
+        foreach(ActionNodePanel actionNodePanel in m_ActionNodePanels)
         {
-            actions.Add(actionNode.GetAction());
+            actions.Add(actionNodePanel.ActionNode.GetAction());
         }
 
         m_Agent.AssignActions(actions);
