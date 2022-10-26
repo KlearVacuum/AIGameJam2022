@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004af115c5244ff458479192e3d9be3a, type: 3}
   m_Name: GoToKeyAction
   m_EditorClassIdentifier: 
-  m_Action: {fileID: 11400000, guid: dc936c4ebf312334489fdd22289f88b9, type: 2}
+  m_ActionReference: {fileID: 11400000, guid: dc936c4ebf312334489fdd22289f88b9, type: 2}
   m_ConditionNodeList: {fileID: 11400000, guid: 19ee6570c7252c542a198af35032d539, type: 2}
