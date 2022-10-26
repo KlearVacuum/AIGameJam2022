@@ -34,6 +34,11 @@ public class FanInteractable : Interactable
         // Debug.Log("Blow");
     }
 
+    public override void ExitTrigger(Agent agent)
+    {
+        m_FanTile.DeactivateFan();
+    }
+
     IEnumerator MoveAgentToWindPosition(Agent agent, Vector3 windPosition)
     {
         float totalTime = (agent.transform.position - windPosition).magnitude / agent.Speed;

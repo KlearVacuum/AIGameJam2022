@@ -74,6 +74,7 @@ MonoBehaviour:
   target: {fileID: 0}
   fieldOfView: 25
   offset: {x: 0, y: 1, z: -10}
+  fadeIn: 1
 --- !u!1 &4912611911355675503
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,8 +178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4912611911355675502}
-  fieldOfView: 50
+  fieldOfView: 60
   offset: {x: 0, y: 0, z: -10}
+  fadeIn: 0
 --- !u!1 &4912611911715000446
 GameObject:
   m_ObjectHideFlags: 0

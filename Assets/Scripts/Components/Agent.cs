@@ -255,12 +255,29 @@ public class Agent : MonoBehaviour
         }
         if (currentControlTime > 0)
         {
-            Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0).normalized;
-            SetDirection(direction);
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, m_CurrentSpeed * Time.deltaTime);
-
-            Debug.DrawLine(transform.position, transform.position + direction, Color.green, 1f);
             currentControlTime -= Time.deltaTime;
+            float hori = Input.GetAxisRaw("Horizontal");
+            float vert = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(hori, vert, 0).normalized;
+            SetDirection(direction);
+            float checkDist = transform.localScale.y/2;
+
+            Vector2 startPos = transform.position;
+            startPos.y += 0.2f;
+
+            if (hori != 0 && vert != 0) checkDist *= Mathf.Sqrt(2);
+
+            RaycastHit2D hit = Physics2D.Raycast(startPos, direction);
+            float distanceFromWall = Vector2.Distance(hit.point, startPos);
+            if (hit.collider != null && hit.collider.CompareTag("Wall") && distanceFromWall < checkDist)
+            {
+                Debug.DrawLine(startPos, hit.point, Color.red, 1f);
+                Debug.Log("moving into wall");
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, m_CurrentSpeed * Time.deltaTime);
+            }
 
             if (currentControlTime <= 0)
             {

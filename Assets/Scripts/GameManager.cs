@@ -9,5 +9,11 @@ public class GameManager : MonoBehaviour
     {
         GlobalGameData.playerGO = GameObject.FindGameObjectWithTag("Player");
         GlobalGameData.maxAudioDistance = maxAudioDistance;
+        GlobalGameData.blackPanelFade = GameObject.FindGameObjectWithTag("BlackPanel").GetComponent<UIFade>();
+    }
+
+    private void Start()
+    {
+        GlobalGameData.blackPanelFade.FadeOut();
     }
 }

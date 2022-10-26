@@ -37,6 +37,7 @@ public class FanTile : PathfindingTile
             go.transform.position += GetDirectionVector();
             m_Fan.SetWindPosition(go.transform.position);
             m_Fan.SetWindDirection(m_FanDirection);
+            m_Fan.SetWindParticleDirection(m_FanDirection);
 
             return true;
         }
@@ -47,12 +48,14 @@ public class FanTile : PathfindingTile
     public void ActivateFan()
     {
         // Debug.Log("Fan activated");
-        m_Fan.gameObject.SetActive(true);
+        // m_Fan.gameObject.SetActive(true);
+        m_Fan.PlayParticles(true);
     }
 
     public void DeactivateFan()
     {
-        m_Fan.gameObject.SetActive(false);
+        // m_Fan.gameObject.SetActive(false);
+        m_Fan.PlayParticles(false);
     }
 
     public Vector3 GetWindPosition()
