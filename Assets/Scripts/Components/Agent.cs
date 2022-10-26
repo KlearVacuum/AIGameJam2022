@@ -40,6 +40,9 @@ public class Agent : MonoBehaviour
     [Header("Status")]
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
     [SerializeField] FrozenStatus m_FrozenStatus;
+    public ParticleSystem wetParticles;
+    public ParticleSystem zapParticles;
+    public ParticleSystem freezeParticles;
     public Status Status => m_StatusHandler.CurrentStatus;
 
     [Header("Spatial Properties")]

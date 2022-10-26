@@ -13,10 +13,12 @@ public class ElectricityInteractable : Interactable
         {
             // agent.audioZapDie.PlayOneShot(agent.aSource);
             agent.Die(tilePosition, m_ShockedDieSprite, 100f, agent.audioZapDie);
+            agent.zapParticles.Play();
         }
         else
         {
             agent.audioZap.PlayOneShot(agent.aSource);
+            agent.zapParticles.Play();
             agent.ApplyStatus(m_Status);
         }
 
