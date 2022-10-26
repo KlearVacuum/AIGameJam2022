@@ -150,7 +150,7 @@ public class Agent : MonoBehaviour
             m_SpriteRenderer.material.SetFloat("_AddColorIntensity", materialColorIntensity -= Time.deltaTime * 0.75f);
         }
 
-        if (!manualControl)
+        if (m_Planner.IsPaused == false)
         {
             // GOAP
             GOAP.Plan currentPlan = m_Planner.GetCurrentPlan();
@@ -250,6 +250,7 @@ public class Agent : MonoBehaviour
                 remainingControlChips--;
                 manualControl = true;
                 currentControlTime = manualControlTime;
+                m_Planner.PausePlanner();
                 UpdateItemsUI();
             }
         }
@@ -283,7 +284,7 @@ public class Agent : MonoBehaviour
             {
                 // end manual control
                 manualControl = false;
-                // Gary: re-enable AI here, GOAP manual planning
+                m_Planner.ResumePlanner();
 
                 UpdateItemsUI();
             }
