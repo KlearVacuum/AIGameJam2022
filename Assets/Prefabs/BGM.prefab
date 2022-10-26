@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a37093414295bc40bbf77dc822e46c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuClip: {fileID: 8300000, guid: 9f69017fa9f892e41ae7fb6131e493a0, type: 3}
-  bgmClip: {fileID: 8300000, guid: dea5e5ce1e5f83c43b8554704faa5150, type: 3}
+  mainMenuClip: {fileID: 8300000, guid: 9f9f625e3b9eb484dbc0c010f2271ae2, type: 3}
+  bgmClip: {fileID: 8300000, guid: 03b7111d0a1938e47a4891998ff322f7, type: 3}
   volumeMultiplier: 0.5
   aSource1: {fileID: 2612338869888457449}
   aSource2: {fileID: 2612338869888457451}
