@@ -71,8 +71,13 @@ class Pathfinding
         PathfindingTile startTile = m_Tilemap.GetTile(startCellPosition) as PathfindingTile;
         PathfindingTile endTile = m_Tilemap.GetTile(endCellPosition) as PathfindingTile;
 
-        Debug.Assert(startTile != null, "Start tile is invalid!");
-        Debug.Assert(endTile != null, "End tile is invalid!");
+        // Debug.Assert(startTile != null, "Start tile is invalid!");
+        // Debug.Assert(endTile != null, "End tile is invalid!");
+
+        if(startTile == null || endTile == null)
+        {
+            return null;
+        }
 
         TileBase[] allTiles = m_Tilemap.GetTilesBlock(m_Tilemap.cellBounds);
 
