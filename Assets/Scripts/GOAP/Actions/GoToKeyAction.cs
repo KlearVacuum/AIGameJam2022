@@ -14,7 +14,7 @@ class GoToKeyAction : GOAP.Action
 
         PathQuery pathQuery = new PathQuery();
 
-        if (m_Precondition.Contains("IsWet", true))
+        if (m_Precondition.ContainsKey("IsWet") == false)
         {
             pathQuery.AddFilter<FireplaceTile>();
         }

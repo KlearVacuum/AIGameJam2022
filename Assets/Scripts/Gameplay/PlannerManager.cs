@@ -10,9 +10,6 @@ public class PlannerManager : MonoBehaviour
     [SerializeField] GameObject actionPanel;
 
     List<ActionNodePanel> m_ActionNodePanels;
-    // [SerializeField] List<ConditionNode> m_AvailableConditionNodes = new List<ConditionNode>();
-
-    // List<ActionNode> m_AddedActionNodes = new List<ActionNode>();
 
     bool m_SimulationRunning = false;
     public bool SimulationRunning => m_SimulationRunning;

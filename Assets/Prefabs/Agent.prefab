@@ -80,6 +80,8 @@ MonoBehaviour:
   startingControlChips: 3
   manualControlTime: 5
   itemsUI: {fileID: 0}
+  m_DefaultActions:
+  - {fileID: 11400000, guid: 22326a4b2ca02ee458fb96f24759a597, type: 2}
   m_Planner:
     m_AvailableActions:
     - {fileID: 11400000, guid: 9397541d08312924bac4354f46daae71, type: 2}

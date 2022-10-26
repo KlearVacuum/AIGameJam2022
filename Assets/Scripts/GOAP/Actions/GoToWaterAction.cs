@@ -14,8 +14,6 @@ class GoToWaterAction : GOAP.Action
             {
                 Complete(agent.WorldState);
             });
-
-        Debug.LogWarning("No water tile found in go to water action");
     }
 
     public override void Execute(Agent agent)

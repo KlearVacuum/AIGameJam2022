@@ -484,6 +484,7 @@ public class Agent : MonoBehaviour
         {
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
+            m_Rigidbody2D.velocity = Vector2.zero;
             m_Fan?.gameObject.SetActive(false);
             audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
@@ -503,6 +504,5 @@ public class Agent : MonoBehaviour
             resumePath.TargetPosition,
             resumePath.PathQuery,
             resumePath.PathCompleteAction);
-
     }
 }
