@@ -35,5 +35,22 @@ class SpeedBoost : MonoBehaviour
     {
         m_Agent.SetSpeed(m_OriginalSpeed);
         m_Agent.ApplyStatus(m_DefaultStatus);
+
+
+        Path path = m_Agent.GetCurrentPath();
+
+        if(path != null)
+        {
+            PathQuery pathQuery = new PathQuery(path.PathQuery);
+
+            pathQuery.RemoveFilter<WaterTile>();
+
+            if(m_Agent.WorldState.GetStateValue<bool>("IsWet") == false)
+            {
+                pathQuery.AddFilter<FireTile>();
+            }
+
+            m_Agent.ReplanWithNewPathQuery(pathQuery);
+        }
     }
 }

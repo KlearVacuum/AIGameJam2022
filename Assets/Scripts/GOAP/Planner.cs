@@ -14,8 +14,10 @@ namespace GOAP
         Queue<PlanRequest> m_PlanRequests = new Queue<PlanRequest>();
         Dictionary<string, IStateValue> m_PreviousDesiredState;
 
-        Plan m_CurrentPlan = null; 
+        Plan m_CurrentPlan = null;
 
+        bool m_Paused = false;
+        public bool IsPaused => m_Paused;
         private Agent m_Agent;
 
         public void Initialize(Agent agent)
@@ -32,7 +34,7 @@ namespace GOAP
         {
             EvaluateCurrentPlan();
 
-            if(m_CurrentPlan == null && m_PlanRequests.Count > 0)
+            if(m_CurrentPlan == null || m_PlanRequests.Count > 0)
             {
                 PlanRequest planRequest = m_PlanRequests.Dequeue();
                 m_PreviousDesiredState = new Dictionary<string, IStateValue>(planRequest.DesiredState);
@@ -42,6 +44,21 @@ namespace GOAP
             return m_CurrentPlan;
         }
 
+        public void RestartPlan()
+        {
+            m_CurrentPlan = null;
+            m_PlanRequests.Enqueue(new PlanRequest(m_PreviousDesiredState));
+        }
+
+        public void PausePlanner()
+        {
+            m_Paused = true;
+        }
+
+        public void ResumePlanner()
+        {
+            m_Paused = false;
+        }
         private void EvaluateCurrentPlan()
         {
             if (m_CurrentPlan == null)
