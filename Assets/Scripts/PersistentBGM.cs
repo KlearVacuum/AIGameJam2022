@@ -46,14 +46,6 @@ public class PersistentBGM : MonoBehaviour
         aSource1.Play();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            // PlayNextBGM();
-        }
-    }
-
     public void PlayNextBGM(AudioClip nextClip)
     {
         ChangeVolume(GetActiveAudioSource(), 0, 0.1f);
