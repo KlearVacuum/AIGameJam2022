@@ -20,30 +20,48 @@ public class PersistentBGM : MonoBehaviour
     {
         if (instance != null)
         {
+            if (SceneManager.GetActiveScene().name == "MainMenu")
+            {
+                instance.PlayMainMenuBGM();
+            }
+            else
+            {
+                instance.PlayGameplayBGM();
+            }
             Destroy(gameObject);
             return;
         }
         else
         {
             instance = this;
+            activeAudioSource = 0;
+
+            aSource1.volume = volumeMultiplier;
+            aSource2.volume = 0;
+
+            if (SceneManager.GetActiveScene().name == "MainMenu")
+            {
+                aSource1.clip = mainMenuClip;
+                aSource2.clip = bgmClip;
+            }
+            else
+            {
+                aSource1.clip = bgmClip;
+                aSource2.clip = mainMenuClip;
+            }
+            aSource1.Play();
         }
         DontDestroyOnLoad(gameObject);
-        activeAudioSource = 0;
+    } 
 
-        aSource1.volume = volumeMultiplier;
-        aSource2.volume = 0;
+    public void PlayMainMenuBGM()
+    {
+        PlayNextBGM(mainMenuClip);
+    }
 
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            aSource1.clip = mainMenuClip;
-            aSource2.clip = bgmClip;
-        }
-        else
-        {
-            aSource1.clip = bgmClip;
-            aSource2.clip = mainMenuClip;
-        }
-        aSource1.Play();
+    public void PlayGameplayBGM()
+    {
+        PlayNextBGM(bgmClip);
     }
 
     public void PlayNextBGM(AudioClip nextClip)
