@@ -329,6 +329,11 @@ public class Agent : MonoBehaviour
         return false;
     }
 
+    public bool AddPathRequestToClosestTileOfType<T>(Action<Agent> pathCompleteAction)
+    {
+        return AddPathRequestToClosestTileOfType<T>(new PathQuery(), pathCompleteAction);
+    }
+
     private void EvaluateCurrentPath()
     {
         if(m_CurrentPath == null)
@@ -346,6 +351,12 @@ public class Agent : MonoBehaviour
     {
         m_Planner.AssignActions(actions);
     }
+
+    public void Replan()
+    {
+        m_Planner.RestartPlan(m_WorldState);
+    }
+
     public void AddPlanRequest(Dictionary<string, GOAP.IStateValue> desiredState)
     {
         m_Planner.AddPlanRequest(desiredState);

@@ -11,7 +11,7 @@ public class ActionNode : ScriptableObject
 
     GOAP.Action m_ActionInstance;
 
-    public string ActionName => m_ActionInstance.name;
+    public string ActionName => m_ActionInstance.GetName();
     public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
     // This is always a copy
@@ -29,6 +29,8 @@ public class ActionNode : ScriptableObject
     {
         GOAP.Action newAction = m_ActionInstance;
 
+        newAction.ClearPreconditions();
+
         if(m_SelectedCondition != null)
         {
             newAction.AddPrecondition(m_SelectedCondition);
@@ -40,6 +42,8 @@ public class ActionNode : ScriptableObject
     public void SetConditionUsingIndex(int conditionIndex)
     {
         List<ConditionNode> conditionNodes = m_ConditionNodeList.ConditionNodes;
+
+        m_ActionInstance.RemovePrecondition(m_SelectedCondition);
 
         if(conditionIndex == 0)
         {

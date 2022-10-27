@@ -12,7 +12,7 @@ class GoToKeyAction : GOAP.Action
 
         Debug.Assert(key != null, "There is no key in the world!");
 
-        PathQuery pathQuery = new PathQuery(null);
+        PathQuery pathQuery = new PathQuery();
 
         if (m_Precondition.ContainsKey("IsWet") == false && 
             m_Precondition.ContainsKey("IsShocked") == false)

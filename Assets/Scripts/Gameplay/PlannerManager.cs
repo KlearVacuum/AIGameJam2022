@@ -34,22 +34,6 @@ public class PlannerManager : MonoBehaviour
         }
     }
 
-    //public void AddActionNode(ActionNode actionNode)
-    //{
-    //    if(m_AddedActionNodes.Contains(actionNode) == false)
-    //    {
-    //        m_AddedActionNodes.Add(actionNode);
-    //    }
-    //}
-
-    //public void RemoveActionNode(ActionNode actionNode)
-    //{
-    //    if(m_AddedActionNodes.Contains(actionNode))
-    //    {
-    //        m_AddedActionNodes.Remove(actionNode);
-    //    }
-    //}
-
     public void StartSimulation()
     {
         SetupAgent();
@@ -74,5 +58,6 @@ public class PlannerManager : MonoBehaviour
         }
 
         m_Agent.AssignActions(actions);
+        m_Agent.Replan();
     }
 }

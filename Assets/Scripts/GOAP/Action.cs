@@ -48,6 +48,16 @@ namespace GOAP
             return m_Precondition.Validate(worldState);
         }
 
+        public virtual void ClearPreconditions()
+        {
+            m_Precondition.Conditions.Clear();
+        }
+
+        public virtual void RemovePrecondition(IStateData condition)
+        {
+            m_Precondition.RemoveCondition(condition);
+        }
+
         public ExecutionStatus GetStatus() => m_ExecutionStatus;
         public bool Succeeded() => m_ExecutionStatus == ExecutionStatus.Succeeded;
         public bool Failed() => m_ExecutionStatus == ExecutionStatus.Failed;
