@@ -51,6 +51,7 @@ public class Agent : MonoBehaviour
     float m_CurrentSpeed;
     [SerializeField] KeyCode m_ManualControlKey;
     [SerializeField] bool manualControl;
+    [SerializeField] bool enableManualControl;
     public int startingControlChips;
     int remainingControlChips;
     public float manualControlTime;
