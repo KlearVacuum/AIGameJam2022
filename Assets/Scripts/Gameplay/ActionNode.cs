@@ -11,7 +11,7 @@ public class ActionNode : ScriptableObject
 
     GOAP.Action m_ActionInstance;
 
-    public string ActionName => m_ActionInstance.name;
+    public string ActionName => m_ActionInstance.GetName();
     public ConditionNodeList ConditionList => m_ConditionNodeList; 
 
     // This is always a copy

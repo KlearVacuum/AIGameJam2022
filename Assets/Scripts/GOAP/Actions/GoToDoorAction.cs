@@ -12,7 +12,7 @@ class GoToDoorAction : GOAP.Action
 
         Debug.Assert(door != null, "There is no door in the world!");
 
-        PathQuery pathQuery = new PathQuery(null);
+        PathQuery pathQuery = new PathQuery();
 
         if(m_Precondition.ContainsKey("IsWet") == false &&
            m_Precondition.ContainsKey("IsShocked") == false)

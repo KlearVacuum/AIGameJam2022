@@ -329,6 +329,11 @@ public class Agent : MonoBehaviour
         return false;
     }
 
+    public bool AddPathRequestToClosestTileOfType<T>(Action<Agent> pathCompleteAction)
+    {
+        return AddPathRequestToClosestTileOfType<T>(new PathQuery(), pathCompleteAction);
+    }
+
     private void EvaluateCurrentPath()
     {
         if(m_CurrentPath == null)
