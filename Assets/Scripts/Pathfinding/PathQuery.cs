@@ -5,6 +5,11 @@ public class PathQuery
 {
     HashSet<Type> m_Filter = new HashSet<Type>();
 
+    public PathQuery()
+    {
+        m_Filter = new HashSet<Type>();
+    }
+
     public PathQuery(PathQuery rhs)
     {
         m_Filter = new HashSet<Type>(m_Filter);
