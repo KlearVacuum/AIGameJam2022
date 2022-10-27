@@ -14,12 +14,6 @@ class GoToKeyAction : GOAP.Action
 
         PathQuery pathQuery = new PathQuery();
 
-        if (m_Precondition.ContainsKey("IsWet") == false && 
-            m_Precondition.ContainsKey("IsShocked") == false)
-        {
-            pathQuery.AddFilter<FireplaceTile>(5);
-        }
-
         if (m_Precondition.ContainsKey("IsShocked"))
         {
             pathQuery.AddFilter<WaterTile>(5);

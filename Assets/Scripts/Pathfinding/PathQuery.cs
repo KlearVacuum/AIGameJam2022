@@ -8,6 +8,8 @@ public class PathQuery
     public PathQuery()
     {
         m_Filter = new Dictionary<Type, int>();
+
+        AddFilter<FireplaceTile>(50);
     }
 
     public PathQuery(PathQuery rhs)
