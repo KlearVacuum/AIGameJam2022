@@ -78,6 +78,31 @@ namespace GOAP
             return false;
         }
 
+        public void RemoveCondition(IStateData conditionToRemove)
+        {
+            if(conditionToRemove != null)
+            {
+                foreach(IStateData condition in m_Conditions)
+                {
+                    if(condition.Key != conditionToRemove.Key)
+                    {
+                        continue;
+                    }
+
+                    bool hasSameValue =
+                        StateValueComparer.Compare(
+                           condition.GetStateValue(),
+                           conditionToRemove.GetStateValue());
+
+                    if(hasSameValue)
+                    {
+                        m_Conditions.Remove(conditionToRemove);
+                        break;
+                    }
+                }
+            }
+        }
+
         private bool CompareStateValueToWorldState<T>(IStateData state, Blackboard worldState)
         {
             StateData<T> data = state as StateData<T>;

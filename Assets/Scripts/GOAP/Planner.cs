@@ -44,9 +44,29 @@ namespace GOAP
             return m_CurrentPlan;
         }
 
-        public void RestartPlan()
+        public void RestartPlan(Blackboard worldState)
         {
+            if(m_PlanRequests.Count > 0)
+            {
+                return;
+            }
+
             m_CurrentPlan = null;
+
+            if (m_PreviousDesiredState == null)
+            {
+                m_PreviousDesiredState = new Dictionary<string, IStateValue>();
+
+                if(worldState.GetStateValue<bool>("HasKey") == false)
+                {
+                    m_PreviousDesiredState.Add("HasKey", new StateValue<bool>(true));
+                }
+                else if (worldState.GetStateValue<bool>("ExitedRoom") == false)
+                {
+                    m_PreviousDesiredState.Add("ExitedRoom", new StateValue<bool>(true));
+                }
+            }
+
             m_PlanRequests.Enqueue(new PlanRequest(m_PreviousDesiredState));
         }
 

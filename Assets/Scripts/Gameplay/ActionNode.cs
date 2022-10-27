@@ -29,6 +29,8 @@ public class ActionNode : ScriptableObject
     {
         GOAP.Action newAction = m_ActionInstance;
 
+        newAction.ClearPreconditions();
+
         if(m_SelectedCondition != null)
         {
             newAction.AddPrecondition(m_SelectedCondition);
@@ -40,6 +42,8 @@ public class ActionNode : ScriptableObject
     public void SetConditionUsingIndex(int conditionIndex)
     {
         List<ConditionNode> conditionNodes = m_ConditionNodeList.ConditionNodes;
+
+        m_ActionInstance.RemovePrecondition(m_SelectedCondition);
 
         if(conditionIndex == 0)
         {
