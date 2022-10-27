@@ -8,7 +8,7 @@ class GoToElectricityAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
-        PathQuery pathQuery = new PathQuery();
+        PathQuery pathQuery = new PathQuery(null);
 
         bool addedRequest = agent.AddPathRequestToClosestTileOfType<ElectricTrapTile>(
             pathQuery, 
