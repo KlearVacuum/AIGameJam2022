@@ -122,6 +122,7 @@ public class Agent : MonoBehaviour
 
     public void UpdateAgent()
     {
+        if (scriptedMoveUp) return;
         if (m_Dead)
         {
             // if(m_Dead) Debug.Log("Dead");
@@ -310,6 +311,7 @@ public class Agent : MonoBehaviour
         }
 
         m_Planner.ResumePlanner();
+        scriptedMoveUp = false;
     }
 
     public Path GetCurrentPath()
@@ -487,7 +489,7 @@ public class Agent : MonoBehaviour
 
     private void UpdateItemsUI()
     {
-        itemsUI.text = "Key Obtained: " + m_HasKey + "\n" 
+        itemsUI.text = "Key Obtained: " + m_HasKey + "\n\n" 
                             + "Override Chips: " + remainingControlChips;
         if (manualControl)
         {
