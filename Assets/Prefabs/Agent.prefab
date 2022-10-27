@@ -93,7 +93,6 @@ MonoBehaviour:
     m_AvailableGoals:
     - {fileID: 11400000, guid: c9d0bada1c0930f4f98921906707c488, type: 2}
     - {fileID: 11400000, guid: e170f624318c6ba4c9f96f7de02c6d8c, type: 2}
-    - {fileID: 11400000, guid: 7c8d867870d339c44b34eb9e4dde1bbc, type: 2}
   m_WorldState:
     m_StateList:
     - {fileID: 11400000, guid: c9024c253a027ac42b7a01455265d056, type: 2}

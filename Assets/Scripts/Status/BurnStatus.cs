@@ -17,12 +17,16 @@ public class BurnStatus : Status
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
                     agent.ApplyStatus(m_WetStatus);
+                    agent.WorldState.SetStateValue("IsFrozen", false);
+                    // agent.Replan();
                 });
                 break;
             case WetStatus:
                 statusEffect = new StatusEffect((Agent agent) =>
                 {
                     agent.ApplyStatus(m_DefaultStatus);
+                    agent.WorldState.SetStateValue("IsWet", false);
+                    // agent.Replan();
                 });
                 break;
         }

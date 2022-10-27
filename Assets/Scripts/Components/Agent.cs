@@ -171,7 +171,7 @@ public class Agent : MonoBehaviour
                 if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
                     currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
                 {
-                    // Debug.Log($"Executing {currentAction.GetName()}");
+                    Debug.Log($"Executing {currentAction.GetName()}");
                 }
 
                 currentPlan.Execute(this);
@@ -333,10 +333,23 @@ public class Agent : MonoBehaviour
         return m_CurrentPath;
     }
 
+    // Need to figure out a cleaner way to handle path requests, what is considered a valid repeated request?
+    public void ClearPathPlanningRequests()
+    {
+        m_PathPlanningRequests.Clear();
+    }
+
+    // Todo: Deprecate this and need to find a better way to replan path or set current path to null?
+    public void ClearCurrentPath()
+    {
+        m_CurrentPath = null;
+    }
+
     public void AddPathRequest(Vector3 targetPosition, PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
         m_PathPlanningRequests.Enqueue(new Path.Request(targetPosition, pathQuery, pathCompleteAction));
     }
+
     public bool AddPathRequestToClosestTileOfType<T>(PathQuery pathQuery, Action<Agent> pathCompleteAction)
     {
         Path.Request pathRequest = m_Pathfinding.GeneratePathRequestToClosestTileOfType<T>(
@@ -535,12 +548,13 @@ public class Agent : MonoBehaviour
             m_IsBlown = false;
             m_Rigidbody2D.isKinematic = true;
             m_Rigidbody2D.velocity = Vector2.zero;
-            m_Fan?.gameObject.SetActive(false);
             audioWallCrash.PlayOneShot(aSource);
             ApplyStatus(m_FrozenStatus);
-            Path resumePath = m_CurrentPath;
-            m_CurrentPath = null;
-            StartCoroutine(ResumeAfterWait(1.0f, resumePath));
+
+
+            //Path resumePath = m_CurrentPath;
+            //m_CurrentPath = null;
+            //StartCoroutine(ResumeAfterWait(1.0f, resumePath));
         }
     }
 
@@ -549,10 +563,10 @@ public class Agent : MonoBehaviour
         yield return new WaitForSeconds(seconds);
 
         // Reevaluate path based on old path
-        m_CurrentPath = m_Pathfinding.FindPath(
-            transform.position,
-            resumePath.TargetPosition,
-            resumePath.PathQuery,
-            resumePath.PathCompleteAction);
+        //m_CurrentPath = m_Pathfinding.FindPath(
+        //    transform.position,
+        //    resumePath.TargetPosition,
+        //    resumePath.PathQuery,
+        //    resumePath.PathCompleteAction);
     }
 }

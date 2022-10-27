@@ -43,12 +43,12 @@ class GoToDoorAction : GOAP.Action
 
         desiredState.Add("ExitedRoom", new StateValue<bool>(true));
 
-        agent.AddPlanRequest(desiredState);
+        // agent.AddPlanRequest(desiredState);
     }
 
     public override string GetName() => "GoToDoorAction";
 
-    public override bool IsValid(Blackboard worldState)
+    public override bool CheckIfValid(Blackboard worldState)
     {
         // Need to check if it is still wet
         return true;

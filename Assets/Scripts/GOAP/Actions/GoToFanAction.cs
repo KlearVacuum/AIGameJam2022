@@ -27,11 +27,16 @@ class GoToFanAction : GOAP.Action
         }
     }
 
-    public override string GetName() => "GoToWaterAction";
+    public override string GetName() => "GoToFanAction";
 
-    public override bool IsValid(Blackboard worldState)
+    public override bool CheckIfValid(Blackboard worldState)
     {
-        // Need to check if it is still wet
+        if(worldState.GetStateValue<bool>("IsFrozen") == true)
+        {
+            NotifyFailure();
+            return false;
+        }
+
         return true;
     }
 }

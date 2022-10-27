@@ -31,7 +31,7 @@ class GoToElectricityAction : GOAP.Action
 
     public override string GetName() => "GoToElectricity";
 
-    public override bool IsValid(Blackboard worldState)
+    public override bool CheckIfValid(Blackboard worldState)
     {
         // Need to check if it is still wet
         return true;

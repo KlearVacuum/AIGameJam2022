@@ -34,7 +34,7 @@ namespace GOAP
         {
             EvaluateCurrentPlan();
 
-            if(m_CurrentPlan == null || m_PlanRequests.Count > 0)
+            if(m_CurrentPlan == null && m_PlanRequests.Count > 0)
             {
                 PlanRequest planRequest = m_PlanRequests.Dequeue();
                 m_PreviousDesiredState = new Dictionary<string, IStateValue>(planRequest.DesiredState);
