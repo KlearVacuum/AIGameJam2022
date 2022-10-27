@@ -3459,6 +3459,14 @@ PrefabInstance:
       propertyPath: m_Tilemap
       value: 
       objectReference: {fileID: 1980173922}
+    - target: {fileID: 7367679284849275862, guid: 84f46f42a25eff346b6d56f960c76ea2, type: 3}
+      propertyPath: m_Planner.m_DefaultActions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367679284849275862, guid: 84f46f42a25eff346b6d56f960c76ea2, type: 3}
+      propertyPath: m_Planner.m_DefaultActions.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6c7f285b05241e944bc54b5c6d564c0c, type: 2}
     - target: {fileID: 7367679286137736988, guid: 84f46f42a25eff346b6d56f960c76ea2, type: 3}
       propertyPath: m_ShadowIntensityEnabled
       value: 0

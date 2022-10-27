@@ -156,6 +156,7 @@ class Pathfinding
 
         while(openList.Count > 0)
         {
+            bool foundTile = false;
             Node currentNode = openList.Dequeue();
 
             closedList.Add(currentNode.Position);
@@ -170,12 +171,18 @@ class Pathfinding
                 if(neighbourNode.Tile.GetType() == typeof(T))
                 {
                     bestNode = neighbourNode;
+                    foundTile = true;
                     break;
                 }
                 else
                 {
                     openList.Enqueue(neighbourNode);
                 }
+            }
+
+            if(foundTile)
+            {
+                break;
             }
         }
 

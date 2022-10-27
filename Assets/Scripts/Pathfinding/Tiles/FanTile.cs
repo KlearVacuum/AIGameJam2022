@@ -6,6 +6,7 @@ public class FanTile : PathfindingTile
 {
     [SerializeField] Fan m_FanPrefab;
     [SerializeField] Fan.Direction m_FanDirection;
+    [SerializeField] Sprite m_WindTileSprite;
 
     public override bool IsWalkable => false;
 
@@ -30,9 +31,19 @@ public class FanTile : PathfindingTile
             // offset trigger
             go.transform.position += GetDirectionVector();
             go.transform.parent = fan.gameObject.transform;
-            fan.SetWindPosition(go.transform.position);
+
+            Vector3 windPosition = go.transform.position;
+
+            fan.SetWindPosition(windPosition);
             fan.SetWindDirection(m_FanDirection);
             fan.SetWindParticleDirection(m_FanDirection);
+
+            Tilemap actualTileMap = tilemap.GetComponent<Tilemap>();
+            WindTile windTile = CreateInstance<WindTile>();
+
+            // Create instance of the wind tile
+            windTile.sprite = m_WindTileSprite;
+            actualTileMap.SetTile(actualTileMap.WorldToCell(windPosition), windTile);
 
             // Initialize fan interactable
             fanInteractable.Initialize(fan);
