@@ -549,8 +549,8 @@ public class Agent : MonoBehaviour
             m_Rigidbody2D.isKinematic = true;
             m_Rigidbody2D.velocity = Vector2.zero;
             audioWallCrash.PlayOneShot(aSource);
+            Replan();
             ApplyStatus(m_FrozenStatus);
-
 
             //Path resumePath = m_CurrentPath;
             //m_CurrentPath = null;

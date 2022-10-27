@@ -8,6 +8,8 @@ class GoToWaterAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
+        agent.ClearCurrentPath();
+        agent.ClearPathPlanningRequests();
         bool addedRequest = agent.AddPathRequestToClosestTileOfType<WaterTile>(
             new PathQuery(), 
             (Agent agent) =>

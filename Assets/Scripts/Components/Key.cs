@@ -8,6 +8,7 @@ class Key : MonoBehaviour
             Agent agent = collision.gameObject.GetComponent<Agent>();
             agent.audioGetKey.PlayOneShot(agent.aSource);
             agent.PickupKey();
+            agent.WorldState.SetStateValue("HasKey", true);
             gameObject.SetActive(false);
         }
     }

@@ -41,13 +41,29 @@ class GoToKeyAction : GOAP.Action
 
     public override bool CheckIfValid(Blackboard worldState)
     {
-        // Need to check if it is still wet
+        if (worldState.GetStateValue<bool>("HasKey") == true)
+        {
+            NotifyFailure();
+            return false;
+        }
+
         return true;
+    }
+
+    public override void Abort(Agent agent)
+    {
+        Exit(agent);
     }
 
     private void FindAndPathToKey(Agent agent)
     {
         Key key = FindObjectOfType<Key>();
+
+        if(key == null)
+        {
+            NotifyFailure();
+            return;
+        }
 
         Debug.Assert(key != null, "There is no key in the world!");
 
