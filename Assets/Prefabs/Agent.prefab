@@ -77,6 +77,7 @@ MonoBehaviour:
   m_DefaultSpeed: 1
   m_ManualControlKey: 32
   manualControl: 0
+  enableManualControl: 0
   startingControlChips: 3
   manualControlTime: 5
   itemsUI: {fileID: 0}
@@ -98,6 +99,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 22471b575c89af04d84083a439fe32b6, type: 2}
     - {fileID: 11400000, guid: 0e487d6d40d12fe4999a0578f38222cf, type: 2}
     - {fileID: 11400000, guid: d8dcb9ae59fe8ab4fa2bfa30022b62f4, type: 2}
+    - {fileID: 11400000, guid: 3142ca138be0be14fad6dcabd36f903b, type: 2}
+  scriptedMoveDestination: {fileID: 0}
 --- !u!50 &7367679284849275864
 Rigidbody2D:
   serializedVersion: 4
