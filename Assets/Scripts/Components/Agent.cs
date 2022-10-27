@@ -79,6 +79,9 @@ public class Agent : MonoBehaviour
     public float DefaultSpeed => m_DefaultSpeed;
     public float Speed => m_CurrentSpeed;
 
+    public Transform scriptedMoveDestination;
+    bool scriptedMoveUp;
+
     void Awake()
     {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -111,6 +114,10 @@ public class Agent : MonoBehaviour
         remainingControlChips = startingControlChips;
 
         UpdateItemsUI();
+        scriptedMoveUp = true;
+
+        scriptedMoveDestination = GameObject.FindGameObjectWithTag("CamStartPos").transform;
+        StartCoroutine(ScriptedMoveUp(Vector3.Distance(transform.position, scriptedMoveDestination.position) / m_CurrentSpeed));
     }
 
     public void UpdateAgent()
@@ -289,6 +296,20 @@ public class Agent : MonoBehaviour
                 UpdateItemsUI();
             }
         }
+    }
+
+    IEnumerator ScriptedMoveUp(float duration)
+    {
+        float t = 0;
+        m_Planner.PausePlanner();
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, m_CurrentSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        m_Planner.ResumePlanner();
     }
 
     public Path GetCurrentPath()

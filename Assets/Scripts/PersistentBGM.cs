@@ -66,10 +66,10 @@ public class PersistentBGM : MonoBehaviour
 
     public void PlayNextBGM(AudioClip nextClip)
     {
-        ChangeVolume(GetActiveAudioSource(), 0, 0.1f);
+        ChangeVolume(GetActiveAudioSource(), 0, 0.2f, 0);
         SwitchActiveAudioSource(nextClip);
         GetActiveAudioSource().Play();
-        ChangeVolume(GetActiveAudioSource(), 1, 0.1f);
+        ChangeVolume(GetActiveAudioSource(), 1, 0.2f, 1);
     }
 
     AudioSource GetActiveAudioSource()
@@ -91,14 +91,15 @@ public class PersistentBGM : MonoBehaviour
         GetActiveAudioSource().clip = newClip;
     }
 
-    public void ChangeVolume(AudioSource aSource, float volume, float changeSpeed)
+    public void ChangeVolume(AudioSource aSource, float volume, float changeSpeed, float delay)
     {
         bool stopAtEnd = volume <= 0;
-        StartCoroutine(ChangeVolumeOverTime(aSource, volume, changeSpeed, stopAtEnd));
+        StartCoroutine(ChangeVolumeOverTime(aSource, volume, changeSpeed, delay, stopAtEnd));
     }
 
-    IEnumerator ChangeVolumeOverTime(AudioSource aSource, float _volume, float changeSpeed, bool stopAtEnd = false)
+    IEnumerator ChangeVolumeOverTime(AudioSource aSource, float _volume, float changeSpeed, float delay = 0, bool stopAtEnd = false)
     {
+        yield return new WaitForSeconds(delay);
         float volume = _volume * volumeMultiplier;
         float volumeDiff = Mathf.Abs(aSource.volume - volume);
         while (volumeDiff > 0.01f)
