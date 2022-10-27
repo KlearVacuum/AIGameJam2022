@@ -11,6 +11,7 @@ public class Agent : MonoBehaviour
     Path m_CurrentPath;
     Queue<Path.Request> m_PathPlanningRequests = new Queue<Path.Request>();
 
+    GameManager gameManager;
     Pathfinding m_Pathfinding = new Pathfinding();
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
@@ -90,6 +91,7 @@ public class Agent : MonoBehaviour
         aSource = GetComponent<AudioSource>();
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
         m_GlowLight = GetComponentInChildren<Light2D>();
+        gameManager = FindObjectOfType<GameManager>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
         startingScale = transform.localScale.x;
@@ -136,6 +138,8 @@ public class Agent : MonoBehaviour
                 isMoving = false;
                 m_Animator.SetBool("isDead", true);
                 deadSpriteRenderer.enabled = true;
+                gameManager.SetGameState(GameManager.eGameState.LOSE);
+
                 dissolveAmount += Time.deltaTime * dissolveSpeed;
                 m_SpriteRenderer.material.SetFloat("_DissolveAmount", dissolveAmount);
                 deadSpriteRenderer.material.SetFloat("_DissolveAmount", 1-dissolveAmount);
