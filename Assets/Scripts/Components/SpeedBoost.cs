@@ -43,13 +43,6 @@ class SpeedBoost : MonoBehaviour
         {
             PathQuery pathQuery = new PathQuery(path.PathQuery);
 
-            pathQuery.RemoveFilter<WaterTile>();
-
-            if(m_Agent.WorldState.GetStateValue<bool>("IsWet") == false)
-            {
-                pathQuery.AddFilter<FireTile>();
-            }
-
             m_Agent.ReplanWithNewPathQuery(pathQuery);
         }
     }
