@@ -1146,13 +1146,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1379934451}
     m_Modifications:
+    - target: {fileID: 2902641617689260591, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
+      propertyPath: m_ActionNodePanelDataList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902641617689260591, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
+      propertyPath: m_ActionNodePanelDataList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 904290766a3a194489a4fcc19324924e, type: 2}
+    - target: {fileID: 2902641617689260591, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
+      propertyPath: m_ActionNodePanelDataList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e72db9ffc222734d80b88f313641972, type: 2}
     - target: {fileID: 7601865488385336841, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_Name
       value: Dextronomics
       objectReference: {fileID: 0}
     - target: {fileID: 7601865488385336841, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7601865488385336842, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_Pivot.x
@@ -3152,7 +3164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4018153849839334768, guid: ee9dbdd8efb14aa4190b05755d9a95c9, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4018153849839334768, guid: ee9dbdd8efb14aa4190b05755d9a95c9, type: 3}
       propertyPath: m_AnchorMax.x

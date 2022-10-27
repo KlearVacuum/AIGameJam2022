@@ -7,10 +7,7 @@ public class FanTile : PathfindingTile
     [SerializeField] Fan m_FanPrefab;
     [SerializeField] Fan.Direction m_FanDirection;
 
-    Fan m_Fan;
-    public Fan Fan => m_Fan;
-
-    public override bool IsWalkable => m_Fan.gameObject.activeSelf ? false : true;
+    public override bool IsWalkable => false;
 
     public override bool StartUp(Vector3Int location, ITilemap tilemap, GameObject go)
     {
@@ -26,19 +23,19 @@ public class FanTile : PathfindingTile
             FanInteractable fanInteractable = interactableTrigger.Interactable as FanInteractable;
 
             // Instantiate fan
-            m_Fan = Instantiate(m_FanPrefab);
-            m_Fan.transform.position = go.transform.position;
+            Fan fan = Instantiate(m_FanPrefab);
+            fan.transform.position = go.transform.position;
             // DeactivateFan();
 
             // offset trigger
             go.transform.position += GetDirectionVector();
-            go.transform.parent = m_Fan.gameObject.transform;
-            m_Fan.SetWindPosition(go.transform.position);
-            m_Fan.SetWindDirection(m_FanDirection);
-            m_Fan.SetWindParticleDirection(m_FanDirection);
+            go.transform.parent = fan.gameObject.transform;
+            fan.SetWindPosition(go.transform.position);
+            fan.SetWindDirection(m_FanDirection);
+            fan.SetWindParticleDirection(m_FanDirection);
 
             // Initialize fan interactable
-            fanInteractable.Initialize(m_Fan);
+            fanInteractable.Initialize(fan);
 
             return true;
         }
