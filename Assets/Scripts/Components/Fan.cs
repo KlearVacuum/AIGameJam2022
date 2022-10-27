@@ -63,6 +63,16 @@ public class Fan : MonoBehaviour
         }
     }
 
+    public void Activate()
+    {
+        PlayParticles(true);
+    }
+
+    public void Deactivate()
+    {
+        PlayParticles(false);
+    }
+
     public void PlayParticles(bool play)
     {
         if (play)

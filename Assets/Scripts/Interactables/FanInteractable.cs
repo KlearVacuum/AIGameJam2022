@@ -6,17 +6,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Interactable/Fan")]
 public class FanInteractable : Interactable
 {
-    FanTile m_FanTile;
+    Fan m_Fan;
 
-    public void Initialize(FanTile fanTile)
+    public void Initialize(Fan fan)
     {
-        m_FanTile = fanTile;
+        m_Fan = fan;
     }
 
     public override void Interact(Agent agent, Vector3 tilePosition)
     {
         // Activate fan
-        m_FanTile.ActivateFan();
+        m_Fan.Activate();
 
         if(agent.Status is FrozenStatus)
         {
@@ -25,18 +25,18 @@ public class FanInteractable : Interactable
 
         if (!agent.IsBlown)
         {
-            agent.SetCoroutine(MoveAgentToWindPosition(agent, m_FanTile.GetWindPosition()));
+            agent.SetCoroutine(MoveAgentToWindPosition(agent, m_Fan.WindPosition));
         }
 
         agent.SetIsBlown(true);
-        agent.SetFan(m_FanTile.Fan);
+        agent.SetFan(m_Fan);
 
         // Debug.Log("Blow");
     }
 
     public override void ExitTrigger(Agent agent)
     {
-        m_FanTile.DeactivateFan();
+        m_Fan.Deactivate();
     }
 
     IEnumerator MoveAgentToWindPosition(Agent agent, Vector3 windPosition)
