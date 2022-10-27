@@ -116,16 +116,17 @@ class Pathfinding
 
                 Vector3Int neighbourPosition = neighbourNode.Position;
 
-                int newGCost = 
-                    currentNodeGCost + GetHeuristic(currentNode, neighbourNode);
+                int costModifier = pathQuery.GetCostModifier(currentNode.Tile);
+                int heuristicCost = GetHeuristic(currentNode, neighbourNode) * costModifier;
+                int newCost = currentNodeGCost + heuristicCost;
                 int currentNeighbourGCost = 
                     costTable.ContainsKey(neighbourPosition) ? costTable[neighbourPosition] : int.MaxValue;
 
-                if (newGCost < currentNeighbourGCost)
+                if (newCost < currentNeighbourGCost)
                 {
-                    costTable[neighbourPosition] = newGCost;
+                    costTable[neighbourPosition] = newCost;
 
-                    neighbourNode.SetGCost(newGCost);
+                    neighbourNode.SetGCost(newCost);
                     neighbourNode.SetHCost(GetHeuristic(neighbourNode, targetNode));
                     openList.Add(neighbourNode);
                 }
@@ -225,7 +226,7 @@ class Pathfinding
                 Vector3Int neighbourPos = new Vector3Int(node.Position.x + x, node.Position.y + y);
                 PathfindingTile neighbourTile = m_Tilemap.GetTile(neighbourPos) as PathfindingTile;
 
-                if (neighbourTile != null && neighbourTile.IsWalkable && pathQuery.PassFilter(neighbourTile))
+                if (neighbourTile != null && neighbourTile.IsWalkable)
                 {
                     Node neighbourNode = new Node(neighbourPos, neighbourTile);
 
