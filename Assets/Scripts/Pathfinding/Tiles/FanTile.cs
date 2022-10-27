@@ -28,39 +28,22 @@ public class FanTile : PathfindingTile
             // Instantiate fan
             m_Fan = Instantiate(m_FanPrefab);
             m_Fan.transform.position = go.transform.position;
-            DeactivateFan();
-
-            // Initialize fan interactable
-            fanInteractable.Initialize(this);
+            // DeactivateFan();
 
             // offset trigger
             go.transform.position += GetDirectionVector();
+            go.transform.parent = m_Fan.gameObject.transform;
             m_Fan.SetWindPosition(go.transform.position);
             m_Fan.SetWindDirection(m_FanDirection);
             m_Fan.SetWindParticleDirection(m_FanDirection);
+
+            // Initialize fan interactable
+            fanInteractable.Initialize(m_Fan);
 
             return true;
         }
 
         return false;
-    }
-
-    public void ActivateFan()
-    {
-        // Debug.Log("Fan activated");
-        // m_Fan.gameObject.SetActive(true);
-        m_Fan.PlayParticles(true);
-    }
-
-    public void DeactivateFan()
-    {
-        // m_Fan.gameObject.SetActive(false);
-        m_Fan.PlayParticles(false);
-    }
-
-    public Vector3 GetWindPosition()
-    {
-        return m_Fan.WindPosition;
     }
 
     Vector3Int GetDirectionVector()
