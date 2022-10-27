@@ -41,7 +41,7 @@ namespace GOAP
 
         public virtual void Abort(Agent agent) { }
 
-        public abstract bool IsValid(Blackboard worldState);
+        public abstract bool CheckIfValid(Blackboard worldState);
 
         public virtual bool Validate(Blackboard worldState)
         {
@@ -71,6 +71,11 @@ namespace GOAP
             Debug.Assert(isValid, $"Attempting to re-execute a completed/failed Action : {GetName()}");
 
             m_ExecutionStatus = ExecutionStatus.Executing;
+        }
+
+        public void ResetStatus()
+        {
+            m_ExecutionStatus = ExecutionStatus.None;
         }
 
         public virtual void NotifySuccess()

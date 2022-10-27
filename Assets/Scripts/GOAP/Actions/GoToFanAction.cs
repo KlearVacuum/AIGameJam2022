@@ -3,15 +3,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToElectricity")]
-class GoToElectricityAction : GOAP.Action
+[CreateAssetMenu(menuName = "Planner/Actions/GoToFan")]
+class GoToFanAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
-        PathQuery pathQuery = new PathQuery();
-
-        bool addedRequest = agent.AddPathRequestToClosestTileOfType<ElectricTrapTile>(
-            pathQuery, 
+        bool addedRequest = agent.AddPathRequestToClosestTileOfType<WindTile>(
+            new PathQuery(), 
             (Agent agent) =>
             {
                 Complete(agent.WorldState);
@@ -29,11 +27,16 @@ class GoToElectricityAction : GOAP.Action
         }
     }
 
-    public override string GetName() => "GoToElectricity";
+    public override string GetName() => "GoToFanAction";
 
     public override bool CheckIfValid(Blackboard worldState)
     {
-        // Need to check if it is still wet
+        if(worldState.GetStateValue<bool>("IsFrozen") == true)
+        {
+            NotifyFailure();
+            return false;
+        }
+
         return true;
     }
 }

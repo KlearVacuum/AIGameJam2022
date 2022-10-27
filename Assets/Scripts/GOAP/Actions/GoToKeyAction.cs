@@ -7,22 +7,9 @@ class GoToKeyAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
-        // Find Key
-        Key key = FindObjectOfType<Key>();
-
-        Debug.Assert(key != null, "There is no key in the world!");
-
-        PathQuery pathQuery = new PathQuery();
-
-        if (m_Precondition.ContainsKey("IsShocked"))
-        {
-            pathQuery.AddFilter<WaterTile>(5);
-        }
-
-        agent.AddPathRequest(key.transform.position, pathQuery, (Agent agent) =>
-        {
-            Complete(agent.WorldState);
-        });
+        agent.ClearCurrentPath();
+        agent.ClearPathPlanningRequests();
+        FindAndPathToKey(agent);
     }
 
     public override void Execute(Agent agent)
@@ -34,6 +21,10 @@ class GoToKeyAction : GOAP.Action
         {
             Vector3 newPosition = path.Update(agent);
             agent.transform.position = newPosition;
+        }
+        else
+        {
+            FindAndPathToKey(agent);
         }
     }
 
@@ -48,9 +39,44 @@ class GoToKeyAction : GOAP.Action
 
     public override string GetName() => "GoToKeyAction";
 
-    public override bool IsValid(Blackboard worldState)
+    public override bool CheckIfValid(Blackboard worldState)
     {
-        // Need to check if it is still wet
+        if (worldState.GetStateValue<bool>("HasKey") == true)
+        {
+            NotifyFailure();
+            return false;
+        }
+
         return true;
+    }
+
+    public override void Abort(Agent agent)
+    {
+        Exit(agent);
+    }
+
+    private void FindAndPathToKey(Agent agent)
+    {
+        Key key = FindObjectOfType<Key>();
+
+        if(key == null)
+        {
+            NotifyFailure();
+            return;
+        }
+
+        Debug.Assert(key != null, "There is no key in the world!");
+
+        PathQuery pathQuery = new PathQuery();
+
+        if (m_Precondition.ContainsKey("IsShocked"))
+        {
+            pathQuery.AddFilter<WaterTile>(5);
+        }
+
+        agent.AddPathRequest(key.transform.position, pathQuery, (Agent agent) =>
+        {
+            Complete(agent.WorldState);
+        });
     }
 }

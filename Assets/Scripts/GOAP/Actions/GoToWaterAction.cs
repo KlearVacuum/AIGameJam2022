@@ -8,6 +8,8 @@ class GoToWaterAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
+        agent.ClearCurrentPath();
+        agent.ClearPathPlanningRequests();
         bool addedRequest = agent.AddPathRequestToClosestTileOfType<WaterTile>(
             new PathQuery(), 
             (Agent agent) =>
@@ -29,7 +31,7 @@ class GoToWaterAction : GOAP.Action
 
     public override string GetName() => "GoToWaterAction";
 
-    public override bool IsValid(Blackboard worldState)
+    public override bool CheckIfValid(Blackboard worldState)
     {
         // Need to check if it is still wet
         return true;

@@ -22,6 +22,11 @@ namespace GOAP
         {
             m_Goal = goal;
             m_Actions = actions;
+
+            foreach(Action action in actions)
+            {
+                action.ResetStatus();
+            }
         }
 
         public void Execute(Agent agent)
@@ -58,6 +63,7 @@ namespace GOAP
                         }
                     case Action.ExecutionStatus.Executing:
                         {
+                            currentAction.CheckIfValid(agent.WorldState);
                             currentAction.Execute(agent);
                             break;
                         }
@@ -90,7 +96,7 @@ namespace GOAP
             ++m_CurrentActionIndex;
         }
 
-        public bool IsValid() => m_CurrentActionIndex < m_Actions.Count;
+        public bool IsValid() => m_ExecutionStatus != ExecutionStatus.Failed && m_CurrentActionIndex < m_Actions.Count;
 
         public bool IsComplete() => m_ExecutionStatus == ExecutionStatus.Succeeded;
 
