@@ -8,7 +8,9 @@ public class PersistentBGM : MonoBehaviour
     public static PersistentBGM instance;
     public AudioClip mainMenuClip;
     public AudioClip bgmClip;
+    public AudioClip noiseClip;
     public float volumeMultiplier;
+    public bool fadeOut;
 
     AudioClip nextClip;
     [Range(0,1)]
@@ -18,15 +20,20 @@ public class PersistentBGM : MonoBehaviour
 
     private void Awake()
     {
+        if (fadeOut)
+        {
+            PlayNextBGM(noiseClip);
+        }
         if (instance != null)
         {
-            if (SceneManager.GetActiveScene().name == "MainMenu")
+            if (!fadeOut)
             {
-                instance.PlayMainMenuBGM();
+                if (SceneManager.GetActiveScene().name == "MainMenu") instance.PlayMainMenuBGM();
+                else instance.PlayGameplayBGM();
             }
             else
             {
-                instance.PlayGameplayBGM();
+                instance.PlayNextBGM(noiseClip);
             }
             Destroy(gameObject);
             return;
@@ -52,7 +59,7 @@ public class PersistentBGM : MonoBehaviour
             aSource1.Play();
         }
         DontDestroyOnLoad(gameObject);
-    } 
+    }
 
     public void PlayMainMenuBGM()
     {
@@ -67,9 +74,13 @@ public class PersistentBGM : MonoBehaviour
     public void PlayNextBGM(AudioClip nextClip)
     {
         ChangeVolume(GetActiveAudioSource(), 0, 0.2f, 0);
-        SwitchActiveAudioSource(nextClip);
-        GetActiveAudioSource().Play();
-        ChangeVolume(GetActiveAudioSource(), 1, 0.2f, 1);
+
+        if (nextClip != null)
+        {
+            SwitchActiveAudioSource(nextClip);
+            GetActiveAudioSource().Play();
+            ChangeVolume(GetActiveAudioSource(), 1, 0.2f, 1);
+        }
     }
 
     AudioSource GetActiveAudioSource()

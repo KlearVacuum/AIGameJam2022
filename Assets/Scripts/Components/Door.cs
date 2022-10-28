@@ -45,8 +45,8 @@ public class Door : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
-
+        m_Opened = true;
+        agent.MoveUp(5f);
         col.enabled = false;
     }
 }

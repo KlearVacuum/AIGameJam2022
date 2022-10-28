@@ -19,6 +19,7 @@ public class FrozenStatus : Status
                     agent.FlashColor(0.5f, m_LightColor);
                     agent.WorldState.SetStateValue("IsWet", true);
                     agent.WorldState.SetStateValue("IsFrozen", false);
+                    agent.freezeParticles.Play();
                     // Other effects..
                 });
                 break;

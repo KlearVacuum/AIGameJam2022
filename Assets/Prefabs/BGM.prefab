@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuClip: {fileID: 8300000, guid: 9f9f625e3b9eb484dbc0c010f2271ae2, type: 3}
   bgmClip: {fileID: 8300000, guid: 0abff737e11937b4fb3d6f8da6821fc0, type: 3}
-  volumeMultiplier: 0.25
+  noiseClip: {fileID: 8300000, guid: 752ce770622dca14c9d4b31ab4ccd2e0, type: 3}
+  volumeMultiplier: 0.45
+  fadeOut: 0
   aSource1: {fileID: 2612338869888457449}
   aSource2: {fileID: 2612338869888457451}
 --- !u!82 &2612338869888457449
@@ -107,7 +109,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.2
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -203,7 +205,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.2
       inSlope: 0
       outSlope: 0
       tangentMode: 0

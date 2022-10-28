@@ -19,6 +19,6 @@ public class ElectricityInteractable : Interactable
             agent.audioZap.PlayOneShot(agent.aSource);
             agent.ApplyStatus(m_Status);
         }
-
+        agent.zapParticles.Play();
     }
 }

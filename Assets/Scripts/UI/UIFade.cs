@@ -16,9 +16,14 @@ public class UIFade : MonoBehaviour
         image.color = new Color(image.color.r, image.color.g, image.color.b, 1);
     }
 
-    public void FadeIn()
+    public void FadeInDelay(float seconds)
     {
-        StartCoroutine(WaitThenFadeInOverSeconds(1f, 1.5f));
+
+    }
+
+    public void FadeIn(float delay = 0)
+    {
+        StartCoroutine(WaitThenFadeInOverSeconds(delay, 1.5f));
     }
 
     public void FadeOut()

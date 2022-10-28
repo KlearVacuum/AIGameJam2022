@@ -8,6 +8,7 @@ public class CameraStateTrigger : MonoBehaviour
     public float fieldOfView;
     public Vector3 offset;
     public bool fadeIn;
+    public float fadeDelay;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,10 +16,8 @@ public class CameraStateTrigger : MonoBehaviour
         {
             Camera.main.GetComponent<CameraScript>().SetCam(target, fieldOfView, offset);
             if (fadeIn)
-            {
-                GlobalGameData.blackPanelFade.FadeIn();
-            }
+                GlobalGameData.blackPanelFade.FadeIn(fadeDelay);
             gameObject.SetActive(false);
         }
-    }
+    } 
 }
