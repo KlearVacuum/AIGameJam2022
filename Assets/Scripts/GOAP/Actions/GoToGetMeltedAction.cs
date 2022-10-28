@@ -3,15 +3,14 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToElectricity")]
-class GoToElectricityAction : GOAP.Action
+[CreateAssetMenu(menuName = "Planner/Actions/GoToGetMelted")]
+class GoToGetMeltedAction : GOAP.Action
 {
     public override void Initialize(Agent agent)
     {
         PathQuery pathQuery = new PathQuery();
 
-        bool addedRequest = agent.AddPathRequestToClosestTileOfType<ElectricTrapTile>(
-            pathQuery, 
+        bool addedRequest = agent.AddPathRequestToClosestTileOfType<FireTile>(
             (Agent agent) =>
             {
                 Complete(agent.WorldState);
@@ -29,14 +28,13 @@ class GoToElectricityAction : GOAP.Action
         }
     }
 
-    public override string GetName() => "GoToElectricity";
+    public override string GetName() => "GoToGetMelted";
 
     public override bool CheckIfValid(Blackboard worldState)
     {
-        // Replan if wet
-        if(worldState.GetStateValue<bool>("IsWet") == true)
+        // No longer wet, should replan
+        if(worldState.GetStateValue<bool>("IsFrozen") == false)
         {
-            NotifyFailure();
             return false;
         }
 

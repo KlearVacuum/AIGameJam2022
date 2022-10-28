@@ -92,6 +92,7 @@ namespace GOAP
                 {
                     // Continue to try to satisfy previous desired state if it hasn't been achieved.
                     AddPlanRequest(m_PreviousDesiredState);
+                    m_CurrentPlan = null;
                 }
                 else
                 {
