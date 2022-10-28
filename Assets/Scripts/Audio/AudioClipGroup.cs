@@ -27,12 +27,16 @@ public class AudioClipGroup : ScriptableObject
     public void PlayOneShot(AudioSource audioSource, float maxDistance = -1)
     {
         if (Time.time >= m_lastPlayedTime && (Time.time - m_lastPlayedTime) < m_minInterval) return;
-        float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
 
-        m_lastPlayedTime = Time.time;
-        audioSource.pitch = Random.Range(m_pitchVariance.x, m_pitchVariance.y);
-        audioSource.panStereo = 0;
+        AudioClip clip = m_clips[Random.Range(0, m_clips.Count)];
         float volume = m_volume;
+        audioSource.pitch = Random.Range(m_pitchVariance.x, m_pitchVariance.y);
+        m_lastPlayedTime = Time.time;
+
+        if (maxDistance < 0) audioSource.PlayOneShot(clip); return;
+
+        float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
+        audioSource.panStereo = 0;
 
         if (maxDistance > 0)
         {
@@ -54,7 +58,6 @@ public class AudioClipGroup : ScriptableObject
         {
             volume = m_volume;
         }
-        AudioClip clip = m_clips[Random.Range(0, m_clips.Count)];
         audioSource.PlayOneShot(clip, volume);
         // Debug.Log(clip + " played");
     }
