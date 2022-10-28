@@ -36,3 +36,4 @@ MonoBehaviour:
   m_ColliderType: 1
   m_FanPrefab: {fileID: 4833348419335772541, guid: 9c3e623e9c3af864da06523305a6bfbd, type: 3}
   m_FanDirection: 3
+  m_WindTileSprite: {fileID: 21300000, guid: a5d1865ee1b972249b75c6dccc8bce78, type: 3}

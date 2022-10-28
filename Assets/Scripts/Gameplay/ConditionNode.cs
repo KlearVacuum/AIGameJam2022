@@ -9,11 +9,14 @@ public class ConditionNode : ScriptableObject
     GOAP.IStateData m_ConditionInstance;
     public GOAP.IStateData Condition => m_ConditionInstance;
 
-    public string ConditionName => m_ConditionInstance.name;
+    public string ConditionName => m_ConditionName;
+
+    private string m_ConditionName;
 
     private void OnEnable()
     {
         m_ConditionInstance = Instantiate(m_ConditionReference);
+        m_ConditionName = m_ConditionReference.name;
     }
 
     public virtual GOAP.IStateData GetCondition()

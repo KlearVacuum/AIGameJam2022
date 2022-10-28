@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GoToElectricity
   m_Cost: 1
   m_Precondition:
-    m_Conditions: []
+    m_Conditions:
+    - {fileID: 11400000, guid: 7004bf99c57ba3248871e951ad2e1cc9, type: 2}
+    - {fileID: 11400000, guid: 9640a72ae053cea4782fc19ffdaa9301, type: 2}
   m_Effect:
     m_Results:
     - {fileID: 11400000, guid: 24b35925c7bab00439d9f7a8d0c1b78f, type: 2}

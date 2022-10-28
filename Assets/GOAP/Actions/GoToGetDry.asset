@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 135de7a752c64594ca178ebe0eacbbf6, type: 3}
-  m_Name: GoToWaterAction
+  m_Script: {fileID: 11500000, guid: 729986b6c81806c4faf9ebe8fcdddf13, type: 3}
+  m_Name: GoToGetDry
   m_EditorClassIdentifier: 
   m_Cost: 1
   m_Precondition:
     m_Conditions:
-    - {fileID: 11400000, guid: 7004bf99c57ba3248871e951ad2e1cc9, type: 2}
+    - {fileID: 11400000, guid: df5cf6e8b2b582f45bc0b2770bcd1b04, type: 2}
     - {fileID: 11400000, guid: 9640a72ae053cea4782fc19ffdaa9301, type: 2}
   m_Effect:
     m_Results:
-    - {fileID: 11400000, guid: df5cf6e8b2b582f45bc0b2770bcd1b04, type: 2}
+    - {fileID: 11400000, guid: 7004bf99c57ba3248871e951ad2e1cc9, type: 2}
+    - {fileID: 11400000, guid: 9640a72ae053cea4782fc19ffdaa9301, type: 2}
