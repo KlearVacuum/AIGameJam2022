@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a27c38b967efc59478c47c5c2955fcaa, type: 3}
-  m_Name: MustBeFrozen
+  m_Name: Must Be Frozen
   m_EditorClassIdentifier: 
   m_StateKey: {fileID: 11400000, guid: 8159876c0324cc84498589937ff4ea1a, type: 2}
   m_StateValue:

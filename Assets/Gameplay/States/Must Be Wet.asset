@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a27c38b967efc59478c47c5c2955fcaa, type: 3}
-  m_Name: MustBeShocked
+  m_Name: Must Be Wet
   m_EditorClassIdentifier: 
-  m_StateKey: {fileID: 11400000, guid: af6799a97398ea54c85bbb22bad0ead6, type: 2}
+  m_StateKey: {fileID: 11400000, guid: 57109ab7241572941abc8354e2642246, type: 2}
   m_StateValue:
     m_Data: 1
