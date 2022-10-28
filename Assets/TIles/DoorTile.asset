@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DoorTile
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: a5d1865ee1b972249b75c6dccc8bce78, type: 3}
-  m_Color: {r: 0.6698113, g: 0.66665184, b: 0.66665184, a: 1}
+  m_Color: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
   m_Transform:
     e00: 1
     e01: 0

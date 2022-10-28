@@ -11,6 +11,7 @@ public class Agent : MonoBehaviour
     Path m_CurrentPath;
     Queue<Path.Request> m_PathPlanningRequests = new Queue<Path.Request>();
 
+    GameManager gameManager;
     Pathfinding m_Pathfinding = new Pathfinding();
     SpriteRenderer m_SpriteRenderer;
     Rigidbody2D m_Rigidbody2D;
@@ -38,6 +39,9 @@ public class Agent : MonoBehaviour
     Fan m_Fan;
 
     [Header("Status")]
+    public ParticleSystem wetParticles;
+    public ParticleSystem zapParticles;
+    public ParticleSystem freezeParticles;
     [SerializeField] StatusHandler m_StatusHandler = new StatusHandler();
     [SerializeField] FrozenStatus m_FrozenStatus;
     public Status Status => m_StatusHandler.CurrentStatus;
@@ -90,6 +94,7 @@ public class Agent : MonoBehaviour
         aSource = GetComponent<AudioSource>();
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
         m_GlowLight = GetComponentInChildren<Light2D>();
+        gameManager = FindObjectOfType<GameManager>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
         startingScale = transform.localScale.x;
@@ -115,15 +120,21 @@ public class Agent : MonoBehaviour
         remainingControlChips = startingControlChips;
 
         UpdateItemsUI();
-        scriptedMoveUp = true;
 
         scriptedMoveDestination = GameObject.FindGameObjectWithTag("CamStartPos").transform;
+
+        scriptedMoveUp = true;
         StartCoroutine(ScriptedMoveUp(Vector3.Distance(transform.position, scriptedMoveDestination.position) / m_CurrentSpeed));
+    }
+
+    public void MoveUp(float distance)
+    {
+        scriptedMoveUp = true;
+        StartCoroutine(ScriptedMoveUp(distance / m_CurrentSpeed));
     }
 
     public void UpdateAgent()
     {
-        if (scriptedMoveUp) return;
         if (m_Dead)
         {
             // if(m_Dead) Debug.Log("Dead");
@@ -136,12 +147,17 @@ public class Agent : MonoBehaviour
                 isMoving = false;
                 m_Animator.SetBool("isDead", true);
                 deadSpriteRenderer.enabled = true;
+                gameManager.SetGameState(GameManager.eGameState.LOSE);
+
                 dissolveAmount += Time.deltaTime * dissolveSpeed;
                 m_SpriteRenderer.material.SetFloat("_DissolveAmount", dissolveAmount);
                 deadSpriteRenderer.material.SetFloat("_DissolveAmount", 1-dissolveAmount);
             }
             return;
         }
+
+        m_Animator.SetBool("isMoving", isMoving);
+        if (scriptedMoveUp) return;
 
         m_StatusHandler.Update(this);
 
@@ -151,7 +167,6 @@ public class Agent : MonoBehaviour
         }
 
         isMoving = GetCurrentPath() != null;
-        m_Animator.SetBool("isMoving", isMoving);
 
         float materialColorIntensity = m_SpriteRenderer.material.GetFloat("_AddColorIntensity");
         if (materialColorIntensity > 0)
@@ -171,7 +186,7 @@ public class Agent : MonoBehaviour
                 if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
                     currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
                 {
-                    Debug.Log($"Executing {currentAction.GetName()}");
+                    // Debug.Log($"Executing {currentAction.GetName()}");
                 }
 
                 currentPlan.Execute(this);
@@ -232,7 +247,7 @@ public class Agent : MonoBehaviour
         Vector2 newDir = direction;
         newDir.y = 0;
         newDir.Normalize();
-        if (Vector2.Dot(newDir, currentFacingDir) < -0.01f)
+        if (Vector2.Dot(newDir, currentFacingDir) < 0f)
         {
             // moving opposite way
             facingDirTime -= Time.deltaTime;
@@ -269,6 +284,7 @@ public class Agent : MonoBehaviour
             float hori = Input.GetAxisRaw("Horizontal");
             float vert = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(hori, vert, 0).normalized;
+            Debug.DrawLine(transform.position, transform.position + direction, Color.green, 1f);
             SetDirection(direction);
             float checkDist = transform.localScale.y/2;
 
@@ -281,7 +297,7 @@ public class Agent : MonoBehaviour
             float distanceFromWall = Vector2.Distance(hit.point, startPos);
             if (hit.collider != null && hit.collider.CompareTag("Wall") && distanceFromWall < checkDist)
             {
-                Debug.DrawLine(startPos, hit.point, Color.red, 1f);
+                // Debug.DrawLine(startPos, hit.point, Color.red, 1f);
                 Debug.Log("moving into wall");
             }
             else
@@ -304,6 +320,7 @@ public class Agent : MonoBehaviour
     {
         float t = 0;
         m_Planner.PausePlanner();
+        isMoving = true;
         while (t < duration)
         {
             t += Time.deltaTime;
@@ -313,6 +330,7 @@ public class Agent : MonoBehaviour
 
         m_Planner.ResumePlanner();
         scriptedMoveUp = false;
+        isMoving = false;
     }
 
     public Path GetCurrentPath()
@@ -504,7 +522,7 @@ public class Agent : MonoBehaviour
     private void UpdateItemsUI()
     {
         itemsUI.text = "Key Obtained: " + m_HasKey + "\n\n" 
-                            + "Override Chips: " + remainingControlChips;
+                            + "[X] Override Chips: " + remainingControlChips;
         if (manualControl)
         {
             itemsUI.text += "\n\n" + "OVERRIDE ACTIVE";
@@ -515,29 +533,28 @@ public class Agent : MonoBehaviour
     {
         float totalTime = seconds;
         float t = 0;
+        float startScale = 1;
+        float endScale = 1;
         if (flipped)
         {
-            while (t < totalTime)
-            {
-                float lerp = Mathf.Lerp(-startingScale, startingScale, t / totalTime);
-                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
-                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
-                t += Time.deltaTime;
-                yield return null;
-            }
+            startScale = -startingScale;
+            endScale = startingScale;
         }
         else
         {
-
-            while (t < totalTime)
-            {
-                float lerp = Mathf.Lerp(startingScale, -startingScale, t / totalTime);
-                if (lerp < 0.01f && lerp > -0.01f) lerp = 0.01f;
-                transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
-                t += Time.deltaTime;
-                yield return null;
-            }
+            startScale = startingScale;
+            endScale = -startingScale;
         }
+        while (t < totalTime)
+        {
+            float lerp = Mathf.Lerp(startScale, endScale, t / totalTime);
+            if (lerp <= 0.001f && lerp >= -0.001f) lerp = 0.001f;
+            transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+            t += Time.deltaTime;
+            if (t > totalTime) t = totalTime;
+            yield return null;
+        }
+        transform.localScale = new Vector3(endScale, transform.localScale.y, transform.localScale.z);
         flipped = !flipped;
     }
 

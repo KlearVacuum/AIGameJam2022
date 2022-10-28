@@ -32,4 +32,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level8.unity
     guid: 97d846c8c0983f44ebf3f2d1e174f8dd
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/EndScene.unity
+    guid: 3a315f56a8a4b9646879e168bd2535ca
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel1.unity
+    guid: 9c8dac990bfa6374ead90d42517c4f2c
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel2.unity
+    guid: eca1dbf7256206047aaf1a4d519512af
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel3.unity
+    guid: 5308452444af3d042961ffaea462eee5
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel4.unity
+    guid: 7f2330379a16c53479abe68060c1ab0e
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel5.unity
+    guid: 3f2b531a985fdce4999a62ef93eb13a2
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel6.unity
+    guid: 0c7a23554572e084588835cb7a968c7b
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel7.unity
+    guid: 8773860af2c4aff4692f43667d704273
+  - enabled: 1
+    path: Assets/Scenes/Cinematics/PreLevel8.unity
+    guid: 61e456bffb46cbc4297139e3f3b4c69f
   m_configObjects: {}

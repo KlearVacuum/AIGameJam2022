@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13debe578ea83c74e926a9be99a10dd3, type: 3}
   m_Name: Level1ConditionNodeList
   m_EditorClassIdentifier: 
-  m_ConditionNodes:
-  - {fileID: 11400000, guid: 171d62dc249cacc46ae8a3e0eb1a693d, type: 2}
+  m_ConditionNodes: []
