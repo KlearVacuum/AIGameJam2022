@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_clips:
   - {fileID: 8300000, guid: 6b66bbf9bf679ee44bee326e4941611f, type: 3}
-  m_volume: 1
+  m_volume: 0.8
   m_pitchVariance: {x: 0.95, y: 1.05}
   m_minInterval: 0.05
+  m_lastPlayedTime: 0

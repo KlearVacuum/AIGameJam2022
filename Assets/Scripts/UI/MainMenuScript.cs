@@ -11,6 +11,7 @@ public class MainMenuScript : MonoBehaviour
     private void Awake()
     {
         aSource = GetComponent<AudioSource>();
+        aSource.volume = 0.5f;
     }
     public void PlayUIHoverSound()
     {

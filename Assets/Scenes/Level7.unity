@@ -4059,7 +4059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912611911361279875, guid: f0a4bfe92ab7a7a4485210a634ce5450, type: 3}
       propertyPath: offset.y
-      value: -1.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4912611911361279875, guid: f0a4bfe92ab7a7a4485210a634ce5450, type: 3}
       propertyPath: fieldOfView
