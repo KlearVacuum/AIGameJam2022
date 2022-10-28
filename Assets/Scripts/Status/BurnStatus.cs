@@ -18,6 +18,7 @@ public class BurnStatus : Status
                 {
                     agent.ApplyStatus(m_WetStatus);
                     agent.WorldState.SetStateValue("IsFrozen", false);
+                    agent.WorldState.SetStateValue("IsWet", true);
                     agent.FlashColor(0.5f, m_LightColor);
                     // agent.Replan();
                 });

@@ -53,6 +53,11 @@ namespace GOAP
 
             m_CurrentPlan = null;
 
+            if(worldState.Fulfills(m_PreviousDesiredState))
+            {
+                m_PreviousDesiredState = null;
+            }
+
             if (m_PreviousDesiredState == null)
             {
                 m_PreviousDesiredState = new Dictionary<string, IStateValue>();

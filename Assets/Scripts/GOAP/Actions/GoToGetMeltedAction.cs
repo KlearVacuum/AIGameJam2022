@@ -10,7 +10,10 @@ class GoToGetMeltedAction : GOAP.Action
     {
         PathQuery pathQuery = new PathQuery();
 
-        bool addedRequest = agent.AddPathRequestToClosestTileOfType<FireTile>(
+        agent.ClearCurrentPath();
+        agent.ClearPathPlanningRequests();
+
+        bool addedRequest = agent.AddPathRequestToClosestTileOfType<FireplaceTile>(
             (Agent agent) =>
             {
                 Complete(agent.WorldState);
