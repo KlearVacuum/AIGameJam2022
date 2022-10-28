@@ -122,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2902641617689260591}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlannerManager, Assembly-CSharp
         m_MethodName: StartSimulation
         m_Mode: 1
@@ -280,7 +280,6 @@ GameObject:
   - component: {fileID: 7601865488385336842}
   - component: {fileID: 7601865488385336844}
   - component: {fileID: 7601865488385336843}
-  - component: {fileID: 2902641617689260591}
   m_Layer: 5
   m_Name: Dextronomics UI
   m_TagString: Untagged
@@ -349,24 +348,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2902641617689260591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7601865488385336841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f682f6730cee1ff4ca5e5f7eac7c0747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Agent: {fileID: 0}
-  m_PanelPrefab: {fileID: 7418451882364975244, guid: cbeebd49f31c97b4c8f01102a7c355b0, type: 3}
-  m_ActionNodePanelDataList:
-  - {fileID: 11400000, guid: 6584c9ab26079da44b2a17cd57c002ee, type: 2}
-  - {fileID: 11400000, guid: bdcecce6dbdbca14991abf694fa965e2, type: 2}
-  actionPanel: {fileID: 8108592969511580472}
 --- !u!1 &7601865489179182276
 GameObject:
   m_ObjectHideFlags: 0
