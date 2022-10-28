@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13debe578ea83c74e926a9be99a10dd3, type: 3}
+  m_Name: Level6ConditionNodeList 1
+  m_EditorClassIdentifier: 
+  m_ConditionNodes:
+  - {fileID: 11400000, guid: 171d62dc249cacc46ae8a3e0eb1a693d, type: 2}
+  - {fileID: 11400000, guid: 05771f2d9200e44469a1c9719c4ab78a, type: 2}

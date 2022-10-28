@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13debe578ea83c74e926a9be99a10dd3, type: 3}
-  m_Name: Level6ConditionNodeList
+  m_Script: {fileID: 11500000, guid: 537052328f9a56647835d3e8e09fbf7f, type: 3}
+  m_Name: Level7_GoToKeyActionNodePanelData
   m_EditorClassIdentifier: 
-  m_ConditionNodes:
-  - {fileID: 11400000, guid: 171d62dc249cacc46ae8a3e0eb1a693d, type: 2}
-  - {fileID: 11400000, guid: 05771f2d9200e44469a1c9719c4ab78a, type: 2}
+  m_ActionNode: {fileID: 11400000, guid: 2dc2eb46f4deb6f4c918fe2aad6db686, type: 2}
