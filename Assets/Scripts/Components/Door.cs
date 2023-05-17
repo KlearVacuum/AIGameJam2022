@@ -11,8 +11,6 @@ public class Door : MonoBehaviour
     BoxCollider2D col;
     public enum Type { HORIZONTAL, VERTICAL }
 
-    bool m_Opened = false;
-
     private void Awake()
     {
         col = GetComponent<BoxCollider2D>();
@@ -45,7 +43,7 @@ public class Door : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        m_Opened = true;
+
         agent.MoveUp(5f);
         col.enabled = false;
     }

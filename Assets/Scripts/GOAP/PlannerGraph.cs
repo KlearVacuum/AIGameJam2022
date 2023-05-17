@@ -175,7 +175,6 @@ namespace GOAP
 
                     if (currentRunningCost < bestRunningCost)
                     {
-                        // actionList.Reverse();
                         bestPlan = new Plan(goal, actionList);
                         bestRunningCost = currentRunningCost;
                     }

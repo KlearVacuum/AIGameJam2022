@@ -8,12 +8,10 @@ namespace GOAP
     public abstract class Goal : ScriptableObject
     {
         [SerializeField] protected float m_Priority;
-        [SerializeField] protected Precondition m_Precondition = new Precondition();
         [SerializeField] protected Effect m_Effect = new Effect();
 
         public virtual float GetPriority() => m_Priority;
 
-        public Precondition GetPreconditions() => m_Precondition;
         public Effect GetEffects() => m_Effect;
         public abstract string GetName();
 
@@ -24,7 +22,7 @@ namespace GOAP
 
         public bool IsSatisfiedBy(Effect effect)
         {
-            return effect.Satisfies(m_Precondition);
+            return effect == m_Effect;
         }
 
     }

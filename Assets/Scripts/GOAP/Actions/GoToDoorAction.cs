@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToDoor")]
+// [CreateAssetMenu(menuName = "Planner/Actions/GoToDoor")]
 class GoToDoorAction : GOAP.Action
 {
     public override void Initialize(Agent agent)

@@ -44,6 +44,7 @@ namespace GOAP
             return m_CurrentPlan;
         }
 
+
         public void RestartPlan(Blackboard worldState)
         {
             if(m_PlanRequests.Count > 0)
@@ -112,7 +113,7 @@ namespace GOAP
 
             if (bestGoal == null)
             {
-                Debug.Log($"Failed to find a plan for " + desiredState);
+                Debug.Log($"Failed to find a plan for desired state : " + desiredState);
                 return null;
             }
 
@@ -127,7 +128,7 @@ namespace GOAP
 
             if (bestPlan == null)
             {
-                Debug.Log($"Failed to find a plan for " + bestGoal);
+                Debug.Log($"Failed to find a plan for goal : " + bestGoal);
             }
 
             return bestPlan;
