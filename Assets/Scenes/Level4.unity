@@ -2438,6 +2438,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1307758557}
     - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fd95ffc8eb5b6644d864a726765f9994, type: 2}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: b2d55c6b06afc5346820a793cf3f0fdd, type: 2}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
       propertyPath: m_ActionNodePanelDataList.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 904290766a3a194489a4fcc19324924e, type: 2}

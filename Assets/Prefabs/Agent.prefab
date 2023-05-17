@@ -120,16 +120,18 @@ MonoBehaviour:
   manualControlTime: 5
   itemsUI: {fileID: 0}
   m_Planner:
+    m_DefaultActionData:
+    - {fileID: 11400000, guid: ab86b86651da33a418dbbe3c8e75bb1f, type: 2}
+    - {fileID: 11400000, guid: f80cfbd0bb70c404cb608abef521e766, type: 2}
+    - {fileID: 11400000, guid: 98fcc5ea7dca2d24fb2a1053842e6893, type: 2}
+    - {fileID: 11400000, guid: fb6115d15d1831e4da3110afe4d0febd, type: 2}
+    - {fileID: 11400000, guid: d5306169d6ead30449707a060e119b11, type: 2}
     m_DefaultActions:
     - {fileID: 11400000, guid: 22326a4b2ca02ee458fb96f24759a597, type: 2}
     - {fileID: 11400000, guid: 7dec521910dfab443b0cf928d38d6673, type: 2}
     - {fileID: 11400000, guid: 6c7f285b05241e944bc54b5c6d564c0c, type: 2}
     - {fileID: 11400000, guid: f9e2c5ea987876849a0906e9c53309be, type: 2}
     - {fileID: 11400000, guid: cd442002c111dd54690882589e99c1f8, type: 2}
-    m_AvailableActions:
-    - {fileID: 11400000, guid: 9397541d08312924bac4354f46daae71, type: 2}
-    - {fileID: 11400000, guid: dc936c4ebf312334489fdd22289f88b9, type: 2}
-    - {fileID: 11400000, guid: 22326a4b2ca02ee458fb96f24759a597, type: 2}
     m_AvailableGoals:
     - {fileID: 11400000, guid: c9d0bada1c0930f4f98921906707c488, type: 2}
     - {fileID: 11400000, guid: e170f624318c6ba4c9f96f7de02c6d8c, type: 2}

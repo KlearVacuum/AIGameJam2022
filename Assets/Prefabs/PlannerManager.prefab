@@ -49,4 +49,7 @@ MonoBehaviour:
   m_ActionNodePanelDataList:
   - {fileID: 11400000, guid: ad69c6ca709199d41b76f1a7a24f9738, type: 2}
   - {fileID: 11400000, guid: 4a37cc8d33ceedc45ab3373433dcd2c2, type: 2}
+  m_ActionNodes:
+  - {fileID: 11400000, guid: 6f7eb4da61a3a344abe554ae74bf453a, type: 2}
+  - {fileID: 11400000, guid: 64b508953005043438a35c8296440aed, type: 2}
   actionPanel: {fileID: 0}

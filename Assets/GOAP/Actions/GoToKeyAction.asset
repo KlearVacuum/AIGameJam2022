@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9879094e923064fb95aeadc9214804, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b4629c1994917040af19eede8e361b9, type: 3}
   m_Name: GoToKeyAction
   m_EditorClassIdentifier: 
-  m_Cost: 1
+  m_Cost: 0
   m_Precondition:
     m_Conditions:
     - {fileID: 11400000, guid: 14ea66bb087e58749a51d4b3bf123823, type: 2}

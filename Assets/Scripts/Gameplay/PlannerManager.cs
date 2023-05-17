@@ -6,7 +6,7 @@ public class PlannerManager : MonoBehaviour
 {
     [SerializeField] Agent m_Agent;
     [SerializeField] ActionNodePanel m_PanelPrefab;
-    [SerializeField] List<ActionNodePanelData> m_ActionNodePanelDataList = new List<ActionNodePanelData>();
+    [SerializeField] List<ActionNode> m_ActionNodes = new List<ActionNode>();
     [SerializeField] GameObject actionPanel;
 
     List<ActionNodePanel> m_ActionNodePanels;
@@ -24,11 +24,11 @@ public class PlannerManager : MonoBehaviour
         m_Agent = GlobalGameData.playerGO.GetComponent<Agent>();
         m_ActionNodePanels = new List<ActionNodePanel>();
 
-        foreach (ActionNodePanelData actionNodePanelData in m_ActionNodePanelDataList)
+        foreach (ActionNode actionNode in m_ActionNodes)
         {
             ActionNodePanel actionNodePanel = Instantiate(m_PanelPrefab, actionPanel.transform);
 
-            actionNodePanel.Initialize(actionNodePanelData.ActionNode);
+            actionNodePanel.Initialize(actionNode);
 
             m_ActionNodePanels.Add(actionNodePanel);
         }

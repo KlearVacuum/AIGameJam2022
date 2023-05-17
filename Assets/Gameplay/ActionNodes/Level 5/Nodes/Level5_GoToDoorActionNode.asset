@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Level5_GoToDoorActionNode
   m_EditorClassIdentifier: 
   m_ActionReference: {fileID: 11400000, guid: 9397541d08312924bac4354f46daae71, type: 2}
+  m_ActionData: {fileID: 11400000, guid: 0ca9e54129db485428782100388b9885, type: 2}
   m_ConditionNodeList: {fileID: 11400000, guid: 559c20bd19afb5e449d4a9fc7a30f399, type: 2}

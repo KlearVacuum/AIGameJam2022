@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c82d8561b27b2394b9e5862775b5348f, type: 3}
+  m_Script: {fileID: 11500000, guid: a84c25a3088dc2648b474805fb30dd66, type: 3}
   m_Name: GoToFanAction
   m_EditorClassIdentifier: 
-  m_Cost: 0
+  m_Cost: 1
   m_Precondition:
     m_Conditions:
     - {fileID: 11400000, guid: df5cf6e8b2b582f45bc0b2770bcd1b04, type: 2}

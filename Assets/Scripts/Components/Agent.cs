@@ -186,7 +186,7 @@ public class Agent : MonoBehaviour
                 if (currentAction.GetStatus() == GOAP.Action.ExecutionStatus.Executing ||
                     currentAction.GetStatus() == GOAP.Action.ExecutionStatus.None)
                 {
-                    Debug.Log($"Executing {currentAction.GetName()}");
+                    // Debug.Log($"Executing {currentAction.GetName()}");
                 }
 
                 currentPlan.Execute(this);

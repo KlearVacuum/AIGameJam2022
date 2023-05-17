@@ -452,6 +452,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1307758557}
     - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 75ff0772b9ec89d4892645ca83682df7, type: 2}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97aee91fb905a3044aa74953957fc3cb, type: 2}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
       propertyPath: m_ActionNodePanelDataList.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: fc089f21bf267764fbb3cebedfe71e70, type: 2}

@@ -3604,6 +3604,14 @@ PrefabInstance:
       propertyPath: actionPanel
       value: 
       objectReference: {fileID: 251025006}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b771dd22656bd1428a9ea908295a5f1, type: 2}
+    - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
+      propertyPath: m_ActionNodes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: fd84b6572e941e44dbefeb5ca59674ac, type: 2}
     - target: {fileID: 4363402429900165467, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
       propertyPath: m_RootOrder
       value: 14

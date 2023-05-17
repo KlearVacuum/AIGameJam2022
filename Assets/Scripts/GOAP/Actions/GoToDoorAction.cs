@@ -2,13 +2,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToDoor")]
 class GoToDoorAction : GOAP.Action
 {
+    public GoToDoorAction(float cost, Precondition precondition, Effect effect)
+        : base(cost, precondition, effect)
+    {
+    }
+
     public override void Initialize(Agent agent)
     {
         // Find Key
-        Door door = FindObjectOfType<Door>();
+        Door door = GameObject.FindObjectOfType<Door>();
 
         Debug.Assert(door != null, "There is no door in the world!");
 

@@ -10,10 +10,22 @@ namespace GOAP
         [SerializeField] List<IStateData> m_Results = new List<IStateData>();
         public List<IStateData> Results => m_Results;
 
+        public Effect()
+        {
+            m_Results = new List<IStateData>();
+        }
+
+        public Effect(Effect other)
+        {
+            m_Results = new List<IStateData>(other.Results);
+        }
+
         public bool Satisfies(Dictionary<string, IStateValue> desiredState)
         {
             foreach (IStateData result in m_Results)
             {
+                Debug.Assert(result != null, "IStateData is null!");
+
                 if (desiredState.ContainsKey(result.Key) == false)
                 {
                     return false;

@@ -40,7 +40,6 @@ namespace GOAP
                 return m_Cost;
             }
 
-            public abstract ScriptableObject GetItem();
             public abstract bool Validate(Blackboard worldState);
             public abstract bool IsSatisfiedBy(Effect effect);
             public abstract string GetName();
@@ -57,7 +56,7 @@ namespace GOAP
                 m_Action = action;
             }
 
-            public override ScriptableObject GetItem()
+            public Action GetAction()
             {
                 return m_Action;
             }
@@ -89,7 +88,7 @@ namespace GOAP
                 m_Goal = goal;
             }
 
-            public override ScriptableObject GetItem()
+            public Goal GetGoal()
             {
                 return m_Goal;
             }
@@ -165,7 +164,7 @@ namespace GOAP
 
                     while (currentNode is ActionNode)
                     {
-                        Action action = currentNode.GetItem() as Action;
+                        Action action = (currentNode as ActionNode).GetAction();
 
                         currentRunningCost += action.GetCost();
                         actionList.Add(action);
@@ -241,12 +240,12 @@ namespace GOAP
 
             do
             {
-                actions.Add(node.GetItem() as Action);
+                actions.Add((node as ActionNode).GetAction());
                 node = node.Parent;
 
             } while (node.Parent != null && node.Parent is not GoalNode);
 
-            return actions.Count > 0 ? new Plan(m_GoalNode.GetItem() as Goal, actions) : null;
+            return actions.Count > 0 ? new Plan(m_GoalNode.GetGoal(), actions) : null;
         }
     }
 }

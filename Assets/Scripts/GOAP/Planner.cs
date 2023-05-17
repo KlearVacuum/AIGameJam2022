@@ -7,9 +7,10 @@ namespace GOAP
     [System.Serializable]
     public class Planner
     {
+        [SerializeField] List<GOAP.ActionData> m_DefaultActionData = new List<GOAP.ActionData>();
         [SerializeField] List<GOAP.Action> m_DefaultActions = new List<GOAP.Action>();
-        [SerializeField] List<Action> m_AvailableActions = new List<Action>();
         [SerializeField] List<Goal> m_AvailableGoals = new List<Goal>();
+        List<Action> m_AvailableActions = new List<Action>();
 
         Queue<PlanRequest> m_PlanRequests = new Queue<PlanRequest>();
         Dictionary<string, IStateValue> m_PreviousDesiredState;
@@ -118,10 +119,15 @@ namespace GOAP
 
             List<Action> availableActions = new List<Action>(m_AvailableActions);
 
-            foreach(Action action in m_DefaultActions)
+            foreach (ActionData actionData in m_DefaultActionData)
             {
-                availableActions.Add(action);
+                availableActions.Add(actionData.CreateAction());
             }
+
+            //foreach(Action action in m_DefaultActions)
+            //{
+            //    availableActions.Add(action);
+            //}
 
             Plan bestPlan = PlannerGraph.GetBestPlan(availableActions, m_Agent.WorldState, bestGoal);
 
@@ -144,7 +150,6 @@ namespace GOAP
             if (actionAlreadyExists == false)
             {
                 m_AvailableActions.Add(actionToAdd);
-                // Debug.Log($"Added new action << {actionToAdd.GetName()} >> .");
             }
             else
             {
@@ -167,7 +172,6 @@ namespace GOAP
             if (goalAlreadyExists == false)
             {
                 m_AvailableGoals.Add(goalToAdd);
-                // Debug.Log($"Added new goal << {goalToAdd.GetName()} >>.");
             }
             else
             {

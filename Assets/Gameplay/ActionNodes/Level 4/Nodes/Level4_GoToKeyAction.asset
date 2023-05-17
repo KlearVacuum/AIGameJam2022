@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Level4_GoToKeyAction
   m_EditorClassIdentifier: 
   m_ActionReference: {fileID: 11400000, guid: dc936c4ebf312334489fdd22289f88b9, type: 2}
+  m_ActionData: {fileID: 11400000, guid: 30a9a7f326cd3db4c94724a5fc69818f, type: 2}
   m_ConditionNodeList: {fileID: 11400000, guid: 1cb3e8b2ae54d3b4dbef956342f54699, type: 2}

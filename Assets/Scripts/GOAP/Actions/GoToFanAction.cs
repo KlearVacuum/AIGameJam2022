@@ -3,9 +3,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToFan")]
 class GoToFanAction : GOAP.Action
 {
+    public GoToFanAction(float cost, Precondition precondition, Effect effect)
+              : base(cost, precondition, effect)
+    {
+    }
+
     public override void Initialize(Agent agent)
     {
         bool addedRequest = agent.AddPathRequestToClosestTileOfType<WindTile>(

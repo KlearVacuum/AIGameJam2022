@@ -1063,13 +1063,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 29936759}
     - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
-      propertyPath: m_ActionNodePanelDataList.Array.data[0]
+      propertyPath: m_ActionNodes.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 9e405c76662d52c46bf7db2620f22d63, type: 2}
+      objectReference: {fileID: 11400000, guid: 1f668d8e2a5d4c7499161f6432d15892, type: 2}
     - target: {fileID: 4363402429900165466, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
-      propertyPath: m_ActionNodePanelDataList.Array.data[1]
+      propertyPath: m_ActionNodes.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 67e156c8e624ed946ab7158fd43f2e46, type: 2}
+      objectReference: {fileID: 11400000, guid: b83fad974b7ffb14cb4bc626ed24ed1b, type: 2}
     - target: {fileID: 4363402429900165467, guid: 448dfe70f840ff2498656987f6d854b7, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -1529,6 +1529,10 @@ PrefabInstance:
     - target: {fileID: 7601865488385336842, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108592969511580472, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
+      propertyPath: m_Name
+      value: ActionNodesPanel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
@@ -3661,6 +3665,10 @@ PrefabInstance:
       propertyPath: m_Tilemap
       value: 
       objectReference: {fileID: 1980173922}
+    - target: {fileID: 7367679284849275862, guid: 84f46f42a25eff346b6d56f960c76ea2, type: 3}
+      propertyPath: m_Planner.m_AvailableActions.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7367679286137736988, guid: 84f46f42a25eff346b6d56f960c76ea2, type: 3}
       propertyPath: m_ShadowIntensityEnabled
       value: 0

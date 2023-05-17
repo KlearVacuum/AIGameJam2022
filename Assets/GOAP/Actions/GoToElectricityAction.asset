@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2017ce351c1a64cb0b839a26ac0ea3, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a8fea91a96aaa64390268b5823f051f, type: 3}
   m_Name: GoToElectricityAction
-  m_EditorClassIdentifier: Assembly-CSharp::GoToElectricity
-  m_Cost: 1
+  m_EditorClassIdentifier: 
+  m_Cost: 0
   m_Precondition:
     m_Conditions:
     - {fileID: 11400000, guid: 7004bf99c57ba3248871e951ad2e1cc9, type: 2}

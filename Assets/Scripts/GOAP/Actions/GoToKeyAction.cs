@@ -2,9 +2,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(menuName = "Planner/Actions/GoToKey")]
 class GoToKeyAction : GOAP.Action
 {
+    public GoToKeyAction(float cost, Precondition precondition, Effect effect)
+                    : base(cost, precondition, effect)
+    {
+    }
+
     public override void Initialize(Agent agent)
     {
         agent.ClearCurrentPath();
@@ -57,7 +61,7 @@ class GoToKeyAction : GOAP.Action
 
     private void FindAndPathToKey(Agent agent)
     {
-        Key key = FindObjectOfType<Key>();
+        Key key = GameObject.FindObjectOfType<Key>();
 
         if(key == null)
         {

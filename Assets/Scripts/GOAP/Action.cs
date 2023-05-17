@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace GOAP
 {
-    public abstract class Action : ScriptableObject
+    public abstract class Action
     {
         public enum ExecutionStatus
         {
@@ -16,23 +16,25 @@ namespace GOAP
             Succeeded
         }
 
-        [SerializeField] protected float m_Cost;
-        [SerializeField] protected Precondition m_Precondition = new Precondition();
-        [SerializeField] protected Effect m_Effect = new Effect();
+        protected float m_Cost;
+        protected Precondition m_Precondition;
+        protected Effect m_Effect;
 
         ExecutionStatus m_ExecutionStatus = ExecutionStatus.None;
 
         protected Agent m_Agent;
 
-        public void OnEnable()
-        {
-            m_ExecutionStatus = ExecutionStatus.None;
-        }
-
         public abstract string GetName();
         public float GetCost() => m_Cost;
         public Precondition GetPreconditions() => m_Precondition;
         public Effect GetEffect() => m_Effect;
+        
+        public Action(float cost, Precondition precondition, Effect effect)
+        {
+            m_Cost = cost;
+            m_Precondition = new Precondition(precondition);
+            m_Effect = new Effect(effect);
+        }
 
         public virtual void Initialize(Agent agent) { }
         public abstract void Execute(Agent agent);

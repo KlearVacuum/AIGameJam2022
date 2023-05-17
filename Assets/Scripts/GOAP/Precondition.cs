@@ -11,6 +11,16 @@ namespace GOAP
 
         public List<IStateData> Conditions => m_Conditions;
 
+        public Precondition()
+        {
+            m_Conditions = new List<IStateData>();
+        }
+
+        public Precondition(Precondition other)
+        {
+            m_Conditions = new List<IStateData>(other.m_Conditions);
+        }
+
         public bool Validate(Blackboard worldState)
         {
             foreach (IStateData state in m_Conditions)

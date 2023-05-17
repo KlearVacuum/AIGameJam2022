@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ce79712dd5c7fc45a4711df22cbc7a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eddfb0d697c96c4a8a7adf90de8af65, type: 3}
   m_Name: GoToDoorAction
   m_EditorClassIdentifier: 
-  m_Cost: 1
+  m_Cost: 0
   m_Precondition:
     m_Conditions:
     - {fileID: 11400000, guid: 81819245103305d42b2b34555ae856a4, type: 2}
