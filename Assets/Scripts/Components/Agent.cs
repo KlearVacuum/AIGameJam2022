@@ -455,8 +455,6 @@ public class Agent : MonoBehaviour
     {
         m_Dead = true;
         m_IsBlown = false;
-        m_Rigidbody2D.simulated = false;
-        m_Rigidbody2D.isKinematic = true;
         dissolveSpeed = _dissolveSpeed;
 
         // Debug.Log("Death position " + deathPosition);
@@ -468,12 +466,17 @@ public class Agent : MonoBehaviour
 
     IEnumerator DyingCoroutine(Vector3 currentPosition, Vector3 nextPosition, Sprite deathSprite, AudioClipGroup audio = null)
     {
-        float totalTime = (currentPosition - nextPosition).magnitude / Speed;
+        float currentSpeed = m_Rigidbody2D.isKinematic ? Speed : m_Rigidbody2D.velocity.magnitude;
+
+        m_Rigidbody2D.simulated = false;
+        m_Rigidbody2D.isKinematic = true;
+
+        float totalTime = (currentPosition - nextPosition).magnitude / currentSpeed;
         float t = 0;
 
         while (t < totalTime)
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPosition, Speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, currentSpeed * Time.deltaTime);
             t += Time.deltaTime;
             yield return null;
         }
