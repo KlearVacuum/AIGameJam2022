@@ -152,11 +152,11 @@ namespace GOAP
 
             float bestRunningCost = float.MaxValue;
 
-            openList.Insert(new GoalNode(ref goal, 0));
+            openList.Push(new GoalNode(ref goal, 0));
 
             while (openList.Count > 0)
             {
-                INode currentNode = openList.RemoveRoot();
+                INode currentNode = openList.Pop();
 
                 if (currentNode.Validate(worldState))
                 {
@@ -197,7 +197,7 @@ namespace GOAP
                         float cost = action.GetCost() + currentNode.GetCost();
 
                         usedActions.Set(i, true);
-                        openList.Insert(new ActionNode(ref currentNode, ref action, cost));
+                        openList.Push(new ActionNode(ref currentNode, ref action, cost));
                     }
                 }
             }
@@ -213,11 +213,11 @@ namespace GOAP
 
             // Initialize
             costTable.Add(m_GoalNode.GetName(), 0);
-            openList.Insert(m_GoalNode);
+            openList.Push(m_GoalNode);
 
             while (openList.Count > 0)
             {
-                INode currentNode = openList.RemoveRoot();
+                INode currentNode = openList.Pop();
 
                 if (currentNode.Validate(worldState))
                 {

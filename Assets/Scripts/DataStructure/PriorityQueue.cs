@@ -6,7 +6,7 @@ public class PriorityQueue<T> where T : IComparable<T>
     private List<T> items = new List<T>();
     public int Count { get { return items.Count; } }
     public void Clear() { items.Clear(); }
-    public void Insert(T item)
+    public void Push(T item)
     {
         int i = items.Count;
         items.Add(item);
@@ -18,7 +18,7 @@ public class PriorityQueue<T> where T : IComparable<T>
         items[i] = item;
     }
     public T Peek() { return items[0]; }
-    public T RemoveRoot()
+    public T Pop()
     {
         T firstItem = items[0];
         T tempItem = items[items.Count - 1];

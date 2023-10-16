@@ -83,7 +83,7 @@ class Pathfinding
 
         Dictionary<Vector3Int, int> costTable = new Dictionary<Vector3Int, int>();
         HashSet<Vector3Int> closedList = new HashSet<Vector3Int>();
-        Heap<Node> openList = new Heap<Node>(allTiles.Length);
+        Heap<Node> openList = new Heap<Node>((uint)allTiles.Length);
 
         Node startNode = new Node(startCellPosition, startTile);
         Node targetNode = new Node(endCellPosition, endTile);
@@ -141,52 +141,66 @@ class Pathfinding
         PathQuery pathQuery, 
         Action<Agent> pathCompleteAction)
     {
+        const uint MAX_SEARCH_COUNT = 50;
+
         Vector3Int tileStartPos = m_Tilemap.WorldToCell(currentPosition);
         PathfindingTile startTile = m_Tilemap.GetTile(tileStartPos) as PathfindingTile;
 
         Debug.Assert(startTile != null, "Start tile is invalid!");
 
-        Queue<Node> openList = new Queue<Node>();
+        Heap<Node> openList = new Heap<Node>(MAX_SEARCH_COUNT);
         HashSet<Vector3Int> closedList = new HashSet<Vector3Int>();
+        Heap<Node> candidateNodes = new Heap<Node>(MAX_SEARCH_COUNT);
+
+        Dictionary<Vector3Int, int> costTable = new Dictionary<Vector3Int, int>();
+        Vector3Int startCellPosition = m_Tilemap.WorldToCell(currentPosition);
+        costTable[startCellPosition] = 0;
 
         Node startNode = new Node(tileStartPos, startTile);
-        Node bestNode = null;
+        openList.Add(startNode);
 
-        openList.Enqueue(startNode);
+        uint searchCount = 0;
 
-        while(openList.Count > 0)
+        while (openList.Count > 0 && searchCount <= MAX_SEARCH_COUNT)
         {
-            bool foundTile = false;
-            Node currentNode = openList.Dequeue();
+            Node currentNode = openList.RemoveFirst();
 
             closedList.Add(currentNode.Position);
 
+            if (currentNode.Tile.GetType() == typeof(T))
+            {
+                candidateNodes.Add(currentNode);
+            }
+
+            int currentNodeGCost = costTable[currentNode.Position];
             foreach (Node neighbourNode in GetNeighbours(currentNode, pathQuery))
             {
-                if(closedList.Contains(neighbourNode.Position))
+                if (closedList.Contains(neighbourNode.Position))
                 {
                     continue;
                 }
 
-                if(neighbourNode.Tile.GetType() == typeof(T))
+                int costModifier = pathQuery.GetCostModifier(currentNode.Tile);
+                int heuristicCost = GetHeuristic(currentNode, neighbourNode) * costModifier;
+                int newCost = currentNodeGCost + heuristicCost;
+                int currentNeighbourGCost =
+                    costTable.ContainsKey(neighbourNode.Position) ? costTable[neighbourNode.Position] : int.MaxValue;
+
+                if (newCost < currentNeighbourGCost)
                 {
-                    bestNode = neighbourNode;
-                    foundTile = true;
-                    break;
-                }
-                else
-                {
-                    openList.Enqueue(neighbourNode);
+                    costTable[neighbourNode.Position] = newCost;
+
+                    neighbourNode.SetGCost(newCost);
+                    neighbourNode.SetHCost(1);
+                    openList.Add(neighbourNode);
                 }
             }
 
-            if(foundTile)
-            {
-                break;
-            }
+            ++searchCount;
         }
 
         Path.Request pathRequest = null;
+        Node bestNode = candidateNodes.RemoveFirst();
 
         if(bestNode != null)
         {
@@ -236,8 +250,6 @@ class Pathfinding
                 if (neighbourTile != null && neighbourTile.IsWalkable)
                 {
                     Node neighbourNode = new Node(neighbourPos, neighbourTile);
-
-                    // Debug.Log($"Type of tile : {neighbourTile.GetType()}");
 
                     neighbourNode.SetParent(node);
                     neighbours.Add(neighbourNode);
