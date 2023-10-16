@@ -156,6 +156,11 @@ public class Agent : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         m_Animator.SetBool("isMoving", isMoving);
         if (scriptedMoveUp) return;
 

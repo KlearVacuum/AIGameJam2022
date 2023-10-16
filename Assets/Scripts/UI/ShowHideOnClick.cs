@@ -14,6 +14,11 @@ public class ShowHideOnClick : MonoBehaviour
 
     public void ShowHide()
     {
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         showHideObject.SetActive(!showHideObject.activeInHierarchy);
     }
 }

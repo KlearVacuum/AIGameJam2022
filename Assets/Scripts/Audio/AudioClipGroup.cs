@@ -33,9 +33,13 @@ public class AudioClipGroup : ScriptableObject
         audioSource.pitch = Random.Range(m_pitchVariance.x, m_pitchVariance.y);
         m_lastPlayedTime = Time.time;
 
-        if (maxDistance < 0) audioSource.PlayOneShot(clip, volume); return;
+        if (maxDistance < 0)
+        {
+            audioSource.PlayOneShot(clip, volume);
+            return;
+        }
 
-        float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
+            float distance = Vector2.Distance(audioSource.transform.position, GlobalGameData.playerGO.transform.position);
         audioSource.panStereo = 0;
 
         if (maxDistance > 0)

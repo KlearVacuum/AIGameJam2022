@@ -9,6 +9,7 @@ TagManager:
   - BGM
   - CamStartPos
   - LosePanel
+  - PausePanel
   layers:
   - Default
   - TransparentFX

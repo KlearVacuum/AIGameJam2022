@@ -11,8 +11,8 @@ public class ToggleSpeedUp : MonoBehaviour
     public void Toggle()
     {
         m_Toggle = !m_Toggle;
-        m_Text.text = (m_Toggle? ">" : ">>");
-        Time.timeScale = (m_Toggle ? 1 : 2);
+        m_Text.text = (m_Toggle? ">>" : ">");
+        Time.timeScale = (m_Toggle ? 2 : 1);
         Debug.Log("Toggle : " + m_Toggle);
     }
 
