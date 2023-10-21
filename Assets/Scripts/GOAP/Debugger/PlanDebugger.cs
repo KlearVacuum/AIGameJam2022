@@ -36,19 +36,6 @@ namespace GOAP
                 element.transform.SetParent(transform);
             }
         }
-
-        string GetDebugString()
-        {
-            foreach(ActionDebugger actionDebugger in m_ActionDebuggers)
-            {
-                if (actionDebugger.Action == m_Plan.GetCurrentAction())
-                {
-                    return actionDebugger.Stringify();
-                }
-            }
-
-            return "NO ACTIVE ACTION";
-        }
     }
 }
 

@@ -29,7 +29,7 @@ public class ActionNode : ScriptableObject
     {
         GOAP.Action newAction = m_ActionInstance;
 
-        newAction.ClearPreconditions();
+        m_ActionInstance = m_ActionReference;
 
         if(m_SelectedCondition != null)
         {
