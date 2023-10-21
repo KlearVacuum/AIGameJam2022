@@ -18,7 +18,7 @@ namespace GOAP
         public List<Action> m_Actions { get; private set; }
         int m_CurrentActionIndex = 0;
         ExecutionStatus m_ExecutionStatus = ExecutionStatus.None;
-        UnityAction m_OnChangeCurrentAction;
+        System.Action m_OnNewActionExecute;
 
         public Plan(Goal goal, List<Action> actions)
         {
@@ -31,9 +31,9 @@ namespace GOAP
             }
         }
 
-        public void AddOnChangeCurrentActionListener(UnityAction listener)
+        public void AddOnNewActionExecuteListener(System.Action action)
         {
-            m_OnChangeCurrentAction += listener;
+            m_OnNewActionExecute = action;
         }
 
         public void Execute(Agent agent)
@@ -66,6 +66,7 @@ namespace GOAP
                         {
                             currentAction.NotifyExecuting();
                             currentAction.Initialize(agent);
+                            m_OnNewActionExecute.Invoke();
                             goto case Action.ExecutionStatus.Executing;
                         }
                     case Action.ExecutionStatus.Executing:
@@ -101,7 +102,6 @@ namespace GOAP
         private void ProgressToNextAction()
         {
             ++m_CurrentActionIndex;
-            m_OnChangeCurrentAction.Invoke();
         }
 
         public bool IsValid() => m_ExecutionStatus != ExecutionStatus.Failed && m_CurrentActionIndex < m_Actions.Count;

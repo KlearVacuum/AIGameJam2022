@@ -12,21 +12,29 @@ namespace GOAP
         ActionDebugger m_ActiveActionDebugger;
         GoalDebugger m_GoalDebugger;
 
-        [SerializeField] private TextMeshProUGUI m_ActionNameText;
+        [SerializeField] NodePanelElement m_NodePanelElementPrefab;
 
         public void Setup(Plan plan)
         {
             m_Plan = plan;
-            // Activate once first
-            OnChangeActiveAction();
-
-            m_Plan.AddOnChangeCurrentActionListener(OnChangeActiveAction);
+            m_Plan.AddOnNewActionExecuteListener(OnChangeActiveAction);
         }
 
         private void OnChangeActiveAction()
         {
+            // Note, could create a pool instead of destroying each time
+            foreach(Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+
             m_ActiveActionDebugger = new ActionDebugger(m_Plan.GetCurrentAction());
-            m_ActionNameText.text = m_ActiveActionDebugger.Stringify();    
+
+            var elements = m_ActiveActionDebugger.CreateNodePanelElements(m_NodePanelElementPrefab);
+            foreach(NodePanelElement element in elements)
+            {
+                element.transform.SetParent(transform);
+            }
         }
 
         string GetDebugString()

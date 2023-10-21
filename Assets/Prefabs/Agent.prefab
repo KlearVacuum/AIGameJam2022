@@ -1058,6 +1058,14 @@ PrefabInstance:
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 7367679284849275861}
+    - target: {fileID: 4960112228036606667, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
+      propertyPath: m_fontSize
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960112228036606667, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4960112228757683504, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
