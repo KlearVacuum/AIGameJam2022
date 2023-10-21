@@ -39,6 +39,7 @@ namespace GOAP
                 PlanRequest planRequest = m_PlanRequests.Dequeue();
                 m_PreviousDesiredState = new Dictionary<string, IStateValue>(planRequest.DesiredState);
                 m_CurrentPlan = Plan(planRequest.DesiredState);
+                m_Agent.UpdatePlanDebugger(m_CurrentPlan);
             }
 
             return m_CurrentPlan;

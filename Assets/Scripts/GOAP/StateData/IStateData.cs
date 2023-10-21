@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GOAP
 {
@@ -6,6 +7,9 @@ namespace GOAP
     {
         [SerializeField] protected StateKey m_StateKey;
         public StateKey Key => m_StateKey;
+
+        public abstract string Name { get; }
+        public abstract string StringifyType();
 
         public abstract IStateValue GetStateValue();
 

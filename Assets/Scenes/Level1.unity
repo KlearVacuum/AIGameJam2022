@@ -871,6 +871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 2141219075595483749, guid: 2f8030821c8515840b655eb59d2f7310, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2141219075595483750, guid: 2f8030821c8515840b655eb59d2f7310, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1028,7 +1032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7601865488385336841, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7601865488385336842, guid: 61adad7c7f7337b4c857e5d0fb760ae9, type: 3}
       propertyPath: m_Pivot.x
@@ -1327,6 +1331,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dextronomics Access Text
       objectReference: {fileID: 0}
+    - target: {fileID: 3086887012322331185, guid: 0dabcd697575f334ea31e0fa3dab6108, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3086887012322331189, guid: 0dabcd697575f334ea31e0fa3dab6108, type: 3}
       propertyPath: showHideObject
       value: 
@@ -1437,6 +1445,10 @@ PrefabInstance:
     - target: {fileID: 1719473581717022706, guid: 5c4beda70b919884b9de362a145cc5c4, type: 3}
       propertyPath: m_Name
       value: Lose Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719473581717022706, guid: 5c4beda70b919884b9de362a145cc5c4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4beda70b919884b9de362a145cc5c4, type: 3}
@@ -3189,6 +3201,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigBlackPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4018153849839334769, guid: ee9dbdd8efb14aa4190b05755d9a95c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4018153849839334775, guid: ee9dbdd8efb14aa4190b05755d9a95c9, type: 3}
       propertyPath: nextLevel
       value: PreLevel2
@@ -3407,6 +3423,10 @@ PrefabInstance:
     - target: {fileID: 6375772846427679478, guid: b7dbc9600ddf1e9418e3e6eb8a3ec2da, type: 3}
       propertyPath: m_Name
       value: Items Text (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6375772846427679478, guid: b7dbc9600ddf1e9418e3e6eb8a3ec2da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7dbc9600ddf1e9418e3e6eb8a3ec2da, type: 3}

@@ -63,6 +63,7 @@ public class Agent : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] TextMeshProUGUI itemsUI;
+    [SerializeField] GOAP.PlanDebugger m_PlanDebugger;
 
     [Header("Planner")]
     [SerializeField] GOAP.Planner m_Planner;
@@ -97,11 +98,12 @@ public class Agent : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
-        startingScale = transform.localScale.x;
+        startingScale = m_SpriteRenderer.transform.parent.localScale.x;
 
         m_CurrentSpeed = m_DefaultSpeed;
         m_Planner.Initialize(this);
         m_WorldState.Initialize();
+        m_PlanDebugger.gameObject.SetActive(false);
     }
 
     void Start()
@@ -557,12 +559,12 @@ public class Agent : MonoBehaviour
         {
             float lerp = Mathf.Lerp(startScale, endScale, t / totalTime);
             if (lerp <= 0.001f && lerp >= -0.001f) lerp = 0.001f;
-            transform.localScale = new Vector3(lerp, transform.localScale.y, transform.localScale.z);
+            m_SpriteRenderer.transform.parent.localScale = new Vector3(lerp, m_SpriteRenderer.transform.parent.localScale.y, m_SpriteRenderer.transform.parent.localScale.z);
             t += Time.deltaTime;
             if (t > totalTime) t = totalTime;
             yield return null;
         }
-        transform.localScale = new Vector3(endScale, transform.localScale.y, transform.localScale.z);
+        m_SpriteRenderer.transform.parent.localScale = new Vector3(endScale, m_SpriteRenderer.transform.parent.localScale.y, m_SpriteRenderer.transform.parent.localScale.z);
         flipped = !flipped;
     }
 
@@ -593,5 +595,14 @@ public class Agent : MonoBehaviour
         //    resumePath.TargetPosition,
         //    resumePath.PathQuery,
         //    resumePath.PathCompleteAction);
+    }
+
+    public void UpdatePlanDebugger(GOAP.Plan plan)
+    {
+        if (plan != null)
+        {
+            m_PlanDebugger.gameObject.SetActive(true);
+            m_PlanDebugger.Setup(plan);
+        }
     }
 }

@@ -4,9 +4,13 @@ using UnityEngine;
 
 namespace GOAP
 {
-    public class StateData<T> : IStateData
+    public abstract class StateData<T> : IStateData
     {
         [SerializeField] protected StateValue<T> m_StateValue;
+
+        public override string Name => m_StateKey;
+
+        public override string StringifyType() => StringifyTypeInternal();
 
         public virtual void Initialize(string key, T value)
         {
@@ -23,5 +27,7 @@ namespace GOAP
         {
             return new StateValue<T>(m_StateValue.Data);
         }
+
+        protected abstract string StringifyTypeInternal();
     }
 }

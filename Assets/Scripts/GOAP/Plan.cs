@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 namespace GOAP
@@ -13,20 +14,26 @@ namespace GOAP
             Failed
         }
 
-        Goal m_Goal;
-        List<Action> m_Actions;
+        public Goal m_Goal { get; private set; }
+        public List<Action> m_Actions { get; private set; }
         int m_CurrentActionIndex = 0;
         ExecutionStatus m_ExecutionStatus = ExecutionStatus.None;
+        UnityAction m_OnChangeCurrentAction;
 
         public Plan(Goal goal, List<Action> actions)
         {
             m_Goal = goal;
             m_Actions = actions;
 
-            foreach(Action action in actions)
+            foreach (Action action in actions)
             {
                 action.ResetStatus();
             }
+        }
+
+        public void AddOnChangeCurrentActionListener(UnityAction listener)
+        {
+            m_OnChangeCurrentAction += listener;
         }
 
         public void Execute(Agent agent)
@@ -94,6 +101,7 @@ namespace GOAP
         private void ProgressToNextAction()
         {
             ++m_CurrentActionIndex;
+            m_OnChangeCurrentAction.Invoke();
         }
 
         public bool IsValid() => m_ExecutionStatus != ExecutionStatus.Failed && m_CurrentActionIndex < m_Actions.Count;

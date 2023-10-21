@@ -9,6 +9,8 @@ namespace GOAP
         {
             return (value as StateValue<T>).Data;
         }
+
+        public abstract string Stringify();
     }
 
     [System.Serializable]
@@ -16,6 +18,8 @@ namespace GOAP
     {
         [SerializeField] T m_Data;
         public T Data => m_Data;
+
+        public override string Stringify() => m_Data.ToString();
 
         public StateValue(T data)
         {
