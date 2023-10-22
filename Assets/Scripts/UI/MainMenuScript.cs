@@ -7,6 +7,7 @@ public class MainMenuScript : MonoBehaviour
 {
     private AudioSource aSource;
     public AudioClip hoverClip, enterClip;
+    public GameObject[] levels;
 
     private void Awake()
     {
@@ -26,5 +27,13 @@ public class MainMenuScript : MonoBehaviour
     public void GoToLevel(string levelName)
     {
         SceneManager.LoadScene(levelName);
+    }
+
+    public void ShowLevels()
+    {
+        foreach(GameObject level in levels)
+        {
+            level.SetActive(true);
+        }
     }
 }

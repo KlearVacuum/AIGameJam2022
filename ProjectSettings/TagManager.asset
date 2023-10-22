@@ -10,6 +10,7 @@ TagManager:
   - CamStartPos
   - LosePanel
   - PausePanel
+  - PlanDebugger
   layers:
   - Default
   - TransparentFX

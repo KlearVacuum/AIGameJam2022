@@ -16,6 +16,7 @@ public class PausePanelScript : MonoBehaviour
 
     public void Quit()
     {
+        Time.timeScale = 1;
         GlobalGameData.blackPanelFade.nextLevel = "MainMenu";
         GlobalGameData.blackPanelFade.FadeIn();
     }

@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         GlobalGameData.blackPanelFade.FadeOut();
+        Time.timeScale = oldTimeScale;
     }
 
     private void Update()

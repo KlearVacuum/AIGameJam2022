@@ -152,7 +152,7 @@ MonoBehaviour:
   startingControlChips: 0
   manualControlTime: 5
   itemsUI: {fileID: 0}
-  m_PlanDebugger: {fileID: 3485128550506564002}
+  m_PlanDebugger: {fileID: 0}
   m_Planner:
     m_DefaultActions:
     - {fileID: 11400000, guid: 22326a4b2ca02ee458fb96f24759a597, type: 2}
@@ -1046,6 +1046,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7367679284849275861}
     m_Modifications:
+    - target: {fileID: 1485831618690488877, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4143964794665516658, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
       propertyPath: m_Sources.Array.size
       value: 1
@@ -1156,17 +1160,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
---- !u!114 &3485128550506564002 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5425580510969072214, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}
-  m_PrefabInstance: {fileID: 8869313114393019380}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0b94751e96638a4bbd22907822e48ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4594791489156955842 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4960112228757683510, guid: b0ef5f491429232409aa2ef2725a952f, type: 3}

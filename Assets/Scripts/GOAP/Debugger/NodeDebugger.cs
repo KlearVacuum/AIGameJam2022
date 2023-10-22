@@ -3,7 +3,7 @@ using System;
 
 namespace GOAP
 {
-    class NodeDebugger
+    public class NodeDebugger
     {
         protected string StringifyStateDatas(List<IStateData> stateDatas)
         {

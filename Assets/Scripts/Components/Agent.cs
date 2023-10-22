@@ -96,6 +96,7 @@ public class Agent : MonoBehaviour
         m_Animator = m_SpriteRenderer.gameObject.GetComponent<Animator>();
         m_GlowLight = GetComponentInChildren<Light2D>();
         gameManager = FindObjectOfType<GameManager>();
+        m_PlanDebugger = GameObject.FindGameObjectWithTag("PlanDebugger").GetComponent<GOAP.PlanDebugger>();
 
         Debug.Assert(m_SpriteRenderer != null, "Agent does not have a sprite renderer!");
         startingScale = m_SpriteRenderer.transform.parent.localScale.x;
@@ -103,7 +104,6 @@ public class Agent : MonoBehaviour
         m_CurrentSpeed = m_DefaultSpeed;
         m_Planner.Initialize(this);
         m_WorldState.Initialize();
-        m_PlanDebugger.gameObject.SetActive(false);
     }
 
     void Start()
@@ -488,7 +488,7 @@ public class Agent : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Truly dead");
+        // Debug.Log("Truly dead");
         m_trulyDead = true;
         deadSpriteRenderer.sprite = deathSprite;
 

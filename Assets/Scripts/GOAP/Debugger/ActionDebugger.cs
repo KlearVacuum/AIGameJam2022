@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GOAP
 {
-    class ActionDebugger : NodeDebugger
+    public class ActionDebugger : NodeDebugger
     {
         Action m_Action;
         public Action Action => m_Action;
@@ -24,23 +24,43 @@ namespace GOAP
             var conditions = m_Action.GetPreconditions().Conditions;
             if (conditions.Count > 0)
             {
-                debugString += String.Format("Conditions : \n {0}", StringifyStateDatas(conditions));
+                debugString += GetConditionsString(conditions);
             }
 
             var results = m_Action.GetEffect().Results;
             if (results.Count > 0)
             {
-                debugString += String.Format("Effects : \n {0}", StringifyStateDatas(results));
+                debugString += GetResultsString(results);
             }
 
             return debugString;
+        }
+
+        // create a content list of conditions in string format
+        public string GetConditionsString(List<IStateData> _conditions)
+        {
+            if (_conditions.Count <= 0) return "";
+            return String.Format("Conditions : \n {0}", StringifyStateDatas(_conditions));
+        }
+
+        // create a content list of results in string format
+        public string GetResultsString(List<IStateData> _results)
+        {
+            if (_results.Count <= 0) return "";
+            return String.Format("Effects : \n {0}", StringifyStateDatas(_results));
+        }
+
+        // create node panel element for header only
+        public NodePanelElement CreateHeaderNodePanelElement(NodePanelElement prefab)
+        {
+            return CreateElement(prefab, m_Action.GetName());
         }
 
         public List<NodePanelElement> CreateNodePanelElements(NodePanelElement prefab)
         {
             List<NodePanelElement> elements = new List<NodePanelElement>();
 
-            elements.Add(CreateElement(prefab, m_Action.GetName()));
+            // elements.Add(CreateElement(prefab, m_Action.GetName()));
 
             {
                 var conditions = m_Action.GetPreconditions().Conditions;
@@ -71,7 +91,7 @@ namespace GOAP
             return elements;
         }
 
-        private NodePanelElement CreateElement(NodePanelElement prefab, string content)
+        public NodePanelElement CreateElement(NodePanelElement prefab, string content)
         {
             NodePanelElement newElement = GameObject.Instantiate(prefab);
             newElement.SetContent(content);

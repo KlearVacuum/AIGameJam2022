@@ -11,12 +11,14 @@ public class LosePanelScript : MonoBehaviour
     }
     public void RestartLevel()
     {
+        Time.timeScale = 1;
         GlobalGameData.blackPanelFade.nextLevel = SceneManager.GetActiveScene().name;
         GlobalGameData.blackPanelFade.FadeIn();
     }
 
     public void QuitToMainMenu()
     {
+        Time.timeScale = 1;
         GlobalGameData.blackPanelFade.nextLevel = "MainMenu";
         GlobalGameData.blackPanelFade.FadeIn();
     }
