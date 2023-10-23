@@ -32,6 +32,7 @@ public class GameManager : Singleton<GameManager>
         losePanel = GameObject.FindGameObjectWithTag("LosePanel");
         pausePanel = FindObjectOfType<PausePanelScript>().gameObject;
 
+        Time.timeScale = 1;
         nextGameState = currentGameState = eGameState.RUNNING;
     }
 
